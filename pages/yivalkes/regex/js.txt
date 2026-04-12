@@ -1,0 +1,177 @@
+====== REGEX SPECIFICATION (JAVASCRIPT) ======
+
+Complete rule set for direct implementation in JS. Apply the "i" flag (ignoreCase) to all operations.
+
+===== Stem Functions =====
+
+<code javascript>
+/**
+ * Stemming logic converted from Python.
+ * Uses .test() for searches and .replace() for substitutions.
+ */
+
+function getCauserStem(spoken) {
+    if (/[!?()]/.test(spoken)) return '';
+    let s = spoken.replace(/^-/, '').toLowerCase();
+    // Count hyphens
+    const hyphenCount = (s.match(/-/g) || []).length;
+    if (hyphenCount >= 2) {
+        return s.replace(/-([^-]+)-.*$/, '$1');
+    }
+    return s.replace(/[,-].*$/, '');
+}
+
+function getMedianStem(spoken) {
+    if (/[!?()]/.test(spoken)) return '';
+    let s = spoken.replace(/^-/, '').toLowerCase();
+    
+    // Attempt multi-hyphen match
+    let m = s.match(/(.*)-(.*)-(.*)/);
+    if (m) return m[1] + m[3];
+    
+    // Attempt single-hyphen match
+    m = s.match(/(.*)-([^ ]*)(.*)/);
+    if (m) return m[1] + m[2];
+    
+    return s.replace(/,.*$/, '');
+}
+</code>
+
+===== Reduplicated Table =====
+
+Apply these to the Causer stem. Replace using **$1, $2** syntax.
+
+<code javascript>
+const REDUP_PAIRS = [
+    [/^[td]h?([sz]h?)([aeiouy]*)([aeiou])/i, "t$3d$1$2$3"],
+    [/^([bdgptkszfv])(h?)([lrsfzv])/i,       "$1e$1$2$3"],
+    [/^([sz])(h?)([pbkgtd])/i,               "s$2ez$3"],
+    [/^[fv]([pbkgtd])/i,                     "fev$1"],
+    [/^[sz]([aeiou]*)([aeiou])/i,            "s$2z$1$2"],
+    [/^[fv]([aeiou]*)([aeiou])/i,            "f$2v$1$2"],
+    [/^[sz]h([aeiou]*)([aeiou])/i,           "sh$2zh$1$2"],
+    [/^(h?)([uwo]*)([ou])/i,                 "$1owo"],
+    [/^(h?)([iy]*)([aeoiu])/i,               "$1iya"],
+    [/^[pb]h?([aeiou]*)([aeiou])/i,          "p$2b$1$2"],
+    [/^([nml])([aeiou]*)([aeiou])/i,         "$1$3$1$2$3"],
+    [/^[kg]h?([aeiou]*)([aeiou])/i,          "k$2g$1$2"],
+    [/^[fv]([nml])/i,                        "fav$1"],
+    [/^[sz]([nml])/i,                        "saz$1"],
+    [/^(h?)([ea]*)/i,                        "$1ea"],
+    [/^/i,                                   "hee"]
+];
+
+function applyReduplicated(stem) {
+    for (const [pat, repl] of REDUP_PAIRS) {
+        if (pat.test(stem)) {
+            return stem.replace(pat, repl);
+        }
+    }
+    return stem;
+}
+</code>
+
+===== 18 Patterns and Replacements =====
+
+  * All patterns should be instantiated as ''new RegExp(pattern, 'i')''.
+  * In the replacements below, ''$1'' corresponds to the first capture group ''(...)''.
+
+<code javascript>
+const PATTERNS = [
+    "et(t?)$", "[ou]y$", "(y[ou]+)([sf]h?)?$", "([w]+)[ae]+$", 
+    "([yi]+)([aeiou]+)([bdgptkmnlrfscvzjh]+)$", 
+    "([wuo]+)([aeiou]*)([bdgptkmnrfscvzjh]+)$",
+    "([bdgptkmnlrfscvzjh]+)(([aeiou])([aeiou]))([lr])$",
+    "([bdgptkmnlrfscvzjh]+)([aeiou])([lr])$",
+    "([bdgptkmnlrfscvzjh']+)([ea])([ea]*)$",
+    "([bdgptkmnlrfscvzjh]+)([aeiou]*)([ouw]+)$",
+    "([bdgptkmnlrfscvzjhw]+)([aeiou]*)([iy])$",
+    "([bdgptkmnlrfscvzjh]+)([aeiou]+)([bdgptkmnrfscvzjh]+)$",
+    "()([ae])y()$", "(y)([ae]+)()$", "(^|[''\\-])([aeoiu]+)([bpkgtd]+)$",
+    "([''\\-])([aeoiu]+)([lr])$", "([''\\-])([aeoiu]+)([lr][lr])$", "$"
+];
+
+// Example: Actor-There Replacements
+const REPL_ACTOR_THERE = [
+    "et$1a", "$1ya", "$1'a$2", "wawa", "$1$2$3e", "$1$2$3e",
+    "$1$2ra", "$1$2ra", "$1$2wa", "$1$2wa", "$1$2$3ya", "$1$2$3e",
+    "$2ye", "$1$2$3'a", "$1$2$3a", "$1$2ra", "$1$2$3a", "a"
+];
+</code>
+
+===== Person Suffixes =====
+
+Apply these after the spatial/case form is generated.
+
+<code javascript>
+const ME_PAIRS = [
+    [/([ao]|[ae]e)$/i, "$1ni"], 
+    [/ii$/i,           "iin"], 
+    [/[uw]$/i,         "win"], 
+    [/e?$/i,           "in"]
+];
+
+const YOU_PAIRS = [
+    [/([^aeiouwyn])$/i, "$1ets"],
+    [/([^aeiou]*[aeiou]+[^aeiou]+[aeiou]+[^aeiou]*[aeiou]+)$/i, "$1ts"],
+    [/$/i, "tse"]
+];
+
+const THEM_PAIRS = [
+    [/([aeou])$/i, "$1rh"], 
+    [/([^i][wyi])$/i, "$1irh"], 
+    [/$/i, "erh"]
+];
+</code>
+
+===== Portmanteau Logic =====
+
+<code javascript>
+const PORTMANTEAUS = {
+    'me_there':   { pat: /in$/i,       rep: 'inia' },
+    'you_there':  { pat: /tse$/i,      rep: 'tsa' },
+    'them_there': { pat: /e?[ei]rh$/i, rep: 'earh' }
+    // Add others following the same pattern
+};
+
+function applyPortmanteau(form, person, direction) {
+    const key = `${person}_${direction}`;
+    if (PORTMANTEAUS[key]) {
+        const entry = PORTMANTEAUS[key];
+        if (entry.pat.test(form)) return form.replace(entry.pat, entry.rep);
+    }
+    // Fallback if not in table
+    const fallbacks = { 'there': 'a', 'hither': 'i', 'hence': 'oy' };
+    return form + (fallbacks[direction] || '');
+}
+</code>
+
+===== JavaScript Demo =====
+
+Copy this into a browser console or a ''.js'' file to test a few rules.
+
+<code javascript>
+// Simple demo of the "Cheers" and "Actor-Me" rules
+const cheersRules = [
+    [/([aeou])[iy]$/i, "$1iyets!"],
+    [/([^aeiou])$/i,   "$1eyets!"],
+    [/[ou]+$/i,        "oyets!"],
+    [/$/i,             "eyets!"]
+];
+
+function makeCheers(word) {
+    for (const [pat, repl] of cheersRules) {
+        if (pat.test(word)) return word.replace(pat, repl);
+    }
+}
+
+function makeActorMe(stem) {
+    // Basic version of the "Me" rules
+    if (/ii$/i.test(stem)) return stem.replace(/ii$/i, "iin");
+    if (/[uw]$/i.test(stem)) return stem + "win";
+    return stem + "in";
+}
+
+console.log(makeCheers("sharu"));   // "sharoyets!"
+console.log(makeActorMe("shaaru")); // "shaarwin"
+</code>

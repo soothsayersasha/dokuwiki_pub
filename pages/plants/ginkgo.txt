@@ -1,0 +1,156 @@
+========= Ginkgo Biloba =========
+<html>
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap; text-align: center; margin: 20px 0;">
+  
+  <div style="width: 300px;">
+    <a href="https://commons.wikimedia.org/wiki/File:Ginkgo_biloba_leaves.jpg" target="_blank">
+      <div style="width: 300px; height: 300px; overflow: hidden; border-radius: 4px; border: 1px solid #ddd;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ginkgo_biloba_leaves.jpg" 
+             style="width: 100%; height: 100%; object-fit: cover;" alt="Ginkgo biloba leaves">
+      </div>
+    </a>
+    <p style="font-size: 0.85em; line-height: 1.2; margin-top: 8px;">Ginkgo biloba fan-shaped leaves<br><i>(Photo: Daderot, Public Domain)</i></p>
+  </div>
+
+  <div style="width: 300px;">
+    <a href="https://commons.wikimedia.org/wiki/File:Ginkgo_seeds.jpg" target="_blank">
+      <div style="width: 300px; height: 300px; overflow: hidden; border-radius: 4px; border: 1px solid #ddd;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ginkgo_seeds.jpg" 
+             style="width: 100%; height: 100%; object-fit: cover;" alt="Ginkgo nuts">
+      </div>
+    </a>
+    <p style="font-size: 0.85em; line-height: 1.2; margin-top: 8px;">Ginkgo seeds (nuts inside shell.)<br><i>(Wikimedia Commons.)</i></p>
+  </div>
+
+</div>
+</html>
+----
+
+^ English ^ Latin ^ Chinese ^ Japanese ^
+| Ginkgo | //Ginkgo biloba// | **銀杏**\\ (yínxìng) | **銀杏 / イチョウ**\\ (ichō) |
+| //From Japanese "gin" (silver) + "kyo/an" (apricot)// | Ginkgo (Borrowed.) + biloba (two-lobed leaf.) | //Silver (銀) + Apricot (杏)// ||
+| ::: | ::: | **銀**: 金 (Semantic: Metal/Gold – relating to silver.) + 艮 (Phonetic.) \\ **杏**: 木 (Semantic: Wood/Tree – relating to the fruit tree.) + 口 (Phonetic.) ||
+----
+
+====== Short Description ======
+Ginkgo biloba, also known as the **maidenhair tree**, is the last living species in the division Ginkgophyta. This "living fossil" has no close living relatives and represents a lineage that dates back over **270 million years**. The tree is renowned for its distinctive fan-shaped leaves, remarkable hardiness, and use in traditional medicine.
+
+  * :!: **Note:** Seeds have a fleshy outer layer containing butyric acid (rancid smell); edible nut inside requires proper preparation.
+
+====== Range and Hardiness ======
+  * **Native Range:** Eastern China (thought to be extinct in the wild; survives primarily in cultivation).
+  * **Growth:** Slow-growing initially, can reach 20-35 meters tall. Extremely long-lived (over 1,000 years).
+  * **Hardiness:** Very hardy; USDA zones 3-8. Tolerates pollution and urban conditions exceptionally well.
+
+^ Zone ^ West Coast ^ East Asia ^ Climate Note ^
+| Zone 3-4 | <html><nobr>Interior BC / Alberta</nobr></html> | <html><nobr>Northern China / Hokkaido</nobr></html> | Cold Hardy - One of the most cold-tolerant broadleaf trees. |
+| Zone 5-7 | <html><nobr>Vancouver / Seattle / Portland</nobr></html> | <html><nobr>Beijing / Seoul / Tokyo</nobr></html> | Ideal Range – Shows best growth and autumn colour display. |
+| Zone 8 | <html><nobr>San Francisco / Sacramento</nobr></html> | <html><nobr>Shanghai / Kyoto</nobr></html> | Warm Limit – Still thrives; autumn colour less dramatic. |
+
+====== DNA History & Ancient Genomics ======
+
+**Longest Plant Genome Sequenced**
+
+ Ginkgo biloba holds the record for having one of the **largest and most complex plant genomes** ever fully sequenced – approximately **10.6 billion base pairs** (about 3.5 times larger than the human genome). The genome was described in GinkgoDB (2022), revealing extraordinary insights into its evolutionary history.
+
+**Genomic Time Capsule**
+
+The Ginkgo genome contains extensive remnants of ancient genetic machinery, much of it now dormant but preserved across millions of years. These "genomic fossils" tell the story of Earth's changing climate and ecology:
+
+^ DNA Sequence Type ^ Estimated Time Period ^ Length (approx.) ^ Extrapolated Purpose ^
+| Ice Age Survival Genes | 2.5 million - 11,700 years ago | ~15 Mb across 200+ loci | Cold tolerance proteins, antifreeze mechanisms, winter dormancy regulation |
+| Insect Defense Arsenal | 150-50 million years ago | ~40 Mb (gene families) | Terpenoid synthesis for repelling Jurassic/Cretaceous herbivores (now extinct) |
+| Fungal Pathogen Resistance | 200-100 million years ago | ~8 Mb | Defense against ancient fungal lineages; some still functional |
+| Drought Tolerance Machinery | Permian-Triassic (~250 Ma) | ~12 Mb | Water conservation during extreme prehistoric aridity events |
+| UV Radiation Shielding | Paleozoic era (~300 Ma) | ~5 Mb | Flavonoid synthesis for protection during low-ozone periods |
+| Fire Resistance Traits | 100-50 million years ago | ~3 Mb | Bark thickening, regeneration from stumps after wildfires |
+
+**Polyploidy & Whole-Genome Duplications**
+
+Ginkgo underwent at least **two ancient whole-genome duplications**, which doubled its genetic material and allowed for functional redundancy. This redundancy likely contributed to its exceptional resilience—even if one gene copy is damaged, backup copies remain functional.
+
+====== Food Use ======
+
+**Ginkgo Nuts (銀杏 - Báiguǒ)**
+
+The seeds of the Ginkgo tree are consumed in East Asian cuisine, particularly in China, Japan, and Korea. The **inner nut** is edible and nutritious, but requires careful preparation.
+
+**Preparation & Consumption**
+  * **Toxicity Warning:** Raw ginkgo nuts contain **ginkgotoxin (4'-O-methylpyridoxine)**, which can cause seizures if consumed in large quantities. Cooking neutralizes most of this compound.
+  * **Harvest:** The fleshy outer sarcotesta (orange-yellow layer) smells strongly of butyric acid (rancid butter) and should be removed with gloves.
+  * **Cooking:** Nuts are typically roasted, boiled, or added to soups and congee. Common in **Buddha's Delight** and **Chawanmushi** (Japanese egg custard).
+  * **Dosage:** Traditional wisdom suggests limiting consumption to **5-10 nuts per day** for adults to avoid toxicity.
+
+**Nutritional Profile (per 100g, cooked)**
+  * Calories: ~182 kcal
+  * Protein: ~4.3 g
+  * Fat: ~1.7 g
+  * Carbohydrates: ~38 g
+  * Rich in Vitamin C, potassium, and phosphorus
+
+====== Chinese Traditional Medicine ======
+
+Ginkgo has been used in **Traditional Chinese Medicine (TCM)** for over 1,000 years. Both the nuts and leaves are employed, though for different purposes.
+
+**Classical TCM Applications**
+  * **Lung Health (肺):** Ginkgo nuts are classified as warming and sweet, believed to tonify lung qi and relieve asthma and chronic cough. Often prescribed for elderly patients with weak respiratory systems.
+  * **Kidney Support (腎):** Used to address frequent urination and nocturnal enuresis (bedwetting). The astringent properties are thought to "secure" kidney essence.
+  * **Phlegm Resolution:** Combined with other herbs (e.g., licorice, platycodon) to dispel phlegm and clear heat from the lungs.
+
+**Leaf Extracts (Modern TCM)**
+
+In modern practice, **Ginkgo leaf extracts** (standardized to contain 24% flavone glycosides and 6% terpene lactones) are used for:
+  * Improving circulation
+  * Supporting cognitive function
+  * Treating vertigo and tinnitus
+
+These uses align with findings from contemporary pharmacological research (see next section).
+
+====== Medicinal Research & Peer-Reviewed Evidence ======
+
+**Circulation & Cardiovascular Health**
+
+Ginkgo biloba extract (GBE) has been studied extensively for its effects on blood flow and vascular health:
+  * **Peripheral Circulation:** A 2000 Cochrane review found moderate evidence that GBE improves symptoms of intermittent claudication (leg pain from poor circulation).
+  * **Blood Viscosity:** Research published in Clinical Hemorheology and Microcirculation (2005) showed GBE reduces blood viscosity, potentially improving microcirculation.
+
+**Cognitive Function & Dementia**
+
+Results are mixed, but some studies suggest benefits:
+  * **Memory in Healthy Adults:** A 2002 study in Psychopharmacology found modest improvements in attention and memory tasks.
+  * **Dementia & Alzheimer's:** A 2008 JAMA study found no significant effect in preventing dementia, though earlier studies suggested mild symptom relief in those already diagnosed.
+
+**Antioxidant & Neuroprotective Properties**
+
+  * **Flavonoids & Terpenoids:** GBE contains potent antioxidants (2014 review in Pharmacological Research) that may protect neurons from oxidative stress.
+  * **Anti-inflammatory Effects:** A 2012 study in Phytomedicine demonstrated reduced inflammatory markers in animal models.
+
+**Eye Health**
+
+  * **Glaucoma & Macular Degeneration:** Some evidence (2004 survey of studies in Survey of Ophthalmology) suggests GBE may improve ocular blood flow, though more research is needed.
+
+**Safety & Interactions**
+
+  * Generally well-tolerated, but can interact with **anticoagulants** (warfarin, aspirin) due to mild blood-thinning effects.
+  * Rare reports of seizures with excessive raw nut consumption.
+
+====== Spiritual & Symbolic Significance ======
+
+**Sacred Tree of Longevity**
+
+In East Asian spirituality, Ginkgo is revered as a **symbol of endurance and immortality**. Many ancient specimens grow near Buddhist temples and Shinto shrines, where they are believed to embody the resilience of the dharma.
+
+**The Tree That Survived Hiroshima**
+
+Six Ginkgo trees survived the atomic bombing of Hiroshima in 1945, located just **1-2 km from ground zero**. Despite the destruction around them, these trees [[https://en.wikipedia.org/wiki/Hibakujumoku|re-sprouted and still thrive today]], making them powerful symbols of **regeneration and hope** in Japanese culture.
+
+**Yin-Yang Duality**
+
+  * **Male & Female Trees:** Ginkgo is dioecious (separate sexes). The male tree is prized for its clean foliage; the female produces the famously malodorous seeds, embodying the balance of beauty and decay.
+  * **Two-Lobed Leaves:** The fan-shaped, bifurcated leaves symbolize duality – past and future, heaven and earth, spiritual and material.
+
+**Meditation & Mindfulness**
+
+Ginkgo leaves are sometimes used in **Zen meditation practices** as objects of contemplation. Their geometric simplicity and seasonal transformation (brilliant golden autumn colour.) reflect the Buddhist concepts of **impermanence** and **wabi-sabi** (beauty in transience.)
+
+

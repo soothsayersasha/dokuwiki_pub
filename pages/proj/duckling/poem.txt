@@ -1,0 +1,103 @@
+<WRAP center round #2d333b mod-dark 70%>
+====== Un Petit Caneton ======
+^ Artist: | [[https://github.com/B7th|MangoTrain]] |
+^ English Title: | Little Duckling (The Bold) |
+
+{{ :proj:duckling:unpetitcaneton.mp3 |}}
+
+===== French (Original) =====
+
+<WRAP indent>
+**Intro**
+  Cm                     G                   Cm  G         Cm
+  Un petit caneton s’en allait voletant dans une nuit bien noire
+     Cm         Bb      Eb                  G
+  Il avait avec lui des noids qui goutaient bon...
+
+**Verse 1**
+  Cm                  G                   Cm       G        Cm
+  Le petit caneton se promenait malgré la pluie et le brouillard
+  
+**Bridge 1**
+  Ab                        Bb              Eb
+  Les hibous et les renards se moquaient de lui
+  Db                           G Cm G
+  Car il se dandinait sans les remarquer
+  
+**Verse 2**
+  Cm                    G                      Bb          Eb
+  Ce petit caneton dans l’étang se baigne pour reposer ses ailes
+  D                               G
+  Aux Reflets de la lune et des étoiles
+  
+**Verse 3**
+  Cm               G,                      Bb            F
+  Le petit caneton n’était point seul, Car il avait ces amis
+     Ab         Bb     F (x2)
+  Le rat, l’écureil et le lapin... (x2)
+
+**Verse 4**
+  Cm                    G                           Cm      G     Cm
+  Not' petit caneton marchotait sur le sol quand le tonerre a frappé
+  Cm                   Bb         Eb          F
+  Mais il n’a eu point peur, car ici est sa demeure...
+
+**Bridge 2**
+      Ab,                      Bb               Eb,
+  Car voyez-vous mes chers, ce caneton est bien maitre
+  Db                               G  Cm  G   Cm G   Cm        G
+  de ces lieux et hardi sont ceux qui bientôt diront sauve qui peut...
+
+**Outro**
+  Cm                    G                Ab       Bb        C
+  Un petit caneton s’en allait voletant alors que l’aube se pointe.
+</WRAP>
+
+===== English =====
+
+<WRAP indent>
+**Intro**
+  Cm                     G                      Cm       G       Cm
+  A little duckling was flittering about in a dark and gloomy night
+  Cm               Bb        Eb               G
+  He had upon himself some nuts that tasted great...
+
+**Verse 1**
+  Cm                       G                       Cm       G        Cm
+  The little duckling was having a fun stroll despite the rain and fog
+  
+**Bridge 1**
+  Ab                           Bb               Eb
+  The foxes and the owls were loudly mocking him
+  Db                        G Cm   G
+  For he was waddling without noticing them
+  
+**Verse 2**
+  Cm                       G               Bb           Eb
+  This little duckling in the pond swims to rest his wings
+  D                                     G
+  Under the glimmer of the moon and the stars
+  
+**Verse 3**
+  Cm                       G,              Bb               F
+  The little duckling was far from alone for he had his friends
+       Ab             Bb      F (x2)
+  The rat, the squirrel and the rabbit... (x2)
+
+**Verse 4**
+  Cm                       G                                 Cm       G       Cm
+  Our little duckling was treading on the ground when the blasting thunder struck
+  Cm                Bb         Eb                 F
+  Yet he was not afraid for here is his domain...
+
+**Bridge 2**
+  Ab,                          Bb             Eb,
+  For notice my darlings, This duckling is indeed
+  Db                                G     Cm  G    Cm   G   Cm        G
+  Master of this land and bold are those who soon will say save our souls...
+  
+**Outro**
+  Cm                     G                     Ab      Bb      C
+  A little duckling was flittering around as dawn at last arrives
+</WRAP>
+</WRAP>

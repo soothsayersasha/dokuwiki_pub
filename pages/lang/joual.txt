@@ -1,0 +1,790 @@
+====== An English/French → Joual Converter ======
+
+//An interactive tool to turn Standard French into Québec Joual w/ optional critter flavour.//
+
+----
+
+<html>
+<link rel="stylesheet" href="/den/testing/wiki/joual.css">
+
+<div id="joual-app">
+  <div class="joual-header">
+    <h2 id="app-title">🐦‍⬛ Jumping Joual!</h2>
+    <div style="margin-top:6px;font-size:0.92em;">
+      <span class="joual-subtitle" id="app-subtitle">An English/French → Joual Converter</span>
+      &nbsp;·&nbsp;
+      <a href="#" id="lang-toggle" style="color:#9e9e9e;text-decoration:underline;">En français</a>
+    </div>
+    <div id="grackle-examples" style="margin-top:0.45em;color:#bfb6ff;font-size:0.9em;">🐾 Critter-ize: <strong>Il est fâché.</strong> → <em>Y'a l'poil croche</em></div>
+  </div>
+
+  <div id="joual-instructions" style="max-width:980px;margin:0.6em auto;color:#cfcce6;font-size:0.95em;">
+    <div id="instructions-en">
+<ul style="margin:0.2em 0 0 1.1em;">
+  <li><em>Joual is the informal, everyday speech of Québec – think casual contractions, local idioms, and softened sacres.</em></li>
+  <li>Type your formal French directly into the left box, or translate first from English.</li>
+  <li><strong>Extra-Cute</strong> adds extra contractions. Disabled when unapplicable.</li>
+  <li><strong>Critter-ize 🐾</strong> adds critter-flavour substitutions. Disabled when unapplicable.</li>
+  <li>Hover or click any highlighted word to see glosses and select alternatives.</li>
+</ul>
+    </div>
+    <div id="instructions-fr" style="display:none;">
+      <ul style="margin:0.2em 0 0 1.1em;">
+        <li>Tapez votre français formel directement dans la boîte de gauche, ou traduisez d'abord depuis l'anglais. <em>Le joual, c'est le parler informel et quotidien du Québec — avec ses contractions, ses expressions locales et ses sacres adoucis.</em></li>
+        <li><strong>Extra-Cute</strong> ajoute des contractions. Désactivé si inapplicable.</li>
+        <li><strong>Critter-ize 🐾</strong> applique des substitutions « critter ». Désactivé si inapplicable.</li>
+        <li>Survolez ou cliquez un mot surligné pour voir des glosses et sélectionner des alternatives.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="joual-controls">
+    <label title="Extra contractions and cute renderings">
+      <input type="checkbox" id="chk-cute"> <span data-en="Extra-Cute" data-fr="Extra-Cute">Extra-Cute</span>
+    </label>
+    <label title="Iridescent/grackle themed alternatives">
+      <input type="checkbox" id="chk-grackle"> <span data-en="Critter-ize 🐾" data-fr="Critter-ize 🐾">Critter-ize 🐾</span>
+    </label>
+    <label title="Strip accents from the input text">
+      <input type="checkbox" id="chk-simplify"> <span data-en="Strip accents" data-fr="Supprimer les accents">Strip accents</span>
+    </label>
+    <label title="Replace entire phrases with native Québécois idioms. May behave unexpectedly with complex tenses." style="position:relative;">
+      <input type="checkbox" id="chk-expr"> <span data-en="Native Expressions ✨ Beta" data-fr="Expressions natives ✨ Bêta" style="color:#e6c84d;">Native Expressions ✨ Beta</span>
+    </label>
+  </div>
+
+    <div class="joual-translate-area">
+      <div style="font-size:0.85em;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#9e9e9e;margin-bottom:0.35em;">
+        <span data-en="English → French (optional translate before Joual)" data-fr="Anglais → Français (facultatif avant le Joual)">English → French (optional translate before Joual)</span>
+      </div>
+      <textarea id="en-input" placeholder="Type English here to translate to French..."></textarea>
+      <div style="display:flex;gap:0.6em;align-items:center;flex-wrap:wrap;justify-content:space-between;">
+        <div style="display:flex;gap:0.6em;align-items:center;flex-wrap:wrap;">
+          <button id="btn-translate" type="button"><span data-en="Translate to French" data-fr="Traduire en français">Translate to French</span></button>
+          <div class="joual-translate-links">
+            <span data-en="Or use:" data-fr="Ou utiliser :">Or use:</span>
+            <a href="https://www.deepl.com/translator#en/fr/" target="_blank">DeepL</a>
+            <a href="https://www.linguee.com/english-french" target="_blank">Linguee</a>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.6em;align-items:center;">
+          <button id="btn-clear" type="button"><span data-en="Clear" data-fr="Effacer">Clear</span></button>
+        </div>
+      </div>
+    </div>
+
+  <div class="joual-panels">
+    <div class="joual-panel">
+      <div class="joual-panel-label"><span data-en="Formal French (input)" data-fr="Français formel (entrée)">Formal French (input)</span><span style="display:flex;gap:0.4em;margin-left:auto;"><button id="btn-example" type="button" title="Load a random example" style="background:none;border:1px solid #555;border-radius:4px;color:#9e9e9e;font-size:0.75em;padding:1px 7px;cursor:pointer;line-height:1.4;letter-spacing:0;text-transform:none;transition:color 0.2s,border-color 0.2s;" onmouseenter="this.style.color='#e8e6e3';this.style.borderColor='#7c5cbf'" onmouseleave="this.style.color='#9e9e9e';this.style.borderColor='#555'">🎯 Example</button><button id="btn-clear-input" type="button" title="Clear input" style="background:none;border:1px solid #555;border-radius:4px;color:#9e9e9e;font-size:0.75em;padding:1px 7px;cursor:pointer;line-height:1.4;letter-spacing:0;text-transform:none;transition:color 0.2s,border-color 0.2s;" onmouseenter="this.style.color='#e8e6e3';this.style.borderColor='#7c5cbf'" onmouseleave="this.style.color='#9e9e9e';this.style.borderColor='#555'">✕ Clear</button></span></div>
+      <textarea id="joual-input" placeholder="Tapez ou collez du français formel ici...&#10;&#10;Exemple : Il n'y a personne dans la maison."></textarea>
+    </div>
+    <div class="joual-panel">
+      <div class="joual-panel-label" style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:0.6em;"><span id="joual-output-label" data-en="Joual (output)" data-fr="Joual (sortie)">Joual (output)</span><span id="joual-legend" style="display:inline-flex;gap:0.5em;align-items:center;font-size:0.85em;color:#aaa;letter-spacing:0;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dotted #7c5cbf;background:transparent;"></span>joual <span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dotted #6dbf7b;background:transparent;"></span>cute <span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dotted #e6c84d;background:transparent;"></span>expr <span style="display:inline-block;width:10px;height:10px;border-radius:2px;border:1.5px dotted #e07843;background:transparent;"></span>critter</span></span><span style="display:flex;gap:0.4em;"><button id="btn-randomize" type="button" title="Shuffle alternatives" style="background:none;border:1px solid #555;border-radius:4px;color:#9e9e9e;font-size:0.75em;padding:1px 7px;cursor:pointer;line-height:1.4;letter-spacing:0;text-transform:none;transition:color 0.2s,border-color 0.2s;" onmouseenter="this.style.color='#e8e6e3';this.style.borderColor='#7c5cbf'" onmouseleave="this.style.color='#9e9e9e';this.style.borderColor='#555'">🎲 Shuffle</button><button id="copy-output-btn" type="button" title="Copy to clipboard" style="background:none;border:1px solid #555;border-radius:4px;color:#9e9e9e;font-size:0.75em;padding:1px 7px;cursor:pointer;line-height:1.4;letter-spacing:0;text-transform:none;transition:color 0.2s,border-color 0.2s;" onmouseenter="this.style.color='#e8e6e3';this.style.borderColor='#7c5cbf'" onmouseleave="this.style.color='#9e9e9e';this.style.borderColor='#555'">📋 Copy</button><button id="btn-share" type="button" title="Share link" style="background:none;border:1px solid #555;border-radius:4px;color:#9e9e9e;font-size:0.75em;padding:1px 7px;cursor:pointer;line-height:1.4;letter-spacing:0;text-transform:none;transition:color 0.2s,border-color 0.2s;" onmouseenter="this.style.color='#e8e6e3';this.style.borderColor='#7c5cbf'" onmouseleave="this.style.color='#9e9e9e';this.style.borderColor='#555'">🔗 Share</button></span></div>
+      <div id="joual-output" class="placeholder" style="white-space: pre-wrap; word-wrap: break-word;">See Joual output appear here automatically
+
+Example:
+Y'a pas un chat dans la cabane.</div>
+    </div>
+  </div>
+
+  <div class="joual-stats" id="joual-stats"></div>
+
+  <div class="joual-tooltip" id="joual-tooltip" style="display:none;"></div>
+</div>
+</html>
+
+<html>
+<script src="/den/testing/wiki/joual.js"></script>
+<script>
+(function() {
+  "use strict";
+
+  // Engine reference
+  var E = window.JoualEngine;
+
+  // Convenience aliases for frequently-used engine members
+  var entries = E.entries;
+  var DICT = E.DICT;
+  var CUTE_CONTRACTIONS = E.CUTE_CONTRACTIONS;
+
+  function parseShareParams() {
+    var params = new URLSearchParams(window.location.search);
+    return {
+      fr: params.get('fr') || null,
+      en: params.get('en') || null,
+      tr: params.get('tr') || null,
+      jo: params.get('jo') || null,
+      cu: params.has('cu'),
+      cr: params.has('cr'),
+      ex: params.has('ex')
+    };
+  }
+  var shareParams = parseShareParams();
+
+  function applyShareParams(enInputEl) {
+    if (!shareParams) return false;
+    if (chkCute) chkCute.checked = !!shareParams.cu;
+    if (chkGrackle) chkGrackle.checked = !!shareParams.cr;
+    if (chkExpr) chkExpr.checked = !!shareParams.ex;
+    // New format: fr= has formal French, en= has original English (display only)
+    var frenchText = shareParams.fr || shareParams.jo || shareParams.tr;
+    if (!frenchText) return false;
+    // Populate English box if present (just for context, no translation triggered)
+    var engText = shareParams.en || (shareParams.tr ? shareParams.tr : null);
+    if (enInputEl && engText) enInputEl.value = engText;
+    // Put formal French into the input and trigger joual conversion
+    E.resetOverrides();
+    inputEl.value = frenchText;
+    doTranslate();
+    return true;
+  }
+
+
+  // ============================================================
+  //  UI WIRING
+  // ============================================================
+
+  var inputEl, outputEl, chkSimplify, chkCute, chkGrackle, chkExpr, tooltipEl, statsEl, dictCountEl;
+  var btnClear, shareHintEl;
+  var currentLang = 'en';
+  var modeHints = {};
+  var labelCute, labelGrackle;
+  var defaultCuteTitle = '';
+  var defaultGrackleTitle = '';
+  var debounceTimer = null;
+
+  function init() {
+    inputEl     = document.getElementById("joual-input");
+    outputEl    = document.getElementById("joual-output");
+    chkSimplify = document.getElementById("chk-simplify");
+    chkCute     = document.getElementById("chk-cute");
+    chkGrackle  = document.getElementById("chk-grackle");
+    chkExpr     = document.getElementById("chk-expr");
+    tooltipEl   = document.getElementById("joual-tooltip");
+    statsEl     = document.getElementById("joual-stats");
+    dictCountEl = document.getElementById("dict-count");
+    btnClear    = document.getElementById("btn-clear");
+    shareHintEl = document.getElementById("joual-share-hint");
+    var enInputEl = document.getElementById("en-input");
+
+    labelCute = chkCute ? chkCute.parentElement : null;
+    labelGrackle = chkGrackle ? chkGrackle.parentElement : null;
+    if (labelCute) defaultCuteTitle = labelCute.getAttribute("title") || "";
+    if (labelGrackle) defaultGrackleTitle = labelGrackle.getAttribute("title") || "";
+    currentLang = 'en';
+
+
+    if (dictCountEl) dictCountEl.textContent = DICT.length;
+
+    var i18n = {
+      en: {
+        title: '🐦‍⬛ Jumping Joual!',
+        subtitle: 'An English/French → Joual Converter',
+        grackleExamples: '🐾 Critter-ize: <strong>Il est fâché.</strong> → <em>Y\'a l\'poil croche.</em>, <strong>succès</strong> → <em>pogner le fromage</em>',
+        simplifyLabel: 'Strip accents',
+        cuteLabel: 'Extra-Cute',
+        grackleLabel: 'Critter-ize 🐾',
+        inputLabel: 'Formal French (input)',
+        outputLabel: 'Joual (output)',
+        inputPlaceholder: 'Type or paste formal French here.\n\nExample:\nIl n\'y a personne dans la maison.',
+        translatingLabel: 'Translating...'
+      },
+      fr: {
+        title: '🐦‍⬛ Jumping Joual!',
+        subtitle: 'Convertisseur anglais/français → Joual',
+        grackleExamples: '🐾 Critter-ize : <strong>Il est fâché.</strong> → <em>Y\'a l\'poil croche</em>, <strong>succès</strong> → <em>pogner le fromage</em>',
+        simplifyLabel: 'Supprimer les accents',
+        cuteLabel: 'Extra-Cute',
+        grackleLabel: 'Critter-ize 🐾',
+        inputLabel: 'Français formel (entrée)',
+        outputLabel: 'Joual (sortie)',
+        inputPlaceholder: 'Tapez ou collez le français formel ici.\n\nExemple :\nIl n\'y a personne dans la maison.',
+        translatingLabel: 'Traduction en cours...'
+      }
+    };
+
+    var translateButtonHtml = '<span data-en="Translate to French" data-fr="Traduire en français">Translate to French</span>';
+    modeHints = {
+      en: {
+        cuteEnabled: 'Show extra-cute substitutions',
+        cuteDisabled: 'No extra-cute replacements detected for this text',
+        grackleEnabled: 'Apply critter-themed substitutions',
+        grackleDisabled: 'No critter replacements match this text'
+      },
+      fr: {
+        cuteEnabled: 'Afficher les remplacements extra-cute',
+        cuteDisabled: 'Aucun remplacement extra-cute détecté pour ce texte',
+        grackleEnabled: 'Appliquer les substitutions critter',
+        grackleDisabled: 'Aucune substitution critter n\'est disponible pour ce texte'
+      }
+    };
+
+    function refreshTranslateButtonTitle() {
+      if (!btnTranslate) return;
+      btnTranslate.title = '';
+    }
+
+    function renderTranslateButton(enabled) {
+      if (!btnTranslate) return;
+      btnTranslate.disabled = !enabled;
+      btnTranslate.innerHTML = translateButtonHtml;
+      refreshTranslateButtonTitle();
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      var appTitle = document.getElementById('app-title');
+      var appSubtitle = document.getElementById('app-subtitle');
+      var grackleEx = document.getElementById('grackle-examples');
+      var langToggle = document.getElementById('lang-toggle');
+      var inputLabel = document.querySelectorAll('.joual-panel-label')[0];
+      var outputLabel = document.querySelectorAll('.joual-panel-label')[1];
+      var inputElPlaceholder = document.getElementById('joual-input');
+
+      if (appTitle) appTitle.textContent = i18n[lang].title;
+      if (appSubtitle) appSubtitle.textContent = i18n[lang].subtitle;
+      if (grackleEx) grackleEx.innerHTML = i18n[lang].grackleExamples;
+      if (langToggle) langToggle.textContent = (lang === 'en') ? 'En français' : 'In English';
+      if (inputLabel) inputLabel.innerHTML = '<span>' + i18n[lang].inputLabel + '</span>';
+      if (outputLabel) {
+        var labelSpan = outputLabel.querySelector('#joual-output-label');
+        if (labelSpan) labelSpan.textContent = i18n[lang].outputLabel;
+      }
+      if (inputElPlaceholder) inputElPlaceholder.placeholder = i18n[lang].inputPlaceholder;
+
+      // Swap the top instructions block (replace whole divs for simplicity)
+      var instrEn = document.getElementById('instructions-en');
+      var instrFr = document.getElementById('instructions-fr');
+      if (instrEn && instrFr) {
+        instrEn.style.display = (lang === 'en') ? 'block' : 'none';
+        instrFr.style.display = (lang === 'fr') ? 'block' : 'none';
+      }
+
+      // Replace control label spans that have data attributes (if present)
+      var enSpans = document.querySelectorAll('[data-en]');
+      enSpans.forEach(function(el) {
+        var txt = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+        if (txt) el.textContent = txt;
+      });
+
+      if (inputEl) evaluateModeAvailability(inputEl.value);
+      refreshTranslateButtonTitle();
+      updateOutputLabel();
+    }
+
+    // Toggle link
+    var lt = document.getElementById('lang-toggle');
+    if (lt) {
+      lt.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        applyLanguage(currentLang === 'en' ? 'fr' : 'en');
+      });
+    }
+
+
+    // Real-time translation on input
+    inputEl.addEventListener("input", function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(doTranslate, 80);
+    });
+
+    // Re-translate on checkbox changes
+    chkSimplify.addEventListener("change", doTranslate);
+    chkCute.addEventListener("change", function() {
+      E.resetOverrides();
+      updateOutputLabel();
+      doTranslate();
+    });
+    chkGrackle.addEventListener("change", function() {
+      E.resetOverrides();
+      updateOutputLabel();
+      doTranslate();
+    });
+    chkExpr.addEventListener("change", doTranslate);
+
+    // Tooltip: hover on substitution spans
+    outputEl.addEventListener("mouseover", function(e) {
+      var span = e.target.closest(".joual-sub");
+      if (span) showTooltip(span, e);
+    });
+    // Click (fallback) – show tooltip on click as well
+    outputEl.addEventListener("click", function(e) {
+      var span = e.target.closest(".joual-sub");
+      if (span) showTooltip(span, e);
+    });
+    // Keyboard: Enter/Space to open tooltip on focused span; Escape to close
+    outputEl.addEventListener("keydown", function(e) {
+      var span = e.target.closest && e.target.closest(".joual-sub");
+      if (span && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        showTooltip(span, e);
+      }
+      if (e.key === "Escape") hideTooltip();
+    });
+    outputEl.addEventListener("mouseout", function(e) {
+      var related = e.relatedTarget;
+      // Don't hide if moving into the tooltip itself
+      if (related && (related === tooltipEl || tooltipEl.contains(related))) return;
+      if (related && related.closest && related.closest(".joual-sub")) return;
+      hideTooltipDelayed();
+    });
+
+    // Keep tooltip visible while hovering over it
+    tooltipEl.addEventListener("mouseover", function() {
+      clearTimeout(tooltipHideTimer);
+    });
+    tooltipEl.addEventListener("mouseout", function(e) {
+      var related = e.relatedTarget;
+      if (related && related.closest && related.closest(".joual-sub")) return;
+      hideTooltipDelayed();
+    });
+
+    // Click on tooltip alternatives
+    tooltipEl.addEventListener("click", function(e) {
+      var altEl = e.target.closest(".tt-alt");
+      if (!altEl) return;
+      var entryIdx = parseInt(altEl.getAttribute("data-entry-idx"), 10);
+      var matchStart = parseInt(altEl.getAttribute("data-match-start"), 10);
+      var altText = altEl.getAttribute("data-alt-text");
+      var overrideKey = entryIdx + "-" + matchStart;
+      E.setOverride(overrideKey, altText);
+      hideTooltip();
+      doTranslate();
+    });
+
+    // Close tooltip on outside click
+    document.addEventListener("click", function(e) {
+      if (!e.target.closest(".joual-tooltip") && !e.target.closest(".joual-sub")) {
+        hideTooltip();
+      }
+    });
+
+    // EN→FR translation wiring
+    var btnTranslate = document.getElementById('btn-translate');
+    if (btnTranslate && enInputEl) {
+      renderTranslateButton(true);
+
+      btnTranslate.addEventListener('click', function() {
+        var engText = enInputEl.value.trim();
+        if (!engText) return;
+        btnTranslate.disabled = true;
+        btnTranslate.textContent = i18n[currentLang].translatingLabel;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://atigerseye.com/den/testing/wiki/proxy.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            renderTranslateButton(true);
+            if (xhr.status === 200) {
+              try {
+                var data = JSON.parse(xhr.responseText);
+                var fr = data.translations ? data.translations[0].text : '';
+                if (fr) {
+                  inputEl.value = fr;
+                  doTranslate();
+                }
+              } catch(e) { /* ignore parse errors */ }
+            }
+          }
+        };
+        xhr.send('text=' + encodeURIComponent(engText));
+      });
+    }
+
+    var btnShare = document.getElementById('btn-share');
+    if (btnClear) {
+      btnClear.addEventListener('click', function() {
+        if (enInputEl) enInputEl.value = '';
+        inputEl.value = '';
+        E.resetOverrides();
+        doTranslate();
+      });
+    }
+
+    if (btnShare) {
+      btnShare.addEventListener('click', function() {
+        var base = window.location.origin + window.location.pathname;
+        var parts = [];
+        var fr = inputEl && inputEl.value.trim();
+        var eng = enInputEl && enInputEl.value.trim();
+        // Always share the formal French (the important part)
+        if (fr) parts.push('fr=' + encodeURIComponent(fr));
+        // Include English for context if present
+        if (eng) parts.push('en=' + encodeURIComponent(eng));
+        if (chkCute && chkCute.checked) parts.push('cu');
+        if (chkGrackle && chkGrackle.checked) parts.push('cr');
+        if (chkExpr && chkExpr.checked) parts.push('ex');
+        var qs = parts.join('&');
+        var url = qs ? base + '?' + qs : base;
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url);
+        var old = btnShare.textContent;
+        btnShare.textContent = (currentLang === 'fr') ? '✓ Copié' : '✓ Copied';
+        setTimeout(function(){ btnShare.textContent = '🔗 Share'; }, 1500);
+      });
+    }
+
+    var shareHandled = applyShareParams(enInputEl);
+    if (!shareHandled) doTranslate();
+
+    // ===================== EXAMPLE PHRASES =====================
+    var EXAMPLES = [
+      "Il n'y a personne dans la maison. Je suis très fatigué ce soir.",
+      "Je suis complètement épuisé après cette longue journée de travail. Mon patron m'a donné beaucoup trop de responsabilités et je suis débordé.",
+      "La température est extrêmement glaciale à l'extérieur. N'oublie pas de bien t'habiller, il fait vraiment froid.",
+      "Arrête de m'agacer avec ces détails. Tu commences vraiment à me taper sur les nerfs.",
+      "S'il vous plaît, cessez de me déranger pendant que j'essaie de me concentrer. C'est vraiment difficile.",
+      "Le film qu'on a regardé hier soir était fantastique. J'ai complètement perdu la tête tellement c'était bon.",
+      "Nous passons notre temps à nous contredire au lieu de trouver des solutions. C'est dommage.",
+      "Mon téléphone cellulaire s'est cassé en tombant. Il est maintenant complètement ruiné et ne fonctionne plus.",
+      "Cette vieille voiture ne fonctionne pas bien. Elle fait des bruits bizarres tout le temps.",
+      "Peux-tu me passer la télécommande du téléviseur s'il te plaît? Je veux changer de chaîne.",
+      "C'est dommage, mais on va devoir annuler la party de ce soir. Il y a trop de neige.",
+      "Je suis vraiment content de te voir! Ça fait longtemps qu'on ne s'est pas parlé. Viens-tu prendre une bière?",
+      "Il fait un froid de canard dehors. On gèle complètement. Il faudrait peut-être rester à la maison ce soir.",
+      "J'ai passé la journée à faire les boutiques et j'ai dépensé une fortune en vêtements et en chaussures.",
+      "Nous pourrions aller au restaurant ce soir. Est-ce que tu connais un bon endroit pas trop cher?",
+      "Elle est vraiment gentille cette fille. Elle m'a aidé avec mon travail sans rien demander en retour.",
+      "Il y a tellement de monde au magasin aujourd'hui. Je n'arrive pas à trouver ce que je cherche.",
+      "On va s'asseoir pour jaser un peu. Il faut que je te raconte quelque chose d'incroyable.",
+      "La nourriture est délicieuse et le chef a vraiment du talent. C'est incroyable comme c'est bon.",
+      "Faut que nous commencions ce projet bientôt si on veut le finir à temps. Il ne reste plus beaucoup de temps."
+    ];
+
+    var btnExample = document.getElementById('btn-example');
+    var btnClearInput = document.getElementById('btn-clear-input');
+
+    if (btnExample) {
+      btnExample.addEventListener('click', function() {
+        var pick = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+        inputEl.value = pick;
+        if (enInputEl) enInputEl.value = '';
+        E.resetOverrides();
+        doTranslate();
+        btnExample.textContent = '🎯 ✓';
+        setTimeout(function(){ btnExample.textContent = '🎯 Example'; }, 1200);
+      });
+    }
+
+    if (btnClearInput) {
+      btnClearInput.addEventListener('click', function() {
+        inputEl.value = '';
+        if (enInputEl) enInputEl.value = '';
+        E.resetOverrides();
+        doTranslate();
+      });
+    }
+
+    // Copy button handler
+    var copyBtn = document.getElementById('copy-output-btn');
+
+    // Shuffle button — randomize alternatives for all substitution spans
+    var btnRandomize = document.getElementById('btn-randomize');
+    if (btnRandomize) {
+      btnRandomize.addEventListener('click', function() {
+        var spans = outputEl.querySelectorAll('.joual-sub');
+        if (!spans.length) return;
+        var changed = 0;
+        for (var i = 0; i < spans.length; i++) {
+          var sp = spans[i];
+          var altsJson = sp.getAttribute('data-alts');
+          if (!altsJson) continue;
+          try { var alts = JSON.parse(altsJson); } catch(e) { continue; }
+          if (!alts || alts.length < 2) continue;
+          // Pick a random alt (up to 5 choices considered)
+          var pool = alts.slice(0, Math.min(alts.length, 5));
+          var pick = pool[Math.floor(Math.random() * pool.length)];
+          var newText = E.matchCase(sp.getAttribute('data-original') || '', pick.text);
+          if (newText !== sp.textContent) {
+            sp.textContent = newText;
+            sp.setAttribute('data-current', newText);
+            // Update override so subsequent translates remember this choice
+            var entryIdx = sp.getAttribute('data-entry-idx');
+            var matchStart = sp.getAttribute('data-match-start');
+            if (entryIdx && matchStart) E.setOverride(entryIdx + '-' + matchStart, newText);
+            changed++;
+          }
+        }
+        if (changed > 0) {
+          btnRandomize.textContent = '🎲 ' + changed + '!';
+          setTimeout(function(){ btnRandomize.textContent = '🎲 Shuffle'; }, 1200);
+        }
+      });
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function() {
+        var text = outputEl.innerText || outputEl.textContent || '';
+        if (!text.trim() || outputEl.classList.contains('placeholder')) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function() {
+            copyBtn.textContent = '✓ Copied!';
+            setTimeout(function() { copyBtn.textContent = '📋 Copy'; }, 1500);
+          });
+        } else {
+          // Fallback for older browsers
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          copyBtn.textContent = '✓ Copied!';
+          setTimeout(function() { copyBtn.textContent = '📋 Copy'; }, 1500);
+        }
+      });
+    }
+
+    // Apply default language (English-first)
+    try { applyLanguage('en'); } catch (e) { /* fail silently if DOM different */ }
+  }
+
+  /**
+   * Perform translation and update the output.
+   */
+  function updateOutputLabel() {
+    var base = document.getElementById('joual-output-label');
+    if (!base) return;
+    var parts = ['Joual'];
+    if (chkCute && chkCute.checked) parts.push('Cute');
+    if (chkGrackle && chkGrackle.checked) parts.push('Critter');
+    var label = parts.join(' + ') + ' (output)';
+    var frLabel = parts.join(' + ') + ' (sortie)';
+    base.textContent = (currentLang === 'fr') ? frLabel : label;
+  }
+
+  function doTranslate() {
+    var text = inputEl.value;
+    evaluateModeAvailability(text);
+    var html = E.translate(text, {
+      simplify: chkSimplify.checked,
+      cute: chkCute.checked,
+      grackle: chkGrackle.checked,
+      expr: chkExpr.checked
+    });
+    if (html && html.trim()) {
+      outputEl.classList.remove('placeholder');
+      outputEl.innerHTML = html;
+    } else {
+      outputEl.classList.add('placeholder');
+      outputEl.innerHTML = 'See Joual output appear here automatically\n\nExample:\nY\'a pas un chat dans la cabane.';
+    }
+    updateStats(text);
+  }
+
+  /**
+   * Update the stats bar.
+   */
+  function updateStats(text) {
+    if (!statsEl) return;
+    if (!text || !text.trim()) {
+      statsEl.textContent = "";
+      return;
+    }
+    var words = text.trim().split(/\s+/).length;
+    var subs = outputEl.querySelectorAll(".joual-sub").length;
+    var mode = [];
+    var names = (currentLang === 'fr') ? { simplify: 'simplifié', cute: 'extra-cute', grackle: 'critter-ize', expr: 'expressions' }
+                                         : { simplify: 'simplified', cute: 'extra-cute', grackle: 'critter-ize', expr: 'expressions' };
+    if (chkSimplify && chkSimplify.checked) mode.push(names.simplify);
+    if (chkCute && chkCute.checked) mode.push(names.cute);
+    if (chkGrackle && chkGrackle.checked) mode.push(names.grackle);
+    if (chkExpr && chkExpr.checked) mode.push(names.expr);
+    var wordsLabel = (currentLang === 'fr') ? 'mots' : 'words';
+    var subsLabel = (currentLang === 'fr') ? 'substitution' : 'substitution';
+    if (currentLang !== 'fr') {
+      // English plural handling
+      subsLabel = subs === 1 ? 'substitution' : 'substitutions';
+    } else {
+      subsLabel = subs === 1 ? 'substitution' : 'substitutions';
+    }
+    statsEl.textContent = words + ' ' + wordsLabel + ' · ' + subs + ' ' + subsLabel
+      + (mode.length ? ' · mode: ' + mode.join(', ') : '');
+  }
+
+  function getProcessedInputForModes(text) {
+    var value = text || "";
+    if (chkSimplify && chkSimplify.checked) {
+      value = E.stripAccents(value);
+      value = E.normalizePunctuation(value);
+    }
+    return value;
+  }
+
+  function evaluateModeAvailability(text) {
+    if (!chkCute || !chkGrackle) return;
+    var processed = getProcessedInputForModes(text);
+    var cuteAvailable = hasCuteModeImpact(processed);
+    var grackleAvailable = hasGrackleModeImpact(processed);
+    if (!cuteAvailable && chkCute.checked) chkCute.checked = false;
+    if (!grackleAvailable && chkGrackle.checked) chkGrackle.checked = false;
+    chkCute.disabled = !cuteAvailable;
+    chkGrackle.disabled = !grackleAvailable;
+    updateModeTooltips(cuteAvailable, grackleAvailable);
+  }
+
+  function updateModeTooltips(cuteAvailable, grackleAvailable) {
+    var hints = (modeHints[currentLang] || modeHints.en) || {};
+    if (labelCute) {
+      var hint = cuteAvailable ? hints.cuteEnabled : hints.cuteDisabled;
+      var parts = [];
+      if (defaultCuteTitle) parts.push(defaultCuteTitle);
+      if (hint) parts.push(hint);
+      if (parts.length) labelCute.setAttribute('title', parts.join(' · '));
+      else labelCute.removeAttribute('title');
+    }
+    if (labelGrackle) {
+      var hint = grackleAvailable ? hints.grackleEnabled : hints.grackleDisabled;
+      var parts = [];
+      if (defaultGrackleTitle) parts.push(defaultGrackleTitle);
+      if (hint) parts.push(hint);
+      if (parts.length) labelGrackle.setAttribute('title', parts.join(' · '));
+      else labelGrackle.removeAttribute('title');
+    }
+  }
+
+  function hasCuteModeImpact(text) {
+    if (!text || !text.trim()) return false;
+    for (var i = 0; i < entries.length; i++) {
+      var entry = entries[i];
+      if (!entry.cute || !entry.cute.length) continue;
+      var base = (entry.joual && entry.joual.length) ? entry.joual[0] : (entry.standard || "");
+      var cuteFirst = entry.cute[0] || "";
+      if (!base || !cuteFirst) continue;
+      if (cuteFirst.toLowerCase() === base.toLowerCase()) continue;
+      entry.regex.lastIndex = 0;
+      if (entry.regex.test(text)) return true;
+    }
+    for (var j = 0; j < CUTE_CONTRACTIONS.length; j++) {
+      var pattern = CUTE_CONTRACTIONS[j].pattern;
+      if (!pattern) continue;
+      pattern.lastIndex = 0;
+      if (pattern.test(text)) return true;
+    }
+    return false;
+  }
+
+  function hasGrackleModeImpact(text) {
+    if (!text || !text.trim()) return false;
+    for (var i = 0; i < entries.length; i++) {
+      var entry = entries[i];
+      if (!entry.grackle || !entry.grackle.length) continue;
+      entry.regex.lastIndex = 0;
+      if (entry.regex.test(text)) return true;
+    }
+    return false;
+  }
+
+
+  // ============================================================
+  //  TOOLTIP SYSTEM
+  // ============================================================
+
+  var tooltipHideTimer = null;
+
+  function showTooltip(span, evt) {
+    clearTimeout(tooltipHideTimer);
+
+    var original  = span.getAttribute("data-original") || "";
+    var english   = span.getAttribute("data-english") || "";
+    var standard  = span.getAttribute("data-standard") || "";
+    var current   = span.getAttribute("data-current") || "";
+    var entryIdx  = span.getAttribute("data-entry-idx") || "0";
+    var matchStart= span.getAttribute("data-match-start") || "0";
+    var altsJson  = span.getAttribute("data-alts") || "[]";
+
+    var alts = [];
+    try { alts = JSON.parse(altsJson); } catch(e) {}
+
+    var html = '<div class="tt-header">' + E.escapeHtml(standard) + ' → ' + E.escapeHtml(current) + '</div>';
+    if (english) {
+      var contracted = E.englishContract(english || '');
+      var engHtml = E.escapeHtml(english);
+      if (contracted && contracted.toLowerCase() !== (english||'').toLowerCase()) {
+        engHtml += ' → ' + E.escapeHtml(contracted);
+      }
+      html += '<div class="tt-english">' + engHtml + '</div>';
+    }
+
+    if (alts.length > 1) {
+      html += '<div class="tt-alts-label">Alternatives :</div><div>';
+      for (var i = 0; i < alts.length; i++) {
+        var isActive = (alts[i].text.toLowerCase() === current.toLowerCase()) ? ' tt-alt-active' : '';
+        var modeTag = '';
+        if (alts[i].mode === 'cute') modeTag = ' (cute)';
+        else if (alts[i].mode === 'grackle') modeTag = ' (critter)';
+        else if (alts[i].mode === 'standard') modeTag = ' (std)';
+
+        html += '<span class="tt-alt' + isActive + '"'
+          + ' data-entry-idx="' + E.escapeAttr(entryIdx) + '"'
+          + ' data-match-start="' + E.escapeAttr(matchStart) + '"'
+          + ' data-alt-text="' + E.escapeAttr(alts[i].text) + '"'
+          + '>' + E.escapeHtml(alts[i].text) + modeTag + '</span>';
+      }
+      html += '</div>';
+    }
+
+    tooltipEl.innerHTML = html;
+    tooltipEl.style.display = "block";
+
+    // Position near the span
+    var rect = span.getBoundingClientRect();
+    var appRect = document.getElementById("joual-app").getBoundingClientRect();
+    var ttLeft = rect.left - appRect.left;
+    var ttTop = rect.bottom - appRect.top + 6;
+
+    // Keep within viewport
+    tooltipEl.style.left = ttLeft + "px";
+    tooltipEl.style.top = ttTop + "px";
+
+    // After rendering, adjust if off-screen
+    requestAnimationFrame(function() {
+      var ttRect = tooltipEl.getBoundingClientRect();
+      if (ttRect.right > window.innerWidth - 10) {
+        tooltipEl.style.left = Math.max(0, ttLeft - (ttRect.right - window.innerWidth + 20)) + "px";
+      }
+      if (ttRect.bottom > window.innerHeight - 10) {
+        tooltipEl.style.top = (rect.top - appRect.top - ttRect.height - 6) + "px";
+      }
+    });
+  }
+
+  function hideTooltip() {
+    clearTimeout(tooltipHideTimer);
+    tooltipEl.style.display = "none";
+  }
+
+  function hideTooltipDelayed() {
+    clearTimeout(tooltipHideTimer);
+    tooltipHideTimer = setTimeout(hideTooltip, 250);
+  }
+
+
+  // ============================================================
+  //  BOOT
+  // ============================================================
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    // DokuWiki may have already loaded the DOM; wait a tick for <html> injection
+    setTimeout(init, 50);
+  }
+
+
+})();
+</script>
+</html>
+===== About this Translator =====
+
+Joual is a Québec French sociolect noted for contractions, anglicisms, softened sacres, and a distinctive phonetic flavour. This translator covers:
+
+  * Common contractions (je → j', tu → t', il → y, etc.) and Québec idioms
+  * 🐾 Critter-ize: critter-themed vocabulary for roleplay (grackles, rats, ducks, cheese, worms, etc.) with animal-themed alternatives to common words
+  * Engine uses a longest-match-first algorithm with tokenization to avoid cascading replacements
+  * Mild sacres included are softened variants (tabarnouche, câline, simonac)
+  * Dictionary based on common Québec French, Montréal-era joual, and critter/RP expressions
+  * English-to-French translation provided by [[https://www.deepl.com/en/docs-api|DeepL API Free]]
+
+//Made with 🖤 by a Coding Corbeau.//

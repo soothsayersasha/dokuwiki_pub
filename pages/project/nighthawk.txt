@@ -1,0 +1,114 @@
+====== The NightHawk: Low Cost, High-Power 850nm IR Thrower ======
+
+This project creates a high-intensity **850nm Infrared** searchlight designed to provide a massive "throw" for night vision cameras. Unlike cheap multi-LED arrays, we use a single high-power **Osram OSLON Black** die and a large aspheric lens to focus invisible light into a tight, long-range beam.
+
+The "NightHawk" turns pitch-black woods into a daytime scene on your camera screen while remaining discrete to human observers.
+
+{{ :project:osram-black-ea.png?400 |}}
+<html><center>Osram OSLON Black - <b>~3.5W</b></center></html>
+
+===== Thermal & Power Profiles =====
+
+The Osram Black (SFH 4715AS) is a specialized "stack" emitter. While it can handle **5A pulses**, for our handheld flashlight use-case, we drive it at a constant **1.5A** to balance heat and intensity.
+
+^ Mode ^ Current ^ Est. Runtime (3000mAh) ^ Thermal Management ^
+| **Low (Scouting)** | 350mA | ~8.5 Hours | Passive (Minimal metal) |
+| **High (Search)** | 1.5A | **~2.0 Hours** | **Heavy Heatsink Required** |
+| **Flash (Ext. Camera Trigger)** | 5.0A | N/A | **1-10ms @ ~17W** | 
+
+===== The Shiny Bits (BOM - Custom Build) =====
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Eye** | [[https://www.digikey.ca/en/products/detail/ams-osram-usa-inc/SFH-4715AS-EA/7325594|SFH 4715AS-EA]] | OSRAM OSLON Black (850nm) | $5.27 | **The $5 Beast.** 1.5A Continuous. |
+| **The Star** | 104990051 | 3535 LED Star PCB (Heatsink) | $3.20 | Crucial for mounting and cooling. |
+| **The Brain** | LD06AJSA | 1.5A Adj. Constant Current | $5.00 | **Lipo-Safe (2.8V-6V).** |
+| **The Juice** | INR18650-30Q | Samsung 30Q 18650 Li-ion | $12.40 | 3000mAh. High drain cell. |
+| **The Glass** | 38mm Aspheric | Plano-Convex Lens | $8.00 | Focuses light from "Flood" to "Throw". |
+| **The Talon** | KSC241J LFS | IP67 Tactile Switch (SMT) | $0.80 | Tiny, waterproof, and very durable. |
+
+**Total Est. Cost per Unit: ~$33.34 CAD.** (~$20.94 if you can reuse a lipo cell battery.) 
+
+<html><!--
+[[https://www.digikey.ca/short/osram_void_eye|Digikey.ca Shopping Cart]]
+--!></html>
+
+===== Scavenger Options =====
+
+If you prefer to find a pre-made nest for your electronics, these "hosts" are excellent for gutting.
+
+==== The "Aspheric Scavenge" (T6 Zoomie, spot/floodlight) ====
+Commonly sold as the **"A100" or "XML-T6 Focusable"** on Amazon/AliExpress for **~$12.00 CAD**.
+  * **The Good:** It already includes the **Collimating Lens** and a sliding head.
+  * **The Mod:** Unscrew the pill, swap the white LED for your Osram. You can often keep the original driver if it outputs 1.5A, otherwise, replace it with the **LD06AJSA**.
+
+==== The Enthusiast Choice (Convoy S2+, floodlight) ====
+Available as an empty aluminum "Host" for **~$18.00 CAD**.
+  * **The Good:** Massive thermal mass. Best for running at 1.5A for long periods.
+  * **The Mod:** Requires a 17mm driver and a 16mm LED star. Note: This is a reflector-based light (Flood) unless you swap the reflector for an aftermarket lens.
+
+===== The Map (Logical Wiring) =====
+
+The LD06AJSA driver is a "buck" style linear regulator. It ensures the LED gets exactly 1.5A even as the battery drops from 4.2V to 3.2V.
+
+
+== Optional Feature: Brightness Control ==
+
+The current is set by the resistance between the **ISET** pin and **Ground**. On your board, this is currently handled by a tiny blue "trimmer" potentiometer. By desoldering it and wiring in an external knob, you gain control over the intensity.
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Dimmer** | PTV09A-4020U-B102 | 1k Ohm Linear Potentiometer | $1.20 | External panel-mount knob for brightness. |
+| **Safety Resistor** | CF14JT1K20 | 1.2k Ohm Fixed Resistor | $0.10 | **Mandatory.** Limits max current to 1.5A. |
+
+<code>
+             ( + ) Li-ion 18650 Battery
+               |   [ 3.7V - 4.2V ]
+               |
+      +--------+----------+
+      |                   |
+      |                [SWITCH]
+      |                   |
+      |         +---------v---------+
+      |         |     [CE / EN]     |
+      |         |                   |
+      +-------[VIN+]     LD06AJSA   |
+                |     LED DRIVER    |
+      +-------[VIN-]                |
+      |         |    [ ISET PAD  ]  |
+      |         |    [     |     ]  |
+      |         |    [ 1.2k Ohm  ]  |
+      |         |    [     |     ]  |
+      |         |    [   1k POT--]--+ <-- Centre & Side Pin
+      |         |                   |
+      |         |  [LED+]   [LED-]  |
+      |         +----+-------+------+
+      |              |       |
+      |            ( A )   ( K )
+      |          [ OSRAM IR LED ]
+      |                |
+      +----------------+
+</code>
+
+The **LD06AJSA** comes with a pre-installed blue trimmer. To use an external knob, you must bypass this component:
+
+  * **Step 1 (The Extraction):** Use a soldering iron and some desoldering braid to remove the blue trimmer. You will see three pads. 
+  * **Step 2 (The Pads):** Identify the **ISET pad** (usually the single pad on one side) and the **Ground pad** (one of the two pads on the opposite side).
+  * **Step 3 (Safety First):** Solder the **1.2k Ohm resistor** to the ISET pad. This resistor is a "hard limit" that prevents the LED from drawing more than 1.5A even if the knob is turned to zero.
+  * **Step 4 (The Knob):** Solder the other end of that resistor to the **Center Pin** of your 1k Potentiometer. Solder a wire from the **Left Pin** of the Potentiometer back to the **Ground (VIN-)** pad on the driver.
+
+**Why 1.2k?** The formula for this driver is //I = 1800/R//. To hit exactly 1.5A, you need 1200 Ohms. 
+  * **Knob at Max:** 1.2k (Safety) + 0 (Pot) = **1.5A (Turbo)**
+  * **Knob at Min:** 1.2k (Safety) + 1.0k (Pot) = **~820mA (Scouting)**
+
+===== Crow's Comments =====
+
+  * **Shiny Flux:** When reflowing the Osram LED onto the Star PCB, use plenty of flux. The LED will "dance" via surface tension into alignment when the solder hits the right temperature.
+  * **The Focus Trick:** To get the maximum "throw," the distance between the LED and the lens should be equal to the lens's focal length. If your beam is a blurry circle, your "nest" is too shallow!
+  * :!: **Hidden Heat:** IR light is invisible, but it carries heat. If you feel the flashlight head getting hot, your heatsinking is working. If it stays cool while the light is on "High," your LED is likely cooking internally!
+  * :!:**Just remember**: even if you can't see the beam, don't point it at your (or anyone else's) eyes. It's high-energy light that the human iris won't react to.
+
+===== Closing Thoughts =====
+
+The NightHawk is a powerful tool for territory observation. 
+Measure your currents, keep your connections tight, and keep your bits shiny!
+
+Caw for now!

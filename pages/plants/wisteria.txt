@@ -1,0 +1,72 @@
+====== Wisteria ======
+<html>
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap; text-align: center; margin: 20px 0;">
+  
+  <div style="width: 300px;">
+    <a href="https://commons.wikimedia.org/wiki/File:Chinese_Wisteria_Bl%C3%BCtentrauben.JPG" target="_blank">
+      <div style="width: 300px; height: 300px; overflow: hidden; border-radius: 4px; border: 1px solid #ddd;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Chinese_Wisteria_Bl%C3%BCtentrauben.JPG/960px-Chinese_Wisteria_Bl%C3%BCtentrauben.JPG" 
+             style="width: 100%; height: 100%; object-fit: cover;" alt="Chinese Wisteria">
+      </div>
+    </a>
+    <p style="font-size: 0.85em; line-height: 1.2; margin-top: 8px;">Chinese Wisteria<br><i>(Photo: Willow, CC BY-SA 2.5)</i></p>
+  </div>
+
+  <div style="width: 300px;">
+    <a href="https://commons.wikimedia.org/wiki/File:Wisteria_frutescens_seeds_in_curled_fuzzy_pod_halves.jpg" target="_blank">
+      <div style="width: 300px; height: 300px; overflow: hidden; border-radius: 4px; border: 1px solid #ddd;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Wisteria_frutescens_seeds_in_curled_fuzzy_pod_halves.jpg/960px-Wisteria_frutescens_seeds_in_curled_fuzzy_pod_halves.jpg" 
+             style="width: 100%; height: 100%; object-fit: cover;" alt="Wisteria frutescens seeds and pods">
+      </div>
+    </a>
+    <p style="font-size: 0.85em; line-height: 1.2; margin-top: 8px;">Wisteria frutescens seeds and pods<br><i>(Photo: John Brandauer, CC BY-SA 2.0)</i></p>
+  </div>
+
+</div>
+</html>
+\\
+----
+
+^ English ^ Latin ^ French ^ Greek ^ Japanese ^ Chinese ^ Yivalese<sup>(conlang)</sup> ^
+| Wisteria | Wisteria | Glycine | Γλυσίνα (Glysína) | **紫藤**\\ (shito) | **紫藤**\\ (zǐténg) | [[https://atigerseye.com/den/yivalkes/?keyword=Klaksveva|Klaksveva]] (<html><span class="yiv-font">DLglbb</span></html>) |
+| ::: || ::: || ::: || ::: |
+| //Named after\\ [[wp>Caspar Wistar]]((Caspar Wistar (1761–1818) - An American physician and author of the first North American anatomy textbook. The genus was named in his honor by botanist Thomas Nuttall to commemorate Wistar’s contributions to science and his role as a prominent host of intellectual salons for the American Philosophical Society.))// || //From Greek "glykys" (sweet)// || //Purple (紫) + vine (藤)// || //Magic (<html><span class="yiv-font">DLgl</span></html>) + Bean (<html><span class="yiv-font">BB.</span></html>) (metaphor)// |
+| <html><nobr>Wistar (Name)</nobr> + <nobr>(-ia) Taxonomic Suffix</nobr></html> || <html><nobr>Glyc- (Sweet)</nobr> + <nobr>(-ine/-ina) Feminine Nominal Suffix</nobr></html> || **紫**: 糸 (Semantic: Silk/Cloth - relating to purple dye) + 此 (Phonetic) \\ **藤**: 艹 (Semantic: Plant/Grass - relating to the vine) + 騰 (Phonetic) || **Tell** (<html><span class="yiv-font">Dl</span></html>) + **Gold** (<html><span class="yiv-font">Gl</span></html>) + **Bean** (<html><span class="yiv-font">Bb</span></html>) |
+----
+
+=== Short Description ===
+Wisteria is a genus of flowering plants in the legume family, **Fabaceae**, that includes ten species of woody climbing bines. They are famous for their cascading clusters of fragrant, pea-like flowers. 
+
+  * :!: **Caution:** Contains wisterin and lectin in all parts; toxic if ingested but safe to handle. 
+
+=== Range and Hardiness ===
+  * **Native Range:** China, Korea, Japan, and the Eastern United States.
+  * **Growth:** Extremely vigorous; can grow up to 20 meters high and 10 meters wide.
+  * **Hardiness:** Generally hardy in USDA zones 5 - 9.
+
+
+^ Zone ^ West Coast ^ Japan ^ Climate Note ^
+| Zone 5 | <html><nobr>Upper BC / Inland PNW</nobr></html> | <html><nobr>Hokkaido</nobr></html> | Cold Limit - Needs south-facing walls to protect flower buds from deep frost. |
+| Zone 7 | <html><nobr>Vancouver / Seattle</nobr></html> | <html><nobr>Honshu / Sendai</nobr></html> | Sweet Spot - Perfect balance of winter dormancy and summer sun. |
+| Zone 9 | <html><nobr>Central & South CA</nobr></html> | <html><nobr>Tokyo / Kyoto / Osaka</nobr></html> | Warm Limit - Growth is nearly year-round; requires aggressive pruning. |
+
+=== Species Classification ===
+
+^ Species ^ Common Name ^ Vine Twist ^ Description ^ Native Region ^
+| //Wisteria sinensis// | Chinese Wisteria | **Left** (Counter-clockwise) | Most common ornamental; produces all flowers at once before leaves appear. Highly fragrant. | China (Central & Southern) |
+| //Wisteria floribunda// | Japanese Wisteria | **Right** (Clockwise) | Longest flower racemes (~1m). Flowers open sequentially from base to tip. | Japan |
+| //Wisteria frutescens// | American Wisteria | **Left** (Counter-clockwise) | Less aggressive than Asian types. Unscented, pine-cone shaped flowers, appears later in summer. | Eastern United States |
+| //Wisteria brachybotrys// | Silky Wisteria | **Right** (Clockwise) | Features fuzzy, "silky" leaves and shorter, very broad flower clusters. Very strong scent. | Japan |
+| //Wisteria macrostachya// | Kentucky Wisteria | **Left** (Counter-clockwise) | Very cold-hardy; similar to //frutescens// but with longer clusters. Bloom time is June - August. | South-Central USA |
+
+=== Magical Qualities ===
+
+**Cultural & Shamanistic Lore**
+  * **Spiritual Barrier:** In Shinto tradition, the dense, cascading curtains of Wisteria are viewed as a **living barrier** against malevolent spirits. Because of its vigorous, "clinging" nature, it was historically used as a "spirit filter" in garden design. Planting it near thresholds was believed to catch negative energy in its tangled vines before it could enter a sacred space.
+  * **The Wisteria Maiden ([[wp>Fuji Musume]]):** A central figure in Otsu-e folk art and Kabuki dance. She represents the spirit of the vine - embodying a love that is both resilient and bittersweet. In shamanistic practice, her image is used to balance the "heaviness" of the heart with the "lightness" of beauty.
+  * **Symbol of Nobility ([[wp>Fujiwara_clan|The Fujiwara]]):** As the crest of one of Japan’s most powerful historical families, the purple blossoms symbolize **longevity and immortality**. Since the vine can live for well over a century, it represents a power that grows more refined and gnarled with age rather than fading.
+
+**Metaphysical & Ritual Use**
+  * **The "Crown of Light":** Due to its purple hue and its habit of hanging from above, it is associated with the **Crown Chakra**. It is used in meditation to facilitate "top-down" consciousness, helping the practitioner pull celestial inspiration down into the physical body.
+  * **Resilience through Flexibility:** Unlike rigid trees, the Wisteria survives storms by bending and twisting. It is used in rituals for **emotional resilience**, specifically for those who need to navigate high-pressure life transitions without breaking.
+  * **The Bittersweet Harvest (Grief & Memory):** Reflecting its Yivalese classification as a "Magic Bean," it carries the duality of the seed: the potential for new life and the weight of the past. It is used in rituals to honor the **"sweetness of memory."** Like the scent of the flower - which is intoxicating but fleeting - it teaches that honoring a lost loved one is a way for the soul to "climb" past the pain of loss and reach for the light.

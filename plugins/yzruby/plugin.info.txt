@@ -1,0 +1,7 @@
+base   yzruby
+author soothsayersasha
+email  223556219+soothsayersasha@users.noreply.github.com
+date   2026-03-01
+name   YzRuby Plugin
+desc   Yivalese font wrappers with ruby compatibility and %base|ruby% shorthand.
+url    https://atigerseye.com/wiki/font/extras

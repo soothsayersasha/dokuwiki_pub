@@ -1,0 +1,163 @@
+====== Project: The Eyol-Elta Enigma ======
+
+===== 1. The Vision: Fated Gleam =====
+The **Eyol-Elta Enigma** is a kinetic light sculpture that rationalises the chaotic //"Gleam"// force into a structured, spherical reality. 
+
+It is a digital realisation of the [[https://b7th.github.io/#p20230411|Eyol]] (the multi-eyed avian watcher of the [[https://b7th.github.io/|Different World]]) governed by [[https://atigerseye.com/den/yivalkes/?keyword=-elta|-elta]] (the Yivalese concept of unbending rules or fated outcomes).
+
+In this artifact, the light does not flicker by chance; it follows the fated rules of cellular propagation. As the gliders travel across the curved horizon, they embody the "Whale Dues turned as fated" – a result that was meant to be, and then, and now.
+
+Inspired by [[wp>Conway's Game of Life|John Conway's Game of Life]] and Mango's //icosahedron/d20// prompt.
+
+===== 2. Visual Logic =====
+
+==== 2.1 2D Logic Mapping (20-Node Lattice) ====
+The internal logic treats the sphere as a vertex-connected lattice. In this 20-point dodecahedron net, each node is linked to exactly 3 neighbours.
+
+Seed (Asymmetric Scout):
+<code>
+        ( o )-( o )
+        /   \ /   \        'o' = Living Cell (Gleam)
+     ( . )-( o )-( . )     '.' = Dead Cell (Void)
+     |       |       |    
+     ( . )-( . )-( . )      Fated Rules: 
+      \     / \     /             B2 / S2 (Born if 2, 
+       ( . )---( . )                  Survives if 2)
+</code>
+
+The above seed produces a spiralling glider (the //Fated Pulse//)
+<code>
+   Tick 0 (Seed)         Tick 1 (Shift)          Tick 2 (Spiral)
+  ( o )---( o )          ( . )---( o )            ( . )---( . ) 
+   /   \ /   \            /   \ /   \              /   \ /   \       
+( . )-( o )-( . )    ( . )---( o )---( o )    ( . )---( . )---( o ) 
+  |     |     |        |       |       |        |       |       |   
+( . )-( . )-( . )    ( . )---( . )---( . )    ( . )---( o )---( o ) 
+</code>
+
+==== 2.2 3D Spherical Projection (The 20-Vertex Orb) ====
+The LEDs are mapped to the 20 vertices of a dodecahedron. This allows patterns to orbit the centre core without ever hitting a physical boundary.
+<code>
+                .-------.           [ 3D TOPOLOGY ]
+             o /    o    \ o        Each "Eye" is a
+           o  /  o     o  \  o      vertex. Patterns 
+           o |  o       o  | o      traverse the 
+           o |  o       o  | o      lattice edges, 
+           o  \  o     o  /  o      orbiting the 
+             o \    o    / o        horizon in fated 
+                '-------'           geometric cycles.
+</code>
+
+===== 3. Technical Specifications =====
+The goal is a self-contained, handheld artifact that can be 3D printed and powered by a modest microcontroller.
+
+==== 3.1 Hardware Architecture ====
+  * **The Brain:** [[wp>PIC microcontrollers|PIC18F series]] (e.g., PIC18F25K22). Sufficient RAM to store the two-state buffer for the 20-LED lattice.
+  * **The Lattice:** A 20-LED Dodecahedron vertex arrangement (perfectly balanced).
+  * **The Drivers:** 3x [[wp>74HC595|74HC595 Shift Registers]] (daisy-chained). Provides 24 outputs, covering the 20 LEDs with 4 pins spare.
+  * **Power:** 3x AAA batteries (4.5V) or a 3.7V LiPo tucked into the hollow centre.
+
+==== 3.2 Mechanical Construction ====
+The orb is designed as a **Hemispherical Snap–Fit** assembly:
+  * **Two Halves:** Printed in a transparent, dark or bone-like filament to contrast the //Gleam//.
+  * **Internal Chassis:** A 3D-printed "core" that holds the battery sled and the PIC circuit board.
+  * **The Channels:** Internal wire-routing slots lead from the core to the LED sockets on the outer shell.
+
+===== 4. Bill of Materials (BOM) =====
+^ Component ^ Quantity ^ Notes ^
+| PIC18F25K22 (DIP or SOIC) | 1 | The //"Seer"// / Controller |
+| 5mm Diffused LEDs | 20 | "Eyes" of the Eyol |
+| 74HC595 Shift Register | 3 | Expands the PIC's reach |
+| Resistors (220–330 Ohm) | 20 | Current limiting for LEDs |
+| 3D Printing Filament | ~100g | PLA or PETG (Conductive for //"Yarn"// paths) |
+| AAA Inline Battery Holder | 1 | Fits in the centre core |
+
+===== 5. Bonus: The "Yarn" Pathing (Conductive Filament) =====
+To honour the **Yarn** force (the force of bonds and life lines), one may replace traditional copper with conductive filament traces:
+  * **Conductive Traces:** The inner shell features recessed paths printed in conductive PLA. 
+  * **Connection:** LED legs are bent to press-fit against these "printed wires," essentially "weaving" the circuit into the very skin of the //Eyol-Elta//.
+  * **Fate Realised:** This method ensures the circuit is as unbending as the rules that govern the lights.
+
+===== 6. Artifact Variations =====
+
+==== 6.1 The Trifold Realms (RGB Multiverse) ====
+----
+Instead of a single simulation, the orb can run three independent //Gleam// layers (Red, Green, Blue) on the same 20-node lattice.
+  * **The Red Realm (The Hearth):** Represents physical matter and the weight of the world. This layer might be programmed with "heavy" rules (e.g., S234), making patterns move slowly but stay alive longer, acting as the structural foundation of the simulation.
+  * **The Green Realm (The Yarn):** Represents life, connections, and the bonds between souls. This layer thrives on propagation (e.g., B2/S2), spiralling quickly across the orb like growth or a spreading message.
+  * **The Blue Realm (The Void):** Represents the ethereal or the "escaped" Gleam. This layer could be programmed with rare, volatile rules (e.g., B3/S1), causing it to flicker in and out of existence, appearing as ghostly apparitions that haunt the other two realms.
+    * <color #FF0000>█</color> + <color #00FF00>█</color> = <color #FFFF00>█</color> **(The Gold of Fate)** – Hearth and Yarn in balance.
+    * <color #FF0000>█</color> + <color #0000FF>█</color> = <color #FF00FF>█</color> **(The Purple Abyss)** – Hearth and Void crossing.
+    * <color #00FF00>█</color> + <color #0000FF>█</color> = <color #00FFFF>█</color> **(The Cyan Ghost)** – Yarn and Void alignment.
+    * <color #FF0000>█</color> + <color #00FF00>█</color> + <color #0000FF>█</color> = <color #FFFFFF>█</color> **(The White Gleam)** – The Perfect Conjunction.
+
+  * **Fated Interactions:** One could program the "Red" Hearth to act as a barrier that the "Blue" Void cannot cross, or allow the "Green" Yarn to "consume" the other colours upon contact, weaving them into its own pattern.
+
+^ Addition ^ Qty ^ Notes ^
+| 5mm RGB LEDs (Common Cathode) | 20 | Replaces standard LEDs |
+| TLC594 or additional 595s | 6 | Required to drive 60 channels (20x3) |
+
+==== 6.2 The Eyol’s Gaze (Tilt-Shift Fate) ====
+----
+Integrating an accelerometer allows the user to influence the "unbending" rules by tilting the orb, simulating a gravity well for the light.
+  * **Well of Light:** Tilting could lower the //Birth// (B) requirement for nodes in the downward direction, causing the Gleam to "pool" at the bottom.
+  * **Velocity of Fate:** Rapid movement could potentially "shake" the cells, randomly toggling states as if the Different World is experiencing a cosmic tremor.
+
+^ Addition ^ Qty ^ Notes ^
+| [[https://www.pcboard.ca/mpu-6050|MPU-6050 Accelerometer]] | 1 | Connects via [[wp>I2C|I2C]] to PIC |
+
+==== 6.3 The Abyssal Vertex (The Lost Dot) ====
+----
+Referencing the "Seeds" lore (22 dots including a lost one), a single 21st LED is hidden deep in the core, flickering asynchronously from the surface -elta.
+  * **Internal Observer:** This light can be programmed to pulse only when the surface simulation reaches a "Stagnant" state (where no cells change).
+  * **Gleam Leakage:** The internal light can serve as a "heartbeat" indicator for battery levels or code execution.
+
+^ Addition ^ Qty ^ Notes ^
+| 3mm Warm White LED | 1 | The "Observer" node |
+
+==== 6.4 The Thrum of Fate (Haptic Pulse) ====
+----
+A tiny vibration motor provides a tactile "thrum" to make the payment of the //Whale Due// physical.
+  * **Generation Haptics:** The motor can trigger a soft pulse on every "Tick," or a heavy jolt only when a pattern is completely extinguished.
+  * **Resonance:** The intensity can be tied to the total population of the Gleam.
+
+^ Addition ^ Qty ^ Notes ^
+| Pancake Vibration Motor | 1 | Driven via a simple [[wp>Bipolar junction transistor|NPN transistor]] |
+
+==== 6.5 The Seed of the First Cause (Quantum Initiation) ====
+----
+To initiate the simulation, the orb requires an initial "Seed." While pseudorandom algorithms are predictable, a true artifact of //Fate// should draw from the noise of the cosmos itself.
+  * **The Avalanche Pulse:** By biasing a transistor into the reverse-avalanche region, the PIC can capture quantum tunnelling noise. This is not just "randomness" – it is the "Truest Fate," a sequence of start-states dictated by the thermal and quantum fluctuations of the universe.
+  * **Capacitive Weaving:** Using the conductive //Yarn// traces as touch sensors, the user can "disturb" the quantum seed, injecting their own bio-electric signature into the initial conditions before the simulation takes hold.
+  * **The Will of the Gaze:** If an accelerometer is present, the specific orientation of the orb at the moment of power-on can be used to "pour" the initial Gleam into specific vertices.
+
+^ Addition ^ Qty ^ Notes ^
+| [[wp>2N3904|NPN Transistor (2N3904)]] | 1 | Reverse-biased for avalanche noise |
+| High-Value Resistors (1M+) | 2 | For high-gain noise amplification |
+| [[wp>Capacitive sensing|Capacitive Touch Pad]] | 1–5 | Integrated into the //Yarn// traces |
+
+===== 7. The Logic of -elta (C Pseudocode) =====
+The following snippet represents the core "Fate Engine." It scans the 20 nodes and calculates the next state based on the //Yarn// connections (Adjacency Map).
+
+<code C [enable_keyword_links="false"]>
+// The Map of Fate: Each node connects to 3 neighbors
+const int yarn[20][3] = { {1,2,5}, {0,3,6}, ... }; 
+
+void calculate_fate() {
+    for (int i = 0; i < 20; i++) {
+        int neighbors = 0;
+        // Count neighbors in the current Gleam realm
+        for (int j = 0; j < 3; j++) {
+            neighbors += current_state[yarn[i][j]];
+        }
+        
+        // Apply B2/S2 Rules (The unbending -elta)
+        if (current_state[i] == 1) {
+            next_state[i] = (neighbors == 2); // Survival
+        } else {
+            next_state[i] = (neighbors == 2); // Birth
+        }
+    }
+    // Snap-fit next_state to current_state and update Shift Registers
+}
+</code>

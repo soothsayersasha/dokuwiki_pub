@@ -1,0 +1,69 @@
+====== Brouillard's Brave Bird: A Game of Light ======
+//Name: Work in Progress!//
+
+//Inspired by the poem: [[https://atigerseye.com/wiki/proj/duckling/poem|Un Petit Caneton]] - Mango Train (in French)//
+
+{{  proj:unpetitecaneton-tufted-edited.jpg?350  }}
+
+In the quiet of a spare room, a world is being pieced together. Beneath the soft glow of tealights and the hum of imagination, a **little duckling (un petit caneton)** prepares to prove that the forest is not a place to fear, but a place to call home.
+
+===== Game Rules & Journey =====
+
+The forest begins in a <color:#222222>_</color> **very dark night (nuit bien noire)**. As the duckling waddles (se dandinait) across the board, his courage manifests as light.
+
+==== The Core Journey ====
+  * **The Radiant Path:** Every tile the duckling touches transforms from a cold shadow into a <color:#D7FF00>_</color> **Warm Golden Glow**.
+  * **The Shadows:** Through the **rain and the fog (la pluie et le brouillard)**, the **owls (hibous)** and **foxes (renards)** emerge.
+  * **Mockery of the Dark:** These predators do not attack; they mock. They move with a <color:#004B82>_</color> **Cold Purple or Deep Blue** light, "blowing out the candles" of the duckling's progress to reclaim the woods for the dark.
+
+==== The Hidden Treasures & Critters ====
+The duckling is not alone in these woods. Hidden in the deep shadows are resources and friends in need, such as the **Rat**, the **Squirrel**, and the **Rabbit**.
+
+  * **The Discovery:** Both Critters and Nuts are invisible in the dark until the duckling draws near. When the duckling is within 2 tiles, the game's electronics trigger a flicker of hope:
+    * Friends pulse in <color:#A52A2A>_</color> **Warm Red**.
+    * Hidden Nuts pulse in <color:#2b6a1b>_</color> **Pale Green**.
+  * **The Rescue:** Upon reaching a **Critter**, the tile flashes. They gift the duckling **Forest Spirit**: a bonus that makes the duckling's light "stickier," preventing predators from blowing it out for a few turns.
+  * **The Forage:** Finding a **Nut (Noid)** hidden in the brush grants a spirit boost, allowing the duckling to waddle faster or providing a permanent speed increase.
+
+==== The Sanctuary & The Storm ====
+  * **The Pond:** When the predators draw too near, the duckling may **rest in a pond**. In the water, he becomes one with the reflection of the stars. The fox and the owl, confused by his stillness, "unsee" him and wander away.
+  * **Thunder Strike:** The storm may come and the **thunder may strike (le tonnerre a frappé)**, but the duckling remains unbothered. The electronics trigger a brief, full-board flash that reveals the location of all hidden **Critters** and **Nuts**.
+
+==== The Great Awakening ====
+The mission is to illuminate **80% of the forest** before the **dawn breaks (l’aube se pointe)**. 
+
+As the game reaches its climax, the forest lights undergo a global transition from <color:#222222>_</color> **Dark Night** to a <color:#FF8C00>_</color> **Sunrise Orange**. Once the forest is aglow, the predators realize the duckling is truly the **master of these places (maitre de ces lieux)**. As the sun rises, it is they who will cry: **"Run for your lives!" (Sauve qui peut!)**
+
+===== Technical Implementation (Work in Progress) =====
+
+The game logic is powered by a cost-effective PIC microcontroller (such as the PIC16F series). These chips offer enough I/O ports to manage the LED grid and sensor inputs from the conductive board.
+
+<code c>
+/* Hardware Configuration */
+#define _XTAL_FREQ 8000000 // Using a 8MHz internal clock for power efficiency
+#include <xc.h>
+
+/* Primary Color Palette (GRB format) */
+const uint32_t COLOR_NIGHT     = 0x222222; // Dark Night
+const uint32_t COLOR_DUCK_PATH = 0xD7FF00; // Warm Gold
+const uint32_t COLOR_PREDATOR  = 0x004B82; // Cold Purple
+const uint32_t COLOR_CRITTER   = 0xA52A2A; // Warm Red Pulse (Target Friend)
+const uint32_t COLOR_NUT_GLOW  = 0x2B6A1B; // Pale Green (Target Nut)
+const uint32_t COLOR_DAWN      = 0xFF8C00; // Sunrise Orange
+
+/* Variables */
+uint8_t noids = 0;
+uint8_t spirit_shield = 0; // "Stickier" light duration
+
+// Logic:
+// 1. Scan proximity to hidden objects (Critters/Nuts).
+// 2. If close, pulse target LED with Warm Red or Pale Green.
+// 3. Handle 'Thunder' flash via Timer interrupt for random atmospheric strikes.
+
+void __interrupt() ISR(void) {
+    if (TMR2IF) {
+        // Atmosphere: Brief strobe to simulate lightning
+        TMR2IF = 0;
+    }
+}
+</code>

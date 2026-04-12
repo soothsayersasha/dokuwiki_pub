@@ -1,0 +1,96 @@
+====== DayHawk: 365nm "Black Light" Surveyor ======
+
+This project builds a high-fidelity **365nm Ultraviolet (UVA)** searchlight. Unlike the purple-tinted "395nm" toys, true 365nm light is nearly invisible until it hits a reactive surface, making it the perfect tool for biological and mineralogical surveys.
+
+{{ :project:viosys-z5.png?400 |}}
+
+
+
+===== Safety Warning (Serious Caw!) =====
+
+:!: **UV Radiation Hazard:** 365nm is high-energy UVA. Because your eyes cannot "see" the beam, your pupils will not contract, allowing high-energy photons to hit your retina full-force.
+
+^ Item ^ Part Number ^ Description ^ Est. Price (CAD) ^ Note ^
+| **The Shield** | 3M Virtua CCS | Polycarbonate Safety Glasses | ~$8.00 | **Mandatory.** Polycarbonate naturally blocks 99.9% of UV. |
+| **Alternative** | Honeywell A700 | Clear Anti-Scratch UV Lens | ~$6.50 | |
+
+ * **Do not stare at the beam.**
+ * **Wear your shields.** Even clear polycarbonate blocks the UV spectrum.
+
+===== The Glow: Bio-Survey =====
+
+In the Pacific Northwest, the DayHawk will make the following "pop" out of the darkness:
+
+  * **Lichen & Fungi:** Many local tree lichens (like *Lobaria*) and mushrooms fluoresce in vivid oranges and yellows.
+  * **Millipedes (Xystodesmidae):** Look for the "Yellow-spotted millipede." Many of these glow a ghostly neon yellow/green under 365nm.
+  * **Moths & Pollinators:** Many local moths have wing patterns meant to be seen in the UV spectrum by other insects.
+  * **Spider Silk:** Certain orb-weaver silks glow bright white or blue, revealing complex webs in the brush.
+
+==== Fluorescent Rocks & Minerals ====
+Common findables that react to 365nm:
+  * **Sodalite / "Yooperlites":** Often found in riverbeds or coastal gravel; glows a brilliant, fiery orange.
+  * **Wernerite (Scapolite):** Primarily found in Quebec but traded locally; emits one of the brightest "canary yellow" glows in the mineral kingdom.
+  * **Calcite & Agate:** Many local quartz and calcite veins will glow ghostly white, green, or pale pink depending on the impurities.
+
+==== Other Notable Finds ====
+  * **Scorpions & Insects:** While scorpions (bright aquamarine) are rare in BC, many local **Crab Spiders** and **Caterpillars** (like Hornworms) glow neon green/yellow.
+  * **Biological Traces:** Animal urine (including rodents/pets) glows bright yellow-white, making it an essential tool for tracking or cleaning.
+  * **Vitamins & Chemicals:** Tonic water (Quinine) glows blue; Vitamin B12 glows bright yellow; Antifreeze glows "nuclear" green.
+
+===== The Shiny Bits (BOM) =====
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Source** | [[https://www.digikey.ca/en/products/detail/seti-seoul-viosys/CUN66A1G/9997673|CUN66A1G]] | Seoul Viosys Z5 (367nm) | $8.42 | **The Powerhouse.** 1.4A Max. |
+| **The Filter** | ZWB2 Glass | "Wood's Glass" Filter | $4.00 | **Crucial.** Blocks visible purple. |
+| **The Star** | 104990051 | 3535 Copper DTP Star | $3.50 | **Copper DTP required for UV heat.** |
+| **The Brain** | LD06AJSA | Adj. Constant Current | $5.00 | **Must limit to 1.0A max.** |
+| **The Juice** | INR18650-30Q | Samsung 30Q 18650 Li-ion | $12.40 | 3000mAh. High drain cell. |
+| **The Lens** | 20mm-38mm | Quartz/Glass Lens | $8.00 | **No plastic optics!** |
+| **The Talon** | KSC241J LFS | IP67 Tactile Switch (SMT) | $0.80 | Tiny, waterproof, and very durable. |
+
+**Total Est. Cost per Unit: ~$42.12 CAD.** (~$29.72 if you can reuse a lipo cell battery.)
+
+See [[project:nighthawk#Scavenger Options|NightHawk #ScavengerOptions]] on more reusing an existing flashlight housing, which may be cheaper.
+
+===== The Circuit (1.0A Current Limit) =====
+
+To protect the Seoul Viosys chip, we use a **1.8k Ohm** safety resistor to cap the driver at **1000mA (1A)**.
+
+<code>
+[ CIRCUIT: THE DAYHAWK ]
+
+             ( + ) Li-ion 18650 Battery
+               |
+      +--------+----------+
+      |                   |
+      |                [SWITCH] 
+      |                   |
+      |         +---------v---------+
+      |         |     [ CE / EN ]   |
+      +-------[VIN+]    LD06AJSA    |
+                |     LED DRIVER    |
+      +-------[VIN-]                |
+      |         |    [ ISET PAD  ]--+
+      |         |    [     |     ]  |
+      |         |    [1.8k Safety]  |
+      |         |    [     |     ]  |
+      |         |    [ 1k POT    ]--+ 
+      |         |                   |
+      |         |  [LED+]   [LED-]  |
+      |         +----+-------+------+
+      |              |       |
+      |            ( A )   ( K )
+      |            [  UV LED  ]
+      |                 |
+      +-----------------+
+</code>
+
+
+
+===== Crow's Comments =====
+
+  * **Lichen Hunting:** If you're surveying in the Vancouver area, head to a damp park like Stanley Park or Pacific Spirit. The variety of lichen that glows is staggering!
+  * **Invisible Heat:** Like the [[project:nighthawk|NightHawk]] IR project, this light feels "dim" but is outputting significant energy. If the head of the DayHawk gets hot, your heatsinking is working.
+  * **The Filter Test:** If you can see a purple beam hitting the wall, you need a thicker **ZWB2 filter**. A perfect 365nm beam should be nearly invisible until it hits something fluorescent.
+
+Caw! Keep your eyes shielded and your minerals glowing!

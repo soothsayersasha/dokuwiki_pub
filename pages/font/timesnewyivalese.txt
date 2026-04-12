@@ -1,0 +1,110 @@
+====== Times New Yivalese ======
+
+The writing style of Valaksá, Yivalkes 300 years in the future, is pretty different from its original form at the time of the reign of Arami.
+
+Whereas it used to function more logographically in the past with sound being inferred from meaning, the new form is way more left to right phonetic focused, with layers of ancient pronunciations being kept in official documents but not that much in common speech.
+
+There are three cases for each of the 64 biliterals, Full, Mid, and Small cases, with some rare ones having more than one medium case, namely for the three persons, Them, You, Me.
+
+In standardized text, full sized letters start phrases, mid cases start other words and follow phrase starts, and small case letters then alternate with mid cases, often with old fashioned pronunciations being kept as is.
+
+However, each person along with fossilized phrases have their own voice, and thus this is not always the case. For example, someone could denote a scream by using all full letters, but using diacritics with them give a friendly childish vibe to it. Using nothing but mid case may give a more authoritarian or robotic voice, which can be soften with the off small cases here and there. Using nothing but small cases except for the first letter of a phrase being with a mid case is mainly used for transcribing another language, and starting words with a small case gIvE thE vIbE oF iRoNy.
+
+For ease of typing on a Latin based keyboard, the following symbols for the middle case are accessible through single character that matches the usual pronunciation of said symbol.
+
+^ Input ^ Result ^ Equivalency ^
+| P | Bx | Bx |
+| F | By | By |
+| V | Yb | Yb |
+| T | Dx | Dx |
+| S | Dy | Dy |
+| Z | Yd | Yd |
+| K | Gx | Gx |
+| C | Gy | Gy |
+| Q | Yg | Yg |
+| J | Wg | Wg |
+| M | Nb | Nb |
+| R | Lx | Lx |
+| H/A | Xx | Xx |
+| E | Xy | Xy |
+| I | Yy | Yy |
+| O | Xw | Xw |
+| U | Ww | Ww |
+
+=== Size differences ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| BB       | BB       | Full size                                             |
+| Bb       | Bb       | Middle cap                                             |
+| bb       | bb       | Small cap                                             |
+
+=== Stylistic choices ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| BBBdbg DbDdedg | BBBdbg DbddeDg     | Common writing style for phrases, giving best readability. Few diacritics only when necessary.     |
+| BBBdbg DBdddd | BBBdbg DBdddg | Showing insistence while clearly denoting phrase starts. |
+| bbbdbg dbdddg | bbbdbg dbdddg | Hard to understand babble |
+| BbBdBg BbBdBg | BbBdBg DbDdDg | Transliteration of a different language | 
+| BBBDBg DBDdDg | BBBDBg DBDdDg | Angry or authoritative | 
+| BBBDBG DBDDDG | BBBDBG DBDDDG | Childish, cute, annoying |
+| BBeBdaqbde dbiDdedgoq | BBeBdaqbde dbiDdedgoq | Excessively polite, potentially dangerous |
+| bbBDbg DbDDdg | bbBDbg DbDDdg | Ridicule | 
+
+=== Diacritics ===
+
+The period, or the comma, give a dot. Two periods, or a colon, give a double dot. Three periods, or a semicolon, give a triple dot.
+
+The dot signifies a meaningful character, or a logographic character, as well as a phrase end.  The double dot signifies either a reduplicated character, or a longer phrase end, as well as a pause. It can also mean that the character it is under or over affects the previous character's pronunciation, especially for vowel-focused characters. The triple dot signifies an intentional tone mark, abrupt ends, long pauses, and the likes.
+
+Other diacritic are sound helpers. They are not commonly used but especially useful in obscure words or with old fashion written words.
+
+^ Input ^ Result ^ Other typed possibilities ^ Meaning ^
+| . | . | , | Under word, say the whole word meant, logographic forms are rare but still occurring. standalone, is a short pause. |
+| : | : | .. | Reduplicates and/or lengthens the character's sound, or affect the previous one if a vowel. Standalone, is a longer pause. |
+| ; | ; | ... | Tone change mark under a character. On its own, either an abrupt end or a long pause. |
+| a | a | | |
+| e | e | | |
+| i | i | | |
+| o | o | | |
+| u | u | | |
+| m | m | q/r | either gives a nasal quality to longer vowels when there is no n to turn into an m, or is used to denotes kh or gh or lh. Standalone is rare but gives a pensive or ridicule sense. |
+| f | f | s/c | turns part of the character into a voiceless fricative |
+| p | p | t/k | turns part of the character into a voiceless plosive |
+| v | v | z/j | turns part of the character into a voiced fricative |
+| h | h | | shows the character has no vowel and is pronounced quickly. On its own denotes the general meaning of "Hm." |
+
+=== Positional and Rotational Modifiers ===
+
+As opposed to the other fonts, there are no rotation and position changes. Text is written from left to write with diacritics when necessary, but no further change. This is due to the limitations of typewriters, and the general distancing from logographic writing.
+
+<html>
+<style>
+/* Centers table headers */
+.dokuwiki table.inline th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Targets only the 2nd cell (Examples) for the Yivalese font */
+.dokuwiki table.inline td:nth-child(2) {
+    font-family: "YzWr", "YzWrBoldFont", "YzWrFont", "yiv-font", sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 1.1;
+    min-width: 140px;
+}
+
+/* Centers and cleans up the Latin and Description columns */
+.dokuwiki table.inline td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+/* Fixes the "stretched" look by making width fit the content */
+.dokuwiki table.inline {
+    border-collapse: collapse;
+    width: auto; 
+    margin: 20px auto;
+    max-width: 1100px;
+}
+</style>
+</html>

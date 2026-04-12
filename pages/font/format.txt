@@ -1,0 +1,65 @@
+====== YzWr Font Stacking & Modifiers Reference ======
+
+This here described works only for both the early penscript (Regular) and cuneiform (Italic) font.
+
+[[timesnewyivalese|Click here to access information about the "Times New Yivalese"]].
+
+In upcoming updates, once the fourth font representing written form is created, the font here described will be accessible as "Bold" and "Bold Italic", while the "Times New Yivalese" will be the regular form, and its written form as Italic.
+
+=== Full Size Standard ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| BB       | BB       | Full size                                             |
+
+=== Size Modifiers ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| BBbd     | BBbd     | Vertically squashed, with top centred                 |
+| BBbdbg   | BBbdbg   | Vertically squashed, with top right then top left     |
+| Bb       | Bb       | Horizontally squashed                                 |
+| Bbbdbg   | Bbbdbg   | Horizontally squashed, with top then bottom           |
+
+=== Positional Modifiers ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| Bbbd     | Bbbd     | Vertically centred                                    |
+| BBbd!    | BBbd!    | Top on the right instead of centred                   |
+| BBbd?    | BBbd?    | Top on the left instead of centred                    |
+| Bbbd!    | Bbbd!    | Side on the top instead of centred                    |
+| Bbbd?    | Bbbd?    | Side on the bottom instead of centred                 |
+
+=== Rotational Modifiers ===
+^ Input    ^ Ex.      ^ Description                                           ^
+| BB!      | BB!      | Upside down full size                                 |
+| Bb!      | Bb!      | Upside down horizontally squashed                     |
+
+<html>
+<style>
+/* Centers table headers */
+.dokuwiki table.inline th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Targets only the 2nd cell (Examples) for the Yivalese font */
+.dokuwiki table.inline td:nth-child(2) {
+    font-family: "YzWrFont", "yiv-font", sans-serif;
+    font-size: 60px;
+    line-height: 1.1;
+    min-width: 140px;
+}
+
+/* Centers and cleans up the Latin and Description columns */
+.dokuwiki table.inline td {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+/* Fixes the "stretched" look by making width fit the content */
+.dokuwiki table.inline {
+    border-collapse: collapse;
+    width: auto; 
+    margin: 20px auto;
+    max-width: 1100px;
+}
+</style>
+</html>

@@ -1,0 +1,106 @@
+===== Grammar =====
+
+Being a language that works primarily with a case system, the grammar Yivalese and its descendent Valakese is pretty distant to English.
+
+Here's some logics that will help learn the language quicker.
+
+Here studied is the late bronze age language's ways, however most will apply still to some degree in its Valakese forms.
+
+==== Single matter phrases ====
+
+{{autoruby}}
+^ Said ^ Parsed ^ Meant ^
+| Mu | Worm | Look, a worm here. |
+| Muwa | Worm-there | Look, a worm there. |
+| Mwi | Worm-hither | There is a worm incoming / This is wormy. |
+| Muyo | Wohm-hence | Look at the worm goooo / This is made out of worm. |
+| Mu no | Worm Here | This is a worm |
+| Mu tukh | Worm Very-here | This is clearly a worm |
+| Mu tudukh | Worm Dupl-VeryHere | Here is absolutely a worm |
+| Mu ha | Worm There | There is a worm over there. This is not a worm |
+| Mu we | Worm Very-there | There is no worm here. There may be a worm but I do not see it |
+| Mu uwwe | Worm Dupl-Very-There | This is not a worm at all. |
+| Mu ley | Worm Hither | [Give it] to the worm. This is wormy. Worm is about to happen. |
+| Mu laras | Worm very-hither | Reaching the worm. At the house of Worm. In the city of Worm. This has completely gone worm. |
+| Mu ayo | Worm Hence | By Worm! From Worm |
+| Mu kerwe | Worm VeryHence | Far from the worm. Stop worming. |
+{{/autoruby}}
+
+==== Personified single matter phrases ====
+
+{{autoruby}}
+^ Said ^ Parsed ^ Meant ^
+| Muni | Worm-me | I am a worm. I am worming. This here is my worm |
+| Mwani | Worm-there-me | I am not currently a worm. I am not currently worming. Over there is my worm |
+| Muniye | Worm-me-hither | I am becoming a worm. This worm will be mine. With my worm. |
+| Muyoni | Worm-hence-me | I am no more a worm. This worm used to me mine. From my worm. |
+{{/autoruby}}
+
+==== Dual matter phrases ====
+
+
+{{autoruby}}
+^ Said ^ Parsed ^ Meant ^
+| El Mu | Me-here Worm | I am a worm |
+| Eli mwi |Me-hither Worm-hither | I want a worm (To me this worm!) |
+| Ney muyo | Me-hence Worm-hence | I do not want a worm (Far from me this worm!) |
+| Mu ney | Worm Me-hence | I have a worm. This is my worm. |
+{{/autoruby}}
+
+==== Tenses ====
+
+Verbs don't really exist as a separate entity from nouns and adjectives, and only a clever use of existing cases along with postpositions and postfixes can one get a proper sense of time.
+
+[The hyphens here added are simply to describe the different word bits, the same way one could parse together as to-gether, however in transcribing a text it is best practice to avoid it]
+
+{{autoruby}}
+^ Said ^ Parsed ^ Meant ^
+| Ez | Eat | To eat |
+| Ez ley | Eat hither | Time to eat |
+| El Ezam | Me-here Eat-now | I am eating right now |
+| Ezoyin | Eat-Hence-Me | I just ate |
+| El Ezi | Me-here Eat-hither | I will eat soon |
+| Ezineye | Eat-me-Hither | I will eat soon |
+| Ezani (ha) | Eat-there-me there | I will eat later |
+| Ezani (ayo, 'yo) | Eat-there-me hence | I ate earlier |
+| Ezani we | Eat-there-me verythere | I won't eat later |
+| Ezni -bo | Eat-me become | I'm gonna get eatin' |
+| Ursewa ley ezin ezine | Discussed-there hither Eat-me Eat-me-there | I eat there often |
+| Ursewa ley ezine ayo | Discussed-there hither eat-me-there hence | I used to eat there often |
+| Ezin -kha | Eat-me wish | I want to eat |
+| Ezin -khaw | Eat-me wish-not | I don't want to eat |
+| Ezin -khafe | Eat-me wish-should | I should probably eat |
+| Ezim -foy! | Eat-me bee-hence | Of course I'm eating! |
+| Eyappeze | Intense-Eat-there | I ate so much |
+{{/autoruby}}
+
+==== Adjectives ====
+
+==== Intensity ====
+
+==== Compounding words ====
+
+^ Said ^ Parsed ^ Meant ^
+| nenkyav | one-allheads | Anyone (same logic for all words with a -ya or -ya- marker meaning the whole of that thing) |
+==== Compounding phrases ====
+
+==== Metaphors ====
+
+A whole lot of meaning is obfuscated, which is why often Lobba Yivalkes Ayo is referred to as Yivalkerobba. People tend to use a lot of metaphor for things instead of saying the thing itself, for both comical and respectful effect.
+
+Death is one of the main taboos of the people of the time, along with that of violence and surprisingly lying in general.
+
+Sex on the other hand is not so taboo, but it is ridiculously fun to present things as others for the sake of ridicule, and as such there exists multiple metaphors for it.
+
+==== Big fat sheet ====
+
+| XX | 1 is happening | XY | 1 is not happening now | YY | 1 is bound to happen | YW | 1 stopped happening |
+| XXny | My 1 | XYny | Not my 1 | YYny | I am becoming 1 | YWny | I used to be 1 / From my 1 |
+| XX XX | 1 is 2 | XX XY | 1 is not 2 | XX YY | 1 is becoming 2 | XX YW | 1 belongs to 2 / 1 is made of 2 |
+| XY XX | ? | XY XY | ? | XY YY | ? | XY YW | ? |
+| YY XX | ? | YY XY | ? | YY YY | ? | YY YW | ? | 
+| YW XX | ? | YW XY | ? | YW YY | From 1 to 2 | YW YW | ? |
+| XXny XX | ? | XXny XY | ? | XXny YY | ? | XXny YW | ? |
+| XYny XX | ? | XYny XY | ? | XYny YY | ? | XYny YW | ? |
+| YYny XX | ? | YYny XY | ? | YYny YY | ? | YYny YW | ? |
+| YWny XX | ? | YWny XY | ? | YWny YY | With the 2 of my 1 | YWny YW | ? |

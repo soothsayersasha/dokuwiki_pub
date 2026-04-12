@@ -1,0 +1,87 @@
+====== Fisa-Yiil: 365nm Reflected UV Surveyor ======
+
+The **Fisa-Yiil** is a full-spectrum digital observation unit. By removing the internal filters of a Raspberry Pi HQ Camera and replacing them with specialized UV-pass glass, we can observe "Nectar Guides" on flowers and skin damage invisible to the naked eye.
+
+When paired with the [[project:dayhawk|DayHawk]] flashlight at night, this camera captures a world of "UV-Greyscale" where white flowers can appear black and clear water looks like ink.
+
+{{ :project:rpi-hq-module.png?400 |}}
+
+<html>
+<center>
+    <p>In the Yivalese conlang, 
+        <a href="https://atigerseye.com/den/yivalkes/?keyword=fisa" target="_blank">Fisa</a> 
+        means "Bee" and 
+        <a href="https://atigerseye.com/den/yivalkes/?keyword=yiil" target="_blank">Yiil</a> 
+        means "Gaze" or "Sight."
+    </p>
+    <p>Together, this unit provides a true vision of the birds and the bees in the ultraviolet realm.</p>
+</center>
+</html>
+
+===== The Camera Surgery: Removing the "Veil" =====
+
+The Raspberry Pi HQ Camera (IMX477) comes with a small pane of blue-tinted glass sitting directly over the sensor. This is the **IR-Cut Filter**. 
+
+  * **The HQ Surgery:** There are two small silver screws holding the filter housing inside the C-mount ring. This is the recommended path.
+  * **The Budget Surgery (Arducam):** Requires a hot air gun to soften the glue on the lens housing to pry out the internal filter. Risk of melting the plastic or damaging the sensor. 
+  * :!: **Danger:** The sensor is now completely exposed. Any dust that enters will be permanent. Perform this in a "steam-cleaned" bathroom.
+
+===== The Shiny Bits (BOM - Camera Edition) =====
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Sensor** | Variable | RPi HQ ($70) or Arducam ($15) | $15 – $70 | HQ is recommended for UV sensitivity. |
+| **The UV Filter** | ZWB2 (25.5mm) | UV-Pass / Visible-Block Glass | $18 | **Crucial.** Blocks all visible light. |
+| **The Glass** | 25mm C-Mount | Quartz or "Simple" Glass Lens | $35 | Standard glass blocks UV; seek Quartz if possible. |
+| **The Brain** | RPi Zero 2 W | Compact Processor | $22 | Small enough for handheld use. |
+| **The Display** | 3.5" DPI LCD | Real-time Viewfinder | $30 | Optional if using phone as viewer. |
+
+**Total Est. Cost per Unit: ~$90 – $175 CAD.** \\ 
+(Low end uses Arducam + Phone as Viewfinder; High end uses HQ + LCD.)\\
+(~$60 – $145 if using a Phone as the Viewfinder - No LCD needed.)\\
+(~$38 – $123 if you have a spare RPi Zero as well.) \\
+
+==== Using a Phone as a Viewfinder ====
+If you want to save $30 and skip the physical LCD, you can use the Pi Zero's built-in WiFi:
+  * **Software:** Use ''mjpg-streamer'' or ''libcamera-vid'' to host a local stream.
+  * **Connection:** Set the Pi as a WiFi Access Point. Connect your Android/iPhone to the "Fisa-Yiil" network.
+  * **Viewing:** Open a browser (Safari/Chrome) or a dedicated "IP Cam" app to see the live UV feed. \\ //Note: There is a slight (~200ms) lag, which makes precision focusing harder than a direct LCD.//
+
+===== Reflected UV: Why the Filter Matters =====
+
+To see like a bee, your camera lens must have a **ZWB2 (or UG1)** filter attached to the front. 
+
+  * **The Illuminator (DayHawk):** Hits the flower with 365nm UV.
+  * **The Flower:** Reflects some 365nm light and *fluoresces* (glows) some visible green light.
+  * **The Camera Filter:** Blocks the green "glow" and only lets the reflected 365nm reach the sensor.
+
+===== The Map (System Integration) =====
+
+<code>
+[ SYSTEM ARCHITECTURE: THE FISA-YIIL ]
+
+      [ DAYHAWK (UV FLASH) ] ----> [ TARGET ] 
+                                     |
+                                     | (Reflected UV + Visible Glow)
+                                     |
+      [ ZWB2 FILTER ] <-------------/
+            | (UV Only)
+            v
+      [ QUARTZ LENS ] 
+            |
+            v
+      [ RPi HQ SENSOR ] (IR Glass Removed)
+            |
+            v
+      [ RPi ZERO 2W ] ----> [ WIFI ] ----> [ SMARTPHONE ]
+                           (OR)
+                      ----> [ TFT LCD ]
+</code>
+
+===== Crow's Comments =====
+
+  * **Daylight Usage:** The [[project:dayhawk|DayHawk]] is primarily for indoor or nocturnal use. During the day, the sun provides high ambient UV levels, making an external flashlight unnecessary for most outdoor shots.
+  * **The Arducam Warning:** If using the budget Arducam, the fixed plastic lens may block up to 90% of incoming UV light even with the filter removed. Results will be much darker than the HQ sensor.
+  * **The "Black Sun" Effect:** Under the sun, the world looks like high-contrast noir due to unique atmospheric scattering of UV light.
+  * **Focus Shifting:** UV light focuses at a different point than visible light. Tweaking the focus slightly "shorter" than usual often helps.
+
+Caw! Ready to see the secrets hidden in the petals?

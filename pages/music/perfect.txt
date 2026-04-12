@@ -1,0 +1,1664 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tonal/browser/tonal.min.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<style>
+    .app-wrapper { color: #e0e0e0; background: #1a1a1a; padding: 25px; border-radius: 12px; font-family: sans-serif; max-width: 920px; margin: 0 auto; }
+    
+    .piano-container { display: flex; flex-direction: column; align-items: center; padding: 15px 10px 10px; background: #222; border-radius: 8px; user-select: none; min-height: 170px; overflow: hidden; border: 1px solid #444; margin-bottom: 20px; }
+    .piano-keys { display: flex; justify-content: center; width: 100%; }
+    .key { position: relative; float: left; cursor: pointer; border-radius: 0 0 4px 4px; transition: background 0.1s; display: flex; justify-content: center; }
+    .white-key { width: 35px; height: 150px; background: linear-gradient(to bottom, #f8f8f8, #ddd); border: 1px solid #999; z-index: 1; }
+    .white-key.active { background: linear-gradient(to bottom, #4a90e2, #3070c2); box-shadow: inset 0 0 15px rgba(0,0,0,0.5); }
+    .black-key { width: 22px; height: 90px; background: linear-gradient(to bottom, #333, #000); margin-left: -11px; margin-right: -11px; z-index: 2; border: 1px solid #333; }
+    .black-key.active { background: linear-gradient(to bottom, #1d4ed8, #0d2e98); }
+    
+    .key-label-top { position: absolute; top: 10px; font-size: 10px; font-weight: bold; pointer-events: none; width: 100%; text-align: center; opacity: 0.5; }
+    .key-label-bottom { position: absolute; bottom: 8px; font-size: 11px; font-weight: bold; pointer-events: none; width: 100%; text-align: center; }
+    .white-key .key-label-top, .white-key .key-label-bottom { color: #222; }
+    .black-key .key-label-top, .black-key .key-label-bottom { color: #ccc; }
+    .black-key .key-label-top { top: 5px; font-size: 9px; }
+    .black-key .key-label-bottom { bottom: 5px; font-size: 10px; }
+
+    .chord-suggestions { margin-top: 8px; padding: 0; border-radius: 6px; border: none; background: transparent; width: 100%; }
+    .chord-suggestion-buttons { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .chord-suggestion-btn { font-size: 0.75em; padding: 6px 10px; border: 1px solid #444; border-radius: 6px; background: #1f1f1f; color: #ccc; cursor: pointer; transition: all 0.15s; }
+    .chord-suggestion-btn:hover { background: #2b2b2b; border-color: #5e5e5e; color: #fff; }
+
+    .dashboard { text-align: center; }
+    .chord-display { font-size: 1.8em; font-weight: bold; color: #4a90e2; margin-bottom: 20px; min-height: 50px; line-height: 1.3; }
+    .chord-alt { font-size: 0.6em; color: #888; display: block; margin-top: 5px; }
+
+    .btn-section { margin-bottom: 25px; }
+    .collapse-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border: 1px solid #333; border-radius: 6px; background: #1a1a1a; color: #9ad7b5; font-size: 0.8em; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; margin-bottom: 10px; }
+    .collapse-indicator { color: #666; font-weight: 700; }
+    .section-stack { display: flex; flex-direction: column; gap: 18px; }
+    .section-wrapper { position: relative; }
+    .section-toolbar { display: flex; justify-content: space-between; align-items: center; margin: 6px 0 6px; color: #999; font-size: 0.85em; letter-spacing: 1px; text-transform: uppercase; }
+    .section-title { color: #82ffad; font-weight: 700; }
+    .section-move-buttons { display: flex; gap: 6px; }
+    .move-btn { font-size: 0.7em; padding: 5px 8px; border-radius: 6px; border: 1px solid #444; background: #151515; color: #ccc; cursor: pointer; transition: all 0.15s; }
+    .move-btn:hover { background: #222; border-color: #666; color: #fff; }
+    .section-anchor { position: relative; top: -6px; }
+    .section-label { font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; text-align: center; border-bottom: 1px solid #333; padding-bottom: 8px; }
+    .btn-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .btn { padding: 12px; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: 600; background: #2a2a2a; color: #ddd; width: 100%; transition: all 0.15s; }
+    .btn:hover { background: #3a3a3a; border-color: #555; }
+    .btn-perf { color: #82ffad; border-color: #2d5a3c; }
+    .btn-comp { color: #74b9ff; border-color: #2b4a69; }
+
+    .analysis-container, .info-container { margin-top: 15px; background: #222; padding: 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 25px;}
+    .analysis-table, .info-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+    .analysis-table th, .analysis-table td, .info-table th, .info-table td { border: 1px solid #444; padding: 10px; text-align: center; }
+    .analysis-table th, .info-table th { background: #2a2a2a; color: #4a90e2; }
+    .drift-neg { color: #ff6b6b; font-weight: bold; }
+    .drift-pos { color: #51cf66; font-weight: bold; }
+
+    .tuning-desc-box { background: #252525; padding: 12px 14px; border-radius: 8px; border-left: 4px solid #82ffad; margin-bottom: 8px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
+    .tuning-title { color: #82ffad; font-weight: bold; font-size: 1.1em; margin-bottom: 0; }
+    .tuning-text { color: #bbb; font-size: 0.9em; line-height: 1.4; }
+    .help { cursor: help; color: #888; font-weight: 700; margin-left: 6px; font-size: 0.85em; }
+
+    .viz-section { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 20px; margin-top: 20px; }
+    .viz-buttons-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 15px; }
+    .viz-button { font-size: 0.8em; padding: 7px 12px; border-radius: 6px; border: 1px solid #444; color: #aaa; background: #222; cursor: pointer; transition: all 0.15s; }
+    .viz-button:hover { background: #2a2a2a; border-color: #666; color: #ddd; }
+    .viz-button.active { background: #82ffad; color: #0d1b14; border-color: #6ce086; font-weight: 600; }
+    .viz-controls-row { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+    
+    .viz-canvas-wrapper { width: 100%; min-height: 400px; display: flex; justify-content: center; align-items: center; background: #151515; border-radius: 8px; overflow: hidden; }
+    #viz-canvas { width: 100%; height: 400px; }
+    
+    .tuning-group-label { text-align: left; font-size: 0.7em; color: #666; text-transform: uppercase; margin-top: 8px; margin-bottom: 4px; border-left: 2px solid #444; padding-left: 6px; }
+    .tuning-buttons-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; justify-content: center; }
+    #tuning-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .t-btn { font-size: 0.8em; padding: 8px 14px; border: 1px solid #444; background: #222; color: #777; border-radius: 4px; cursor: pointer; transition: all 0.15s; }
+    .t-btn:hover { background: #2a2a2a; border-color: #555; color: #aaa; }
+    .t-btn.active { background: #2d5a3c; color: #82ffad; border-color: #82ffad; }
+
+    .action-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .btn-small { font-size: 0.8em; padding: 6px 12px; background: transparent; border: 1px solid #555; color: #999; cursor: pointer; border-radius: 4px; transition: all 0.15s; }
+    .btn-small:hover { background: #333; border-color: #777; color: #ddd; }
+    .credits { margin-top: 30px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.75em; color: #555; display: flex; justify-content: space-between; }
+</style>
+
+<div class="app-wrapper">
+    <div class="dashboard">
+       <h2 style="margin-top:0;">Perfect Pitch Piano</h2>
+       <p style="color:#888;">Select notes to build chords. Compare standard 12-TET with alternate tuning systems.</p>
+        <div class="action-row">
+            <button class="btn btn-small" onclick="clearAll()">✖ Clear</button>
+            <div id="status-msg" style="color: #555; font-size: 0.9em;">Ready</div>
+            <button class="btn btn-small" onclick="generateLink()">🔗 Share</button>
+        </div>
+
+        <div class="piano-container" id="piano">
+            <div id="piano-keys" class="piano-keys"></div>
+            <div id="chord-suggestions" class="chord-suggestions" style="display:none;">
+                <div class="chord-suggestion-buttons" id="chord-suggestion-buttons"></div>
+            </div>
+        </div>
+        
+        <div class="chord-display" id="chordName">---</div>
+
+        <div id="section-stack" class="section-stack">
+            <div class="section-wrapper" data-section="sound">
+                <div class="section-toolbar">
+                    <span class="section-title">Sound Preview</span>
+                    <div class="section-move-buttons">
+                        <button class="move-btn" onclick="moveSection('sound','up')">↑</button>
+                        <button class="move-btn" onclick="moveSection('sound','down')">↓</button>
+                    </div>
+                </div>
+                <div class="collapse-bar" onclick="toggleSection('sound-controls')">Sound Preview <span class="collapse-indicator" id="sound-controls-ind">▼</span></div>
+                <div id="sound-controls" data-collapsed="false">
+                    <div class="btn-section">
+                        <div class="btn-grid">
+                            <button class="btn" onclick="playCurrent('arp', 'tet')">12-TET Arpeggio</button>
+                            <button class="btn" onclick="playCurrent('chord', 'tet')">12-TET Chord</button>
+                            <button class="btn btn-comp" onclick="compare('arp')">Compare Arp</button>
+                            <button class="btn btn-perf" onclick="playCurrent('arp', 'just')">Altered Arpeggio</button>
+                            <button class="btn btn-perf" onclick="playCurrent('chord', 'just')">Altered Chord</button>
+                            <button class="btn btn-comp" onclick="compare('chord')">Compare Chord</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-wrapper" data-section="analysis" style="display:none;">
+                <div class="section-toolbar">
+                    <span class="section-title">Harmonic Drift Analysis</span>
+                    <div class="section-move-buttons">
+                        <button class="move-btn" onclick="moveSection('analysis','up')">↑</button>
+                        <button class="move-btn" onclick="moveSection('analysis','down')">↓</button>
+                    </div>
+                </div>
+                <div id="analysis-section" class="analysis-container" style="display:none; text-align: left;">
+                    <div class="collapse-bar" onclick="toggleSection('analysis-content')">Harmonic Drift Analysis <span class="collapse-indicator" id="analysis-content-ind">▼</span></div>
+                    <div id="analysis-content" data-collapsed="false">
+                        <table class="analysis-table">
+                            <thead>
+                                <tr>
+                                    <th>Note</th>
+                                    <th>12-TET Hz</th>
+                                    <th>Altered Hz</th>
+                                    <th>Beat (Hz) <span class="help" title="Audible 'wobble' frequency between the two pitches">[?]</span></th>
+                                    <th>Drift (¢) <span class="help" title="Pitch difference in cents (100¢ = 1 semitone)">[?]</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="analysis-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-wrapper" data-section="viz" style="display:none;">
+                <div class="section-toolbar">
+                    <span class="section-title">Visualizations</span>
+                    <div class="section-move-buttons">
+                        <button class="move-btn" onclick="moveSection('viz','top')">Top</button>
+                        <button class="move-btn" onclick="moveSection('viz','up')">↑</button>
+                        <button class="move-btn" onclick="moveSection('viz','down')">↓</button>
+                    </div>
+                </div>
+                <div class="viz-section" id="viz-section" style="display:none;">
+                    <div id="viz" class="section-anchor"></div>
+                    <div class="viz-buttons-row" id="viz-buttons"></div>
+                    <div class="viz-controls-row">
+                        <button class="btn-small" onclick="shareVisualization()">Share Viz</button>
+                    </div>
+                    <div id="viz-desc" class="tuning-text" style="text-align: center; margin-bottom: 12px; color: #666;">Select a visualization mode</div>
+                    <div class="viz-canvas-wrapper">
+                        <canvas id="viz-canvas"></canvas>
+                    </div>
+                    <div id="viz-explain" class="tuning-text" style="text-align: left; margin-top: 12px; color: #888;"></div>
+                </div>
+            </div>
+
+            <div class="section-wrapper" data-section="tuning">
+                <div class="section-toolbar">
+                    <span class="section-title">Tuning System</span>
+                    <div class="section-move-buttons">
+                        <button class="move-btn" onclick="moveSection('tuning','up')">↑</button>
+                        <button class="move-btn" onclick="moveSection('tuning','down')">↓</button>
+                    </div>
+                </div>
+                <div class="btn-section" style="border: none; margin-top: 0;">
+                    <div class="tuning-desc-box">
+                        <div id="tuning-title" class="tuning-title">---</div>
+                        <div id="tuning-desc" class="tuning-text">---</div>
+                    </div>
+                    <div id="tuning-buttons-container"></div>
+                </div>
+            </div>
+
+            <div class="section-wrapper" data-section="info">
+                <div class="section-toolbar">
+                    <span class="section-title">Tuning Reference</span>
+                    <div class="section-move-buttons">
+                        <button class="move-btn" onclick="moveSection('info','up')">↑</button>
+                        <button class="move-btn" onclick="moveSection('info','down')">↓</button>
+                    </div>
+                </div>
+                <div class="info-container">
+                    <h3 style="color: #82ffad; margin-top: 0; font-size: 1em;" id="ref-table-title">Tuning Reference</h3>
+                    <table class="info-table">
+                        <thead><tr><th>Interval</th><th>Ratio</th><th>Description</th></tr></thead>
+                        <tbody id="reference-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="credits">
+            <span><a href="https://github.com/tonaljs/tonal" style="color:#82ffad; text-decoration:none;">Tonal.js</a> · chord identification</span>
+            <span><a href="https://d3js.org" style="color:#82ffad; text-decoration:none;">D3.js</a> · SVG graphs</span>
+            <span><a href="https://tonejs.github.io" style="color:#82ffad; text-decoration:none;">Tone.js</a> · tone generation</span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    
+    var startOctave = 3, endOctave = 5;
+    var NOTE_NAMES = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "G♯", "A", "B♭", "B"];
+    var NOTE_NAMES_TONAL = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
+    var INTERVAL_NAMES = ["Root", "m2", "M2", "m3", "M3", "P4", "Tritone", "P5", "m6", "M6", "m7", "M7"];
+    
+    var KEY_MAP = { 'a': 'C4', 'w': 'C#4', 's': 'D4', 'e': 'Eb4', 'd': 'E4', 'f': 'F4', 't': 'F#4', 'g': 'G4', 'y': 'G#4', 'h': 'A4', 'u': 'Bb4', 'j': 'B4', 'k': 'C5' };
+    var INV_KEY_MAP = {};
+    for (var k in KEY_MAP) INV_KEY_MAP[KEY_MAP[k]] = k.toUpperCase();
+
+    var PHI = (1 + Math.sqrt(5)) / 2;
+    var PI = Math.PI;
+    var TAU = 2 * PI;
+
+    var TUNING_CATEGORIES = {
+        "Just Intonation": ["septimal", "5limit", "pythag", "11limit", "13limit", "harmonic"],
+        "Historical": ["young", "meantone", "werckmeister", "kirnberger", "vallotti"],
+        "Mathematical": ["golden", "pi", "lucy", "euler", "sqrt2"],
+        "Microtonal": ["edo19", "edo22", "edo31", "edo53"],
+        "Experimental": ["bohlen", "carlos_alpha", "wendy_beta"]
+    };
+
+    var TUNING_SYSTEMS = {
+        'septimal': {
+            name: "7-Limit (Septimal)",
+            desc: "The 'Blues' tuning. Uses the 7th harmonic (7:4) for a pure dominant 7th chord. Smooth and soulful.",
+            ratios: [{r:1,n:"1:1",d:"Unison"}, {r:16/15,n:"16:15",d:"Semitone"}, {r:9/8,n:"9:8",d:"Whole tone"}, {r:6/5,n:"6:5",d:"Minor third"}, {r:5/4,n:"5:4",d:"Major third"}, {r:4/3,n:"4:3",d:"Fourth"}, {r:7/5,n:"7:5",d:"Septimal tritone"}, {r:3/2,n:"3:2",d:"Fifth"}, {r:14/9,n:"14:9",d:"Septimal m6"}, {r:5/3,n:"5:3",d:"Major sixth"}, {r:7/4,n:"7:4",d:"Septimal seventh"}, {r:15/8,n:"15:8",d:"Major seventh"}]
+        },
+        '5limit': {
+            name: "5-Limit (Ptolemaic)",
+            desc: "Pure Renaissance harmony. Major triads ring like a single bell with no beating.",
+            ratios: [{r:1,n:"1:1",d:"Unison"}, {r:16/15,n:"16:15",d:"Semitone"}, {r:9/8,n:"9:8",d:"Major tone"}, {r:6/5,n:"6:5",d:"Minor third"}, {r:5/4,n:"5:4",d:"Major third"}, {r:4/3,n:"4:3",d:"Fourth"}, {r:45/32,n:"45:32",d:"Tritone"}, {r:3/2,n:"3:2",d:"Fifth"}, {r:8/5,n:"8:5",d:"Minor sixth"}, {r:5/3,n:"5:3",d:"Major sixth"}, {r:9/5,n:"9:5",d:"Minor seventh"}, {r:15/8,n:"15:8",d:"Major seventh"}]
+        },
+        'pythag': {
+            name: "Pythagorean (3-Limit)",
+            desc: "Pure stacked fifths (3:2). Brilliant melodies, but thirds are sharp. Ancient Greek.",
+            ratios: [{r:1,n:"1:1",d:"Unison"}, {r:256/243,n:"256:243",d:"Limma"}, {r:9/8,n:"9:8",d:"Tone"}, {r:32/27,n:"32:27",d:"m3"}, {r:81/64,n:"81:64",d:"Ditone"}, {r:4/3,n:"4:3",d:"Fourth"}, {r:729/512,n:"729:512",d:"Tritone"}, {r:3/2,n:"3:2",d:"Fifth"}, {r:128/81,n:"128:81",d:"m6"}, {r:27/16,n:"27:16",d:"M6"}, {r:16/9,n:"16:9",d:"m7"}, {r:243/128,n:"243:128",d:"M7"}]
+        },
+        '11limit': {
+            name: "11-Limit (Undecimal)",
+            desc: "Exotic neutral intervals from the 11th harmonic. Middle Eastern flavor.",
+            ratios: [{r:1,n:"1:1",d:"Unison"}, {r:12/11,n:"12:11",d:"Neutral 2nd"}, {r:9/8,n:"9:8",d:"M2"}, {r:11/9,n:"11:9",d:"Neutral 3rd"}, {r:5/4,n:"5:4",d:"M3"}, {r:4/3,n:"4:3",d:"P4"}, {r:11/8,n:"11:8",d:"Undecimal tritone"}, {r:3/2,n:"3:2",d:"P5"}, {r:18/11,n:"18:11",d:"Neutral 6th"}, {r:5/3,n:"5:3",d:"M6"}, {r:11/6,n:"11:6",d:"Neutral 7th"}, {r:15/8,n:"15:8",d:"M7"}]
+        },
+        '13limit': {
+            name: "13-Limit (Tridecimal)",
+            desc: "The 13th harmonic adds rich, unusual intervals. Complex and exotic.",
+            ratios: [{r:1,n:"1:1",d:"Unison"}, {r:14/13,n:"14:13",d:"Tridecimal m2"}, {r:9/8,n:"9:8",d:"M2"}, {r:13/11,n:"13:11",d:"Tridecimal m3"}, {r:5/4,n:"5:4",d:"M3"}, {r:4/3,n:"4:3",d:"P4"}, {r:13/9,n:"13:9",d:"Tridecimal tritone"}, {r:3/2,n:"3:2",d:"P5"}, {r:13/8,n:"13:8",d:"Tridecimal 6th"}, {r:5/3,n:"5:3",d:"M6"}, {r:13/7,n:"13:7",d:"Tridecimal 7th"}, {r:15/8,n:"15:8",d:"M7"}]
+        },
+        'harmonic': {
+            name: "Harmonic Series",
+            desc: "Natural overtones of a vibrating string. The physics of sound itself.",
+            ratios: [{r:1,n:"1:1",d:"Fundamental"}, {r:17/16,n:"17:16",d:"17th"}, {r:9/8,n:"9:8",d:"9th"}, {r:19/16,n:"19:16",d:"19th"}, {r:5/4,n:"5:4",d:"5th"}, {r:21/16,n:"21:16",d:"21st"}, {r:11/8,n:"11:8",d:"11th"}, {r:3/2,n:"3:2",d:"3rd"}, {r:13/8,n:"13:8",d:"13th"}, {r:27/16,n:"27:16",d:"27th"}, {r:7/4,n:"7:4",d:"7th"}, {r:15/8,n:"15:8",d:"15th"}]
+        },
+        'meantone': {
+            name: "¼-Comma Meantone",
+            desc: "Renaissance standard. Flattened fifths give pure major thirds. Historical keyboards.",
+            ratios: [{r:1,n:"0c",d:"C"}, {r:1.070,n:"117c",d:"C#"}, {r:1.118,n:"193c",d:"D"}, {r:1.196,n:"310c",d:"Eb"}, {r:1.25,n:"386c",d:"E"}, {r:1.337,n:"503c",d:"F"}, {r:1.397,n:"579c",d:"F#"}, {r:1.495,n:"697c",d:"G"}, {r:1.6,n:"814c",d:"G#"}, {r:1.672,n:"890c",d:"A"}, {r:1.789,n:"1007c",d:"Bb"}, {r:1.869,n:"1083c",d:"B"}]
+        },
+        'werckmeister': {
+            name: "Werckmeister III",
+            desc: "Bach's favorite well-temperament. Every key playable but each uniquely colored.",
+            ratios: [{r:1,n:"0c",d:"C"}, {r:1.053,n:"90c",d:"C#"}, {r:1.119,n:"192c",d:"D"}, {r:1.185,n:"294c",d:"Eb"}, {r:1.254,n:"390c",d:"E"}, {r:1.335,n:"498c",d:"F"}, {r:1.414,n:"588c",d:"F#"}, {r:1.495,n:"696c",d:"G"}, {r:1.587,n:"792c",d:"G#"}, {r:1.674,n:"888c",d:"A"}, {r:1.782,n:"996c",d:"Bb"}, {r:1.888,n:"1092c",d:"B"}]
+        },
+        'vallotti': {
+            name: "Vallotti",
+            desc: "Elegant Baroque temperament. Smooth transitions between pure and tempered intervals.",
+            ratios: [{r:1,n:"0c",d:"C"}, {r:1.056,n:"94c",d:"C#"}, {r:1.12,n:"196c",d:"D"}, {r:1.189,n:"300c",d:"Eb"}, {r:1.254,n:"392c",d:"E"}, {r:1.335,n:"502c",d:"F"}, {r:1.414,n:"590c",d:"F#"}, {r:1.498,n:"698c",d:"G"}, {r:1.587,n:"796c",d:"G#"}, {r:1.678,n:"894c",d:"A"}, {r:1.785,n:"1000c",d:"Bb"}, {r:1.89,n:"1096c",d:"B"}]
+        },
+        'kirnberger': {
+            name: "Kirnberger III",
+            desc: "Mathematical compromise of pure ratios and tempered fifths. Clean and rational.",
+            ratios: [{r:1,n:"0c",d:"C"}, {r:1.053,n:"90c",d:"C#"}, {r:1.125,n:"204c",d:"D"}, {r:1.185,n:"294c",d:"Eb"}, {r:1.25,n:"386c",d:"E"}, {r:1.333,n:"498c",d:"F"}, {r:1.406,n:"579c",d:"F#"}, {r:1.496,n:"697c",d:"G"}, {r:1.58,n:"792c",d:"G#"}, {r:1.667,n:"884c",d:"A"}, {r:1.778,n:"996c",d:"Bb"}, {r:1.875,n:"1088c",d:"B"}]
+        },
+        'euler': {
+            name: "Euler-Fokker",
+            desc: "Prime factor lattice system. Mathematically elegant pitch relationships.",
+            ratios: [{r:1,n:"1:1",d:"Unity"}, {r:25/24,n:"25:24",d:"Chromatic"}, {r:10/9,n:"10:9",d:"Small tone"}, {r:6/5,n:"6:5",d:"m3"}, {r:5/4,n:"5:4",d:"M3"}, {r:4/3,n:"4:3",d:"P4"}, {r:25/18,n:"25:18",d:"Tritone"}, {r:3/2,n:"3:2",d:"P5"}, {r:25/16,n:"25:16",d:"Aug5"}, {r:5/3,n:"5:3",d:"M6"}, {r:9/5,n:"9:5",d:"m7"}, {r:15/8,n:"15:8",d:"M7"}]
+        },
+        'lucy': {
+            name: "Lucy Tuning",
+            desc: "Based on π. The fifth-to-octave ratio equals π/(2π-2). Dreamy and irrational.",
+            ratios: (function() {
+                var L = 1200 / (2 * PI), s = (1200 - 5*L) / 2;
+                var steps = [0, s, 2*s, L+2*s, 2*L+2*s, 2*L+3*s, 3*L+3*s, 3*L+4*s, 4*L+4*s, 4*L+5*s, 5*L+5*s, 5*L+6*s];
+                return steps.map(function(c, i) { return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "Step "+i}; });
+            })()
+        },
+        'golden': {
+            name: "Golden Ratio (φ)",
+            desc: "Scale from powers of phi (1.618...). Nature's most aesthetic proportion.",
+            ratios: (function() {
+                var cents = [0];
+                for (var i = 1; i < 12; i++) cents.push((1200 * Math.log2(Math.pow(PHI, i/7))) % 1200);
+                cents.sort(function(a,b) { return a-b; });
+                return cents.map(function(c, i) { return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "φ^"+(i)+"/7"}; });
+            })()
+        },
+        'pi': {
+            name: "Pi Tuning",
+            desc: "Intervals from π. The circle constant becomes harmony.",
+            ratios: (function() {
+                var base = [0, 100*PI/3, 200*PI/3, 300, 400*PI/3, 500, 600*PI/3, 700, 800*PI/3, 900, 1000*PI/3, 1100];
+                return base.map(function(c, i) { return {r: Math.pow(2, (c%1200)/1200), n: (c%1200).toFixed(0)+"c", d: "π step "+i}; });
+            })()
+        },
+        'sqrt2': {
+            name: "√2 Tuning",
+            desc: "Based on √2—the tritone's exact 12-TET ratio. Symmetric and balanced.",
+            ratios: (function() {
+                var cents = [0];
+                for (var i = 1; i < 12; i++) cents.push((100 * i * Math.log2(Math.SQRT2) * 2) % 1200);
+                cents.sort(function(a,b) { return a-b; });
+                return cents.map(function(c, i) { return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "√2 step "+i}; });
+            })()
+        },
+        'young': {
+            name: "Young Well",
+            desc: "Balanced well-temperament keeping familiar keys clear. Smooth compromise.",
+            ratios: [{r:1.000,n:"0c",d:"C"}, {r:1.056,n:"94c",d:"C#"}, {r:1.120,n:"196c",d:"D"}, {r:1.188,n:"298c",d:"Eb"}, {r:1.254,n:"392c",d:"E"}, {r:1.335,n:"500c",d:"F"}, {r:1.408,n:"592c",d:"F#"}, {r:1.497,n:"698c",d:"G"}, {r:1.584,n:"796c",d:"G#"}, {r:1.676,n:"894c",d:"A"}, {r:1.782,n:"1000c",d:"Bb"}, {r:1.879,n:"1092c",d:"B"}]
+        },
+        'edo19': {
+            name: "19-EDO",
+            desc: "19 equal divisions. Better thirds than 12-TET, Renaissance ideal realized.",
+            ratios: (function() {
+                var steps = [0, 2, 3, 5, 6, 8, 9, 11, 13, 14, 16, 17];
+                return steps.map(function(s) { var c = (s/19)*1200; return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "Step "+s+"/19"}; });
+            })()
+        },
+        'edo22': {
+            name: "22-EDO",
+            desc: "22 equal divisions. Approximates 7-limit ratios. Indian classical connection.",
+            ratios: (function() {
+                var steps = [0, 2, 4, 5, 7, 9, 11, 13, 14, 16, 18, 20];
+                return steps.map(function(s) { var c = (s/22)*1200; return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "Step "+s+"/22"}; });
+            })()
+        },
+        'edo31': {
+            name: "31-EDO",
+            desc: "31 equal divisions. Nearly pure thirds and good fifths. Meantone perfected.",
+            ratios: (function() {
+                var steps = [0, 3, 5, 8, 10, 13, 15, 18, 21, 23, 26, 28];
+                return steps.map(function(s) { var c = (s/31)*1200; return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "Step "+s+"/31"}; });
+            })()
+        },
+        'edo53': {
+            name: "53-EDO",
+            desc: "53 equal divisions. Nearly indistinguishable from Pythagorean and 5-limit JI.",
+            ratios: (function() {
+                var steps = [0, 5, 9, 14, 17, 22, 26, 31, 36, 39, 44, 48];
+                return steps.map(function(s) { var c = (s/53)*1200; return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "Step "+s+"/53"}; });
+            })()
+        },
+        'bohlen': {
+            name: "Bohlen-Pierce",
+            desc: "Divides the tritave (3:1) into 13 steps. Alien and otherworldly.",
+            ratios: (function() {
+                return [0,1,2,3,4,5,6,7,8,9,10,11].map(function(i) {
+                    var c = (i * 1200 * Math.log2(3) / 13) % 1200;
+                    return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "BP "+i};
+                });
+            })()
+        },
+        'carlos_alpha': {
+            name: "Carlos Alpha",
+            desc: "Wendy Carlos's 78¢ step scale. Perfect fifths with unusual thirds.",
+            ratios: (function() {
+                return [0,1,2,3,4,5,6,7,8,9,10,11].map(function(i) {
+                    var c = (i * 78) % 1200;
+                    return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "α "+i};
+                });
+            })()
+        },
+        'wendy_beta': {
+            name: "Carlos Beta",
+            desc: "Wendy Carlos's 63.8¢ step scale. Good minor thirds, unique character.",
+            ratios: (function() {
+                return [0,1,2,3,4,5,6,7,8,9,10,11].map(function(i) {
+                    var c = (i * 63.8) % 1200;
+                    return {r: Math.pow(2, c/1200), n: c.toFixed(0)+"c", d: "β "+i};
+                });
+            })()
+        }
+    };
+
+    var VISUALIZATIONS = [
+        { id: 'chladni', label: "Chladni", desc: "Plate nodal lines derived from your frequency ratios.", explain: "Simulates a vibrating square plate with powder; nodes constructively create shapes. Mode numbers are pulled from the selected pitches, and brighter nodes appear where intervals reinforce. Cleaner harmonic sets produce crisp, repeated ridges, while beating intervals blur the pattern." },
+        { id: 'fifths', label: "Circle of 5ths", desc: "Classic fifths circle with your chord highlighted.", explain: "Each note lands at its position on the circle of fifths, and the filled polygon traces the harmonic footprint of the selected pitches. Colors cue drift, so you can see which steps stay close to just fifths." },
+        { id: 'waveform', label: "Waveform", desc: "Summed waveform with individual partial overlays.", explain: "A thick bright line shows the sum of all tuned frequencies, while faint colored lines trace each note’s waveform. Pay attention to swells or interference where partials align—that’s where beating and agreement happen." },
+        { id: 'spiral', label: "φ Spiral", desc: "See how well the notes line up with the golden ratio (φ).", explain: "Notes sit along a logarithmic spiral tied to φ: if they diverge from the golden ratio, they fall off the spiral." },
+        { id: 'spectrum', label: "Spectrum", desc: "Stacked frequency bars with beat-energy overlays.", explain: "Teal bars show each altered tuning frequency with numeric labels, while the thinner gold band visualizes the beat frequency (difference from 12‑TET). Compare heights and beat bars to judge spread and roughness." },
+        { id: 'network', label: "Network", desc: "Chord graph where edge weight tracks drift agreement.", explain: "Nodes sit on a circle and connect to every other note. Thicker, brighter edges mean the pair shares similar drift values, highlighting the most consonant links while thinner ones point to tension." },
+        { id: 'tonnetz', label: "Tonnetz", desc: "Neo-Riemannian lattice of fifths and thirds.", explain: "Horizontal steps are fifths, diagonals are thirds. Active notes glow while neighboring cells stay muted, showing how the chord sits inside the harmonic neighborhood." },
+        { id: 'constellation', label: "Constellation", desc: "Ratio map with points radiating from the center.", explain: "Notes scatter by ratio and drift distance, while connecting lines sketch the chord path. Symmetry appears when you have clean intervals, and the background stars reinforce the cosmic metaphor." },
+        { id: 'helix', label: "Helix", desc: "Double helix that climbs as pitch rises.", explain: "Two twisting strands climb vertically; each note sits on a crossbar and is colored by drift. The helix shows how your pitches ascend, making it easier to compare relative spacing." },
+        { id: 'lissajous', label: "Lissajous", desc: "Oscilloscope loops for every note pair.", explain: "Each pair of notes draws one loop governed by their ratio. Simple ratios form symmetric shapes, while complex ones create messy loops, so the visual symmetry reports consonance geometrically." }
+    ];
+    var CHORD_SUGGESTIONS = [
+        { label: 'maj', type: 'maj' },
+        { label: 'min', type: 'min' },
+        { label: 'sus2', type: 'sus2' },
+        { label: 'sus4', type: 'sus4' },
+        { label: 'dim', type: 'dim' },
+        { label: 'aug', type: 'aug' },
+        { label: '6', type: '6' },
+        { label: 'm6', type: 'm6' },
+        { label: '7', type: '7' },
+        { label: 'm7', type: 'm7' },
+        { label: 'maj7', type: 'maj7' },
+        { label: 'add9', type: 'add9' }
+    ];
+
+    var DEFAULT_TUNING_KEY = 'septimal';
+    var DEFAULT_VIZ = 'chladni';
+    var CURRENT_TUNING = TUNING_SYSTEMS[DEFAULT_TUNING_KEY];
+    var CURRENT_TUNING_KEY = DEFAULT_TUNING_KEY;
+    var CURRENT_VIZ = DEFAULT_VIZ;
+    var selectedNotes = new Set();
+    var synth = null;
+    var audioStarted = false;
+    var latestMetrics = [];
+    var canvas, ctx;
+
+    function initApp() {
+        canvas = document.getElementById('viz-canvas');
+        ctx = canvas.getContext('2d');
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        buildPiano();
+        buildChordSuggestionButtons();
+        buildTuningButtons();
+        buildVizButtons();
+        selectTuning(DEFAULT_TUNING_KEY);
+        checkUrlParams();
+        initCollapsibles();
+    }
+
+    function resizeCanvas() {
+        var wrapper = canvas.parentElement;
+        var dpr = window.devicePixelRatio || 1;
+        var rect = wrapper.getBoundingClientRect();
+        var width = Math.max(300, rect.width || wrapper.clientWidth || 300);
+        var height = 400;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        if (latestMetrics.length > 0) renderVisualization(CURRENT_VIZ, latestMetrics);
+    }
+
+    function checkUrlParams() {
+        try {
+            var params = new URLSearchParams(window.location.search);
+            var vizParam = params.get('viz');
+            var tunParam = params.get('tun');
+            var notesParam = params.get('notes');
+
+            if (vizParam && VISUALIZATIONS.some(function(v) { return v.id === vizParam; })) {
+                switchVisualization(vizParam);
+            }
+
+            if (tunParam && TUNING_SYSTEMS[tunParam]) {
+                selectTuning(tunParam);
+            }
+
+            if (notesParam) {
+                selectedNotes.clear();
+                notesParam.split(',').forEach(function(n) {
+                    if (n && n.trim()) {
+                        var note = n.trim();
+                        selectedNotes.add(note);
+                        var el = document.getElementById("key-" + note);
+                        if (el) el.classList.add('active');
+                    }
+                });
+                analyze();
+            }
+        } catch(e) {}
+    }
+
+    function buildTuningButtons() {
+        var container = document.getElementById('tuning-buttons-container');
+        if (!container) return;
+        container.innerHTML = "";
+        for (var cat in TUNING_CATEGORIES) {
+            var keys = TUNING_CATEGORIES[cat];
+            var label = document.createElement('div');
+            label.className = "tuning-group-label";
+            label.innerText = cat;
+            container.appendChild(label);
+            var row = document.createElement('div');
+            row.className = "tuning-buttons-row";
+            keys.forEach(function(key) {
+                var sys = TUNING_SYSTEMS[key];
+                if (!sys) return;
+                var btn = document.createElement('button');
+                btn.className = "t-btn";
+                btn.innerText = sys.name.split(" (")[0].split(" ")[0];
+                btn.id = "tbtn-" + key;
+                (function(k) { btn.onclick = function() { selectTuning(k); }; })(key);
+                row.appendChild(btn);
+            });
+            container.appendChild(row);
+        }
+    }
+
+    function buildVizButtons() {
+        var container = document.getElementById('viz-buttons');
+        if (!container) return;
+        container.innerHTML = "";
+        VISUALIZATIONS.forEach(function(viz) {
+            var btn = document.createElement('button');
+            btn.className = "viz-button";
+            btn.innerText = viz.label;
+            btn.dataset.viz = viz.id;
+            (function(v) { btn.onclick = function() { switchVisualization(v.id); }; })(viz);
+            container.appendChild(btn);
+        });
+        switchVisualization(CURRENT_VIZ);
+    }
+
+    function switchVisualization(id) {
+        CURRENT_VIZ = id;
+        var viz = VISUALIZATIONS.find(function(v) { return v.id === id; });
+        var descEl = document.getElementById('viz-desc');
+        var explainEl = document.getElementById('viz-explain');
+        if (descEl && viz) descEl.innerText = viz.desc;
+        if (explainEl && viz) explainEl.innerText = viz.explain || '';
+        document.querySelectorAll('.viz-button').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.viz === id);
+        });
+        renderVisualization(id, latestMetrics);
+    }
+
+    function selectTuning(key) {
+        if (!TUNING_SYSTEMS[key]) return;
+        CURRENT_TUNING_KEY = key;
+        CURRENT_TUNING = TUNING_SYSTEMS[key];
+        document.getElementById('tuning-title').innerText = CURRENT_TUNING.name;
+        document.getElementById('tuning-desc').innerText = CURRENT_TUNING.desc;
+        document.querySelectorAll('.t-btn').forEach(function(b) { b.classList.remove('active'); });
+        var btn = document.getElementById("tbtn-" + key);
+        if (btn) btn.classList.add('active');
+        renderReferenceTable();
+        analyze();
+    }
+
+    function renderReferenceTable() {
+        document.getElementById('ref-table-title').innerText = CURRENT_TUNING.name.split(" (")[0] + " Reference";
+        var tbody = document.getElementById('reference-body');
+        tbody.innerHTML = "";
+        CURRENT_TUNING.ratios.forEach(function(item, i) {
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + (INTERVAL_NAMES[i] || "Step "+i) + '</td><td>' + item.n + '</td><td>' + item.d + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    // ========== VISUALIZATION RENDERERS ==========
+
+    function renderVisualization(id, metrics) {
+        latestMetrics = metrics || [];
+        var w = canvas.width / (window.devicePixelRatio || 1);
+        var h = canvas.height / (window.devicePixelRatio || 1);
+        
+        ctx.fillStyle = '#151515';
+        ctx.fillRect(0, 0, w, h);
+        
+        if (!metrics || metrics.length === 0) {
+            ctx.fillStyle = '#444';
+            ctx.font = '16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Select notes on the piano to see visualizations', w/2, h/2);
+            return;
+        }
+        
+        var renderers = {
+            spiral: renderSpiral,
+            chladni: renderChladni,
+            waveform: renderWaveform,
+            fifths: renderFifths,
+            spectrum: renderSpectrum,
+            network: renderNetwork,
+            tonnetz: renderTonnetz,
+            constellation: renderConstellation,
+            helix: renderHelix,
+            lissajous: renderLissajous,
+            tree: renderTree
+        };
+        
+        if (renderers[id]) renderers[id](ctx, w, h, metrics);
+    }
+
+    function getSortedSelectedNotes() {
+        return Array.from(selectedNotes).sort(function(a, b) {
+            return Tonal.Note.midi(a) - Tonal.Note.midi(b);
+        });
+    }
+
+    function buildChordSuggestionButtons() {
+        var container = document.getElementById('chord-suggestion-buttons');
+        if (!container) return;
+        container.innerHTML = '';
+        CHORD_SUGGESTIONS.forEach(function(entry) {
+            var btn = document.createElement('button');
+            btn.className = 'chord-suggestion-btn';
+            btn.innerText = entry.label;
+            btn.dataset.type = entry.type;
+            btn.title = entry.type;
+            btn.onclick = function() { applyChordSuggestion(entry.type); };
+            container.appendChild(btn);
+        });
+    }
+
+    function syncKeyHighlights() {
+        document.querySelectorAll('#piano .key').forEach(function(keyEl) {
+            var note = keyEl.id.replace('key-', '');
+            keyEl.classList.toggle('active', selectedNotes.has(note));
+        });
+    }
+
+    function updateChordSuggestionsVisibility(rootNote) {
+        var container = document.getElementById('chord-suggestions');
+        if (!container) return;
+        var visible = selectedNotes.size > 0;
+        container.style.display = visible ? 'block' : 'none';
+    }
+
+    function applyChordSuggestion(type) {
+        var root = getSortedSelectedNotes()[0];
+        if (!root) return;
+        var chord = Tonal.Chord.getChord(type, root);
+        if (!chord || !Array.isArray(chord.intervals) || chord.intervals.length === 0) return;
+        var chordNotes = chord.intervals.map(function(interval) {
+            return Tonal.Note.transpose(root, interval);
+        });
+        selectedNotes.clear();
+        syncKeyHighlights();
+        chordNotes.forEach(function(note) {
+            var candidates = [note, Tonal.Note.enharmonic(note)].filter(Boolean);
+            var applied = false;
+            candidates.forEach(function(candidate) {
+                if (applied) return;
+                var keyEl = document.getElementById('key-' + candidate);
+                if (!keyEl) return;
+                selectedNotes.add(candidate);
+                keyEl.classList.add('active');
+                applied = true;
+            });
+        });
+        analyze();
+        if (selectedNotes.size > 0) {
+            initAudio();
+            if (synth) synth.triggerAttackRelease(Array.from(selectedNotes), '8n');
+        }
+    }
+
+    function roundRectPath(ctx, x, y, w, h, r) {
+        var radius = Math.max(0, Math.min(r, Math.min(w, h) / 2));
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.arcTo(x + w, y, x + w, y + h, radius);
+        ctx.arcTo(x + w, y + h, x, y + h, radius);
+        ctx.arcTo(x, y + h, x, y, radius);
+        ctx.arcTo(x, y, x + w, y, radius);
+        ctx.closePath();
+    }
+
+    function driftColor(drift) {
+        var t = Math.max(-20, Math.min(20, drift)) / 20;
+        if (t < 0) {
+            return 'rgb(' + Math.round(255) + ',' + Math.round(107 + t * 60) + ',' + Math.round(107 + t * 60) + ')';
+        } else {
+            return 'rgb(' + Math.round(81 + (1-t) * 100) + ',' + Math.round(255) + ',' + Math.round(173) + ')';
+        }
+    }
+
+    function renderSpiral(ctx, w, h, metrics) {
+        var cx = w / 2, cy = h / 2;
+        var count = metrics.length;
+        var a = Math.max(40, Math.min(w, h) / 6);
+        var maxRadius = Math.min(w, h) / 2 - 40;
+        var tMax = TAU * 2;
+        ctx.strokeStyle = '#2a2a2a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (var t = 0; t <= tMax; t += 0.05) {
+            var r = a * Math.pow(PHI, t / TAU);
+            var x = cx + Math.min(maxRadius, r) * Math.cos(t);
+            var y = cy + Math.min(maxRadius, r) * Math.sin(t);
+            if (t === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        if (count === 0) return;
+        var baseFreq = metrics[0].perfFreq || 440;
+        var prevFreq = baseFreq;
+        metrics.forEach(function(m, i) {
+            var freq = m.perfFreq || baseFreq;
+            var logRatio = Math.log(freq / baseFreq) / Math.log(PHI);
+            var t = logRatio * TAU;
+            var goldenRadius = a * Math.pow(PHI, logRatio);
+            var ratioToPrev = i === 0 ? PHI : freq / prevFreq;
+            var deviation = Math.log(ratioToPrev / PHI) / Math.log(PHI);
+            var offset = deviation * 50;
+            var radius = Math.max(30, Math.min(maxRadius, goldenRadius + offset));
+            var x = cx + radius * Math.cos(t);
+            var y = cy + radius * Math.sin(t);
+            prevFreq = freq;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 26, 0, TAU);
+            ctx.fillStyle = driftColor(m.drift);
+            ctx.fill();
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(formatNote(m.note), x, y - 4);
+            ctx.font = '10px sans-serif';
+            ctx.fillText(m.drift.toFixed(1) + '¢', x, y + 10);
+        });
+
+        var avgDrift = metrics.reduce(function(s, m) { return s + m.drift; }, 0) / metrics.length;
+        ctx.fillStyle = '#ffd369';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.fillText('Avg: ' + avgDrift.toFixed(1) + '¢', cx, cy);
+    }
+
+    function renderTonnetz(ctx, w, h, metrics) {
+        var noteSet = new Set(metrics.map(function(m) { return Tonal.Note.pitchClass(m.note); }));
+        var enharmonic = {'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#'};
+        
+        // Tonnetz layout: fifths horizontally, major thirds diagonally up-right
+        var fifths = ['F', 'C', 'G', 'D', 'A', 'E', 'B'];
+        var cellW = 70, cellH = 55;
+        var startX = (w - cellW * 6) / 2;
+        var startY = 60;
+        
+        for (var row = 0; row < 5; row++) {
+            for (var col = 0; col < 6; col++) {
+                // Calculate note based on Tonnetz relationships
+                var baseIdx = (col + row * 4) % 12;
+                var fifthsIdx = (col - 2 + 7) % 7;
+                var note = fifths[fifthsIdx];
+                
+                // Adjust for row (each row shifts by major third = 4 semitones)
+                var semitoneShift = row * 4;
+                var noteIdx = (NOTE_NAMES_TONAL.indexOf(note) + semitoneShift) % 12;
+                var displayNote = NOTE_NAMES_TONAL[noteIdx];
+                
+                var x = startX + col * cellW + (row % 2) * (cellW / 2);
+                var y = startY + row * cellH;
+                
+                var isActive = noteSet.has(displayNote);
+                if (!isActive && enharmonic[displayNote]) isActive = noteSet.has(enharmonic[displayNote]);
+                if (!isActive) {
+                    for (var flat in enharmonic) {
+                        if (enharmonic[flat] === displayNote && noteSet.has(flat)) isActive = true;
+                    }
+                }
+                
+                // Draw hexagon-ish rectangle
+                roundRectPath(ctx, x - 28, y - 20, 56, 40, 8);
+                ctx.fillStyle = isActive ? '#4a90e2' : '#252525';
+                ctx.fill();
+                ctx.strokeStyle = isActive ? '#82ffad' : '#333';
+                ctx.lineWidth = isActive ? 3 : 1;
+                ctx.stroke();
+                
+                ctx.fillStyle = isActive ? '#fff' : '#555';
+                ctx.font = (isActive ? 'bold ' : '') + '13px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(displayNote.replace('#', '♯').replace('b', '♭'), x, y);
+            }
+        }
+        
+        // Draw relationship lines
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1;
+        // Horizontal lines (fifths)
+        for (var r = 0; r < 5; r++) {
+            for (var c = 0; c < 5; c++) {
+                var x1 = startX + c * cellW + (r % 2) * (cellW / 2) + 28;
+                var y1 = startY + r * cellH;
+                var x2 = startX + (c + 1) * cellW + (r % 2) * (cellW / 2) - 28;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y1);
+                ctx.stroke();
+            }
+        }
+    }
+
+    function renderWaveform(ctx, w, h, metrics) {
+        var midY = h / 2;
+        var amp = h / 3;
+        var baseFreq = metrics[0] ? metrics[0].perfFreq : 440;
+        
+        // Draw grid
+        ctx.strokeStyle = '#252525';
+        ctx.lineWidth = 1;
+        for (var i = 0; i < 10; i++) {
+            var y = (i / 10) * h;
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(w, y);
+            ctx.stroke();
+        }
+        
+        // Draw composite wave
+        ctx.beginPath();
+        ctx.moveTo(0, midY);
+        
+        for (var x = 0; x < w; x++) {
+            var t = (x / w) * 8 * PI;
+            var y = 0;
+            metrics.forEach(function(m, idx) {
+                var freqRatio = m.perfFreq / baseFreq;
+                var amplitude = 1 / (idx + 1);
+                y += amplitude * Math.sin(t * freqRatio);
+            });
+            y = midY + y * amp / metrics.length;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        
+        ctx.strokeStyle = '#82ffad';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Draw individual waves faintly
+        metrics.forEach(function(m, idx) {
+            ctx.beginPath();
+            var freqRatio = m.perfFreq / baseFreq;
+            for (var x = 0; x < w; x++) {
+                var t = (x / w) * 8 * PI;
+                var y = midY + (amp * 0.3) * Math.sin(t * freqRatio);
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = driftColor(m.drift);
+            ctx.globalAlpha = 0.3;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+        });
+        
+        // Legend
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'left';
+        metrics.forEach(function(m, i) {
+            ctx.fillStyle = driftColor(m.drift);
+            ctx.fillRect(10, 15 + i * 20, 12, 12);
+            ctx.fillStyle = '#aaa';
+            ctx.fillText(formatNote(m.note) + ' (' + m.perfFreq.toFixed(1) + ' Hz)', 28, 25 + i * 20);
+        });
+    }
+
+    function renderSpectrum(ctx, w, h, metrics) {
+        var barH = Math.min(40, (h - 80) / metrics.length);
+        var startY = 40;
+        var maxFreq = Math.max.apply(null, metrics.map(function(m) { return m.perfFreq; }));
+        var maxBeat = Math.max.apply(null, metrics.map(function(m) { return m.beat; })) || 1;
+        
+        ctx.fillStyle = '#888';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Frequency & Beat Spectrum', w / 2, 20);
+        
+        metrics.forEach(function(m, i) {
+            var y = startY + i * (barH + 10);
+            
+            // Note label
+            ctx.fillStyle = '#ddd';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(formatNote(m.note), 60, y + barH / 2 + 4);
+            
+            // Frequency bar
+            var freqW = (m.perfFreq / maxFreq) * (w - 180);
+            ctx.fillStyle = driftColor(m.drift);
+            ctx.fillRect(70, y, freqW, barH * 0.6);
+            
+            // Beat bar (separate band)
+            var beatW = (m.beat / maxBeat) * (w - 180) * 0.5;
+            var beatY = y + barH * 0.68;
+            ctx.fillStyle = 'rgba(255, 211, 105, 0.65)';
+            ctx.fillRect(70, beatY, beatW, barH * 0.3);
+            
+            // Values
+            ctx.fillStyle = '#aaa';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(m.perfFreq.toFixed(1) + ' Hz', 75 + freqW, y + barH * 0.4);
+            ctx.fillStyle = '#ffd369';
+            var beatLabelX = 70 + beatW + 8;
+            if (beatLabelX < 140) beatLabelX = 140;
+            ctx.fillText('Beat: ' + m.beat.toFixed(2) + ' Hz', beatLabelX, beatY + barH * 0.25);
+        });
+        
+        // Legend
+        ctx.fillStyle = '#82ffad';
+        ctx.fillRect(w - 150, h - 40, 15, 10);
+        ctx.fillStyle = '#aaa';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('Frequency', w - 130, h - 32);
+        
+        ctx.fillStyle = '#ffd369';
+        ctx.fillRect(w - 150, h - 25, 15, 10);
+        ctx.fillStyle = '#aaa';
+        ctx.fillText('Beat freq', w - 130, h - 17);
+    }
+
+    function renderNetwork(ctx, w, h, metrics) {
+        if (metrics.length < 2) {
+            ctx.fillStyle = '#666';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Need 2+ notes for network view', w/2, h/2);
+            return;
+        }
+        
+        var cx = w / 2, cy = h / 2;
+        var radius = Math.min(w, h) / 2 - 80;
+        
+        // Position nodes in a circle
+        var nodes = metrics.map(function(m, i) {
+            var angle = (i / metrics.length) * TAU - PI / 2;
+            return {
+                x: cx + radius * Math.cos(angle),
+                y: cy + radius * Math.sin(angle),
+                note: m.note,
+                drift: m.drift
+            };
+        });
+        
+        // Draw edges (interval relationships)
+        for (var i = 0; i < nodes.length; i++) {
+            for (var j = i + 1; j < nodes.length; j++) {
+                var driftDiff = Math.abs(nodes[i].drift - nodes[j].drift);
+                var opacity = Math.max(0.1, 1 - driftDiff / 30);
+                var lineWidth = Math.max(1, 4 - driftDiff / 10);
+                
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = 'rgba(130, 255, 173, ' + opacity + ')';
+                ctx.lineWidth = lineWidth;
+                ctx.stroke();
+            }
+        }
+        
+        // Draw nodes
+        nodes.forEach(function(node) {
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 30, 0, TAU);
+            ctx.fillStyle = driftColor(node.drift);
+            ctx.fill();
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(formatNote(node.note), node.x, node.y - 5);
+            ctx.font = '10px sans-serif';
+            ctx.fillText(node.drift.toFixed(1) + '¢', node.x, node.y + 10);
+        });
+    }
+
+    function renderFifths(ctx, w, h, metrics) {
+        var cx = w / 2, cy = h / 2;
+        var r = Math.min(w, h) / 2 - 60;
+        var fifthsOrder = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F'];
+        var enharmonic = {'C#': 'Db', 'G#': 'Ab', 'D#': 'Eb', 'A#': 'Bb'};
+        
+        var noteSet = new Set(metrics.map(function(m) {
+            var pc = Tonal.Note.pitchClass(m.note);
+            return enharmonic[pc] || pc;
+        }));
+        
+        // Draw outer circle
+        ctx.beginPath();
+        ctx.arc(cx, cy, r + 10, 0, TAU);
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        // Draw connecting lines for active notes
+        var activeIndices = [];
+        fifthsOrder.forEach(function(note, i) {
+            if (noteSet.has(note) || noteSet.has(note.replace('b', '#'))) {
+                activeIndices.push(i);
+            }
+        });
+        
+        if (activeIndices.length > 1) {
+            ctx.beginPath();
+            activeIndices.forEach(function(idx, i) {
+                var angle = (idx * 30 - 90) * PI / 180;
+                var x = cx + (r - 30) * Math.cos(angle);
+                var y = cy + (r - 30) * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(74, 144, 226, 0.2)';
+            ctx.fill();
+            ctx.strokeStyle = '#4a90e2';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+        
+        // Draw notes
+        fifthsOrder.forEach(function(note, i) {
+            var angle = (i * 30 - 90) * PI / 180;
+            var x = cx + r * Math.cos(angle);
+            var y = cy + r * Math.sin(angle);
+            var isActive = noteSet.has(note) || noteSet.has(note.replace('b', '#'));
+            
+            ctx.beginPath();
+            ctx.arc(x, y, 26, 0, TAU);
+            ctx.fillStyle = isActive ? '#4a90e2' : '#252525';
+            ctx.fill();
+            ctx.strokeStyle = isActive ? '#82ffad' : '#444';
+            ctx.lineWidth = isActive ? 3 : 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = isActive ? '#fff' : '#666';
+            ctx.font = (isActive ? 'bold ' : '') + '13px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(note.replace('#', '♯').replace('b', '♭'), x, y);
+        });
+        
+        // Center label
+        ctx.fillStyle = '#ffd369';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.fillText('Circle of', cx, cy - 8);
+        ctx.fillText('Fifths', cx, cy + 10);
+    }
+
+    function renderConstellation(ctx, w, h, metrics) {
+        var cx = w / 2, cy = h / 2;
+        
+        // Star background
+        for (var i = 0; i < 80; i++) {
+            var x = Math.random() * w;
+            var y = Math.random() * h;
+            var size = Math.random() * 2 + 0.5;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, TAU);
+            ctx.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.4 + 0.1) + ')';
+            ctx.fill();
+        }
+        
+        // Position notes based on frequency ratios
+        var baseFreq = metrics[0] ? metrics[0].perfFreq : 440;
+        var points = metrics.map(function(m, i) {
+            var freqRatio = m.perfFreq / baseFreq;
+            var angle = (freqRatio - 1) * 3 * PI + (i * 0.8);
+            var dist = 50 + Math.abs(m.drift) * 3 + i * 40;
+            dist = Math.min(dist, Math.min(w, h) / 2 - 50);
+            return {
+                x: cx + dist * Math.cos(angle),
+                y: cy + dist * Math.sin(angle),
+                note: m.note,
+                drift: m.drift
+            };
+        });
+        
+        // Draw constellation lines
+        ctx.strokeStyle = 'rgba(74, 144, 226, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        points.forEach(function(p, i) {
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        });
+        ctx.stroke();
+        
+        // Draw stars (notes)
+        points.forEach(function(p) {
+            // Glow
+            var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 30);
+            gradient.addColorStop(0, driftColor(p.drift));
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(p.x - 30, p.y - 30, 60, 60);
+            
+            // Star
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 16, 0, TAU);
+            ctx.fillStyle = driftColor(p.drift);
+            ctx.fill();
+            
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(formatNote(p.note), p.x, p.y);
+        });
+    }
+
+    function renderHelix(ctx, w, h, metrics) {
+        var cx = w / 2;
+        var helixW = 100;
+        var turns = 2;
+        var points = 80;
+        
+        // Draw helix strands
+        var strand1 = [], strand2 = [];
+        for (var i = 0; i <= points; i++) {
+            var t = (i / points) * turns * TAU;
+            var y = 30 + (i / points) * (h - 60);
+            var x1 = cx + helixW * Math.cos(t);
+            var x2 = cx + helixW * Math.cos(t + PI);
+            strand1.push({x: x1, y: y});
+            strand2.push({x: x2, y: y});
+        }
+        
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        
+        // Draw strand 1
+        ctx.beginPath();
+        strand1.forEach(function(p, i) {
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        });
+        ctx.strokeStyle = '#4a90e2';
+        ctx.stroke();
+        
+        // Draw strand 2
+        ctx.beginPath();
+        strand2.forEach(function(p, i) {
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+        });
+        ctx.strokeStyle = '#82ffad';
+        ctx.stroke();
+        
+        // Place notes as "base pairs"
+        metrics.forEach(function(m, i) {
+            var progress = (i + 0.5) / metrics.length;
+            var t = progress * turns * TAU;
+            var y = 30 + progress * (h - 60);
+            var x1 = cx + helixW * Math.cos(t);
+            var x2 = cx + helixW * Math.cos(t + PI);
+            
+            // Connecting bar
+            ctx.beginPath();
+            ctx.moveTo(x1, y);
+            ctx.lineTo(x2, y);
+            ctx.strokeStyle = driftColor(m.drift);
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Note bubble
+            ctx.beginPath();
+            ctx.arc(x1, y, 20, 0, TAU);
+            ctx.fillStyle = driftColor(m.drift);
+            ctx.fill();
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(formatNote(m.note), x1, y);
+            
+            // Drift label on other side
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            ctx.fillText(m.drift.toFixed(1) + '¢', x2, y);
+        });
+    }
+
+    function renderLissajous(ctx, w, h, metrics) {
+        if (metrics.length < 2) {
+            ctx.fillStyle = '#666';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Need 2+ notes for Lissajous curves', w/2, h/2);
+            return;
+        }
+        
+        var cx = w / 2, cy = h / 2;
+        var amp = Math.min(w, h) / 2 - 50;
+        
+        // Draw multiple curves for all note pairs
+        var colors = ['#82ffad', '#4a90e2', '#ffd369', '#ff6b6b', '#a78bfa'];
+        var colorIdx = 0;
+        
+        for (var i = 0; i < metrics.length; i++) {
+            for (var j = i + 1; j < metrics.length; j++) {
+                var freqA = metrics[i].perfFreq;
+                var freqB = metrics[j].perfFreq;
+                var ratio = freqB / freqA;
+                var phase = (j - i) * PI / 8;
+                
+                ctx.beginPath();
+                for (var t = 0; t < 6 * PI; t += 0.02) {
+                    var x = cx + amp * 0.8 * Math.sin(t);
+                    var y = cy + amp * 0.8 * Math.sin(t * ratio + phase);
+                    if (t === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                
+                ctx.strokeStyle = colors[colorIdx % colors.length];
+                ctx.globalAlpha = 0.6;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+                colorIdx++;
+            }
+        }
+        
+        // Legend
+        ctx.font = '11px sans-serif';
+        colorIdx = 0;
+        var legendY = 20;
+        for (var i = 0; i < metrics.length; i++) {
+            for (var j = i + 1; j < metrics.length; j++) {
+                ctx.fillStyle = colors[colorIdx % colors.length];
+                ctx.fillRect(10, legendY - 8, 12, 12);
+                ctx.fillStyle = '#aaa';
+                ctx.textAlign = 'left';
+                ctx.fillText(formatNote(metrics[i].note) + ':' + formatNote(metrics[j].note), 28, legendY);
+                legendY += 18;
+                colorIdx++;
+            }
+        }
+    }
+
+    function renderChladni(ctx, w, h, metrics) {
+        var size = Math.min(w, h) - 60;
+        var startX = (w - size) / 2;
+        var startY = (h - size) / 2;
+        
+        // Use frequencies to determine mode numbers
+        var baseFreq = metrics[0] ? metrics[0].perfFreq : 440;
+        var n = Math.round(2 + metrics.length * 1.5);
+        var m = Math.round(2 + (metrics.length > 1 ? metrics[1].perfFreq / baseFreq : 1) * 2);
+        
+        // Draw plate border
+        ctx.strokeStyle = '#444';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(startX, startY, size, size);
+        
+        // Calculate Chladni pattern
+        var resolution = 150;
+        var cellSize = size / resolution;
+        
+        for (var px = 0; px < resolution; px++) {
+            for (var py = 0; py < resolution; py++) {
+                var x = (px / resolution - 0.5) * PI * n;
+                var y = (py / resolution - 0.5) * PI * m;
+                
+                // Chladni equation: cos(nx)cos(my) - cos(mx)cos(ny) = 0
+                var value = Math.cos(x) * Math.cos(y * m / n) - Math.cos(y) * Math.cos(x * m / n);
+                
+                // Add harmonics based on other notes
+                metrics.slice(1).forEach(function(met, idx) {
+                    var freq = met.perfFreq / baseFreq;
+                    value += 0.3 * Math.sin(x * freq) * Math.sin(y * freq);
+                });
+                
+                // Draw nodal lines (where value ≈ 0)
+                if (Math.abs(value) < 0.2) {
+                    var brightness = 1 - Math.abs(value) / 0.2;
+                    ctx.fillStyle = 'rgba(130, 255, 173, ' + brightness * 0.9 + ')';
+                    ctx.fillRect(startX + px * cellSize, startY + py * cellSize, cellSize + 0.5, cellSize + 0.5);
+                }
+            }
+        }
+        
+        // Label
+        ctx.fillStyle = '#888';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Chladni pattern (n=' + n + ', m=' + m + ')', w / 2, h - 15);
+    }
+
+    function renderTree(ctx, w, h, metrics) {
+        if (metrics.length === 0) return;
+        
+        var root = metrics[0];
+        var rootX = w / 2, rootY = h - 60;
+        
+        // Draw trunk
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 8;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(rootX, rootY);
+        ctx.lineTo(rootX, rootY - 60);
+        ctx.stroke();
+        
+        // Root node
+        ctx.beginPath();
+        ctx.arc(rootX, rootY, 30, 0, TAU);
+        ctx.fillStyle = driftColor(root.drift);
+        ctx.fill();
+        ctx.strokeStyle = '#111';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        ctx.fillStyle = '#111';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(formatNote(root.note), rootX, rootY - 4);
+        ctx.font = '10px sans-serif';
+        ctx.fillText(root.drift.toFixed(1) + '¢', rootX, rootY + 10);
+        
+        // Branch nodes
+        var branchY = [rootY - 120, rootY - 200, rootY - 270];
+        var branchNotes = metrics.slice(1);
+        
+        branchNotes.forEach(function(m, i) {
+            var level = Math.min(Math.floor(i / 2), 2);
+            var spread = (i % 2 === 0 ? -1 : 1) * (60 + Math.floor(i / 2) * 40);
+            var x = rootX + spread;
+            var y = branchY[level];
+            
+            // Branch line
+            var parentY = level === 0 ? rootY - 60 : branchY[level - 1];
+            ctx.strokeStyle = '#444';
+            ctx.lineWidth = Math.max(2, 6 - level * 2);
+            ctx.beginPath();
+            ctx.moveTo(rootX + (level === 0 ? 0 : spread * 0.3), parentY);
+            ctx.quadraticCurveTo(x, parentY + 30, x, y + 25);
+            ctx.stroke();
+            
+            // Node
+            ctx.beginPath();
+            ctx.arc(x, y, 25 - level * 3, 0, TAU);
+            ctx.fillStyle = driftColor(m.drift);
+            ctx.fill();
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold ' + (13 - level) + 'px sans-serif';
+            ctx.fillText(formatNote(m.note), x, y - 3);
+            ctx.font = (10 - level) + 'px sans-serif';
+            ctx.fillText(m.drift.toFixed(1) + '¢', x, y + 10);
+        });
+        
+        // Title
+        ctx.fillStyle = '#666';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Root: ' + formatNote(root.note), 50, 25);
+    }
+
+    function shadeColor(color, percent) {
+        // Simple color shading
+        var match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+        if (!match) return color;
+        var r = Math.max(0, Math.min(255, parseInt(match[1]) + percent));
+        var g = Math.max(0, Math.min(255, parseInt(match[2]) + percent));
+        var b = Math.max(0, Math.min(255, parseInt(match[3]) + percent));
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    // ========== AUDIO & PIANO ==========
+
+    function initAudio() {
+        if (!audioStarted) {
+            Tone.start();
+            synth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: "triangle" },
+                envelope: { attack: 0.02, decay: 0.1, sustain: 0.3, release: 0.8 }
+            }).toDestination();
+            synth.volume.value = -12;
+            audioStarted = true;
+        }
+    }
+
+    function buildPiano() {
+        var piano = document.getElementById('piano-keys');
+        if (!piano) return;
+        
+        for (var oct = startOctave; oct <= endOctave; oct++) {
+            NOTE_NAMES_TONAL.forEach(function(noteTonal, idx) {
+                var noteId = noteTonal + oct;
+                var noteDisplay = NOTE_NAMES[idx];
+                var key = document.createElement('div');
+                var isBlack = noteTonal.indexOf("#") !== -1 || noteTonal.indexOf("b") !== -1;
+                key.className = isBlack ? "key black-key" : "key white-key";
+                key.id = "key-" + noteId;
+                (function(n) { key.onclick = function() { toggleNote(n); }; })(noteId);
+                
+                var topLabel = document.createElement('span');
+                topLabel.className = 'key-label-top';
+                topLabel.innerText = INV_KEY_MAP[noteId] || "";
+                key.appendChild(topLabel);
+
+                var bottomLabel = document.createElement('span');
+                bottomLabel.className = 'key-label-bottom';
+                bottomLabel.innerText = noteDisplay;
+                key.appendChild(bottomLabel);
+                
+                piano.appendChild(key);
+            });
+        }
+    }
+
+    function toggleSection(id) {
+        var target = document.getElementById(id);
+        var indicator = document.getElementById(id + '-ind');
+        if (!target || !indicator) return;
+        var collapsed = target.getAttribute('data-collapsed') === 'true';
+        collapsed = !collapsed;
+        target.setAttribute('data-collapsed', collapsed ? 'true' : 'false');
+        target.style.display = collapsed ? 'none' : 'block';
+        indicator.innerText = collapsed ? '▼' : '▲';
+    }
+
+    function initCollapsibles() {
+        ['sound-controls', 'analysis-content'].forEach(function(id) {
+            var el = document.getElementById(id);
+            var ind = document.getElementById(id + '-ind');
+            if (!el || !ind) return;
+            el.style.display = 'block';
+            el.setAttribute('data-collapsed', 'false');
+            ind.innerText = '▲';
+        });
+    }
+
+    function scrollToPiano() {
+        var piano = document.getElementById('piano');
+        if (!piano) return;
+        piano.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function moveSection(id, direction) {
+        var stack = document.getElementById('section-stack');
+        if (!stack) return;
+        var section = stack.querySelector('[data-section="' + id + '"]');
+        if (!section) return;
+        var children = Array.from(stack.children);
+        var idx = children.indexOf(section);
+        if (idx === -1) return;
+        if (direction === 'top') {
+            if (idx > 0) stack.insertBefore(section, children[0]);
+            return;
+        }
+        if (direction === 'up' && idx > 0) {
+            stack.insertBefore(section, children[idx - 1]);
+        } else if (direction === 'down' && idx < children.length - 1) {
+            stack.insertBefore(children[idx + 1], section);
+        }
+    }
+
+    window.addEventListener('keydown', function(e) {
+        var note = KEY_MAP[e.key.toLowerCase()];
+        if (note && !e.repeat) toggleNote(note);
+    });
+
+    function toggleNote(note) {
+        initAudio();
+        var el = document.getElementById("key-" + note);
+        if (selectedNotes.has(note)) {
+            selectedNotes.delete(note);
+            if (el) el.classList.remove('active');
+        } else {
+            selectedNotes.add(note);
+            if (el) el.classList.add('active');
+            if (synth) synth.triggerAttackRelease(note, "16n");
+        }
+        analyze();
+    }
+
+    function formatNote(note) {
+        if (!note) return '';
+        return note.replace(/([A-G])#/g, '$1♯').replace(/([A-G])b/g, '$1♭');
+    }
+
+    function analyze() {
+        var notes = getSortedSelectedNotes();
+        
+        var analysisSection = document.getElementById('analysis-section');
+        var vizSection = document.getElementById('viz-section');
+        var analysisWrap = document.querySelector('[data-section="analysis"]');
+        var vizWrap = document.querySelector('[data-section="viz"]');
+        var chordNameEl = document.getElementById('chordName');
+        updateChordSuggestionsVisibility(notes[0]);
+        
+        if (notes.length === 0) {
+            chordNameEl.innerHTML = "---";
+            if (analysisSection) analysisSection.style.display = "none";
+            if (vizSection) vizSection.style.display = "none";
+            if (analysisWrap) analysisWrap.style.display = "none";
+            if (vizWrap) vizWrap.style.display = "none";
+            latestMetrics = [];
+            renderVisualization(CURRENT_VIZ, []);
+            return;
+        }
+        if (analysisWrap) analysisWrap.style.display = "";
+        if (vizWrap) vizWrap.style.display = "";
+        
+        // Detect all possible chord names
+        var detected = Tonal.Chord.detect(notes);
+        if (detected.length > 0) {
+            var primary = formatNote(detected[0]);
+            var alts = detected.slice(1, 4).map(formatNote).join(' · ');
+            chordNameEl.innerHTML = primary + (alts ? '<span class="chord-alt">' + alts + '</span>' : '');
+        } else {
+            chordNameEl.innerHTML = "Custom Voicing";
+        }
+        
+        var rootFreq = Tonal.Note.freq(notes[0]);
+        var tbody = document.getElementById('analysis-body');
+        tbody.innerHTML = "";
+        
+        var noteMetrics = notes.map(function(note) {
+            var tetFreq = Tonal.Note.freq(note);
+            var semi = Tonal.Interval.semitones(Tonal.Interval.distance(notes[0], note));
+            var oct = Math.floor(semi / 12);
+            var idx = ((semi % 12) + 12) % 12;
+            var ratio = CURRENT_TUNING.ratios[idx];
+            var perfFreq = rootFreq * (ratio ? ratio.r : 1) * Math.pow(2, oct);
+            var drift = 1200 * Math.log2(perfFreq / tetFreq);
+            var beat = Math.abs(perfFreq - tetFreq);
+            return { note: note, tetFreq: tetFreq, perfFreq: perfFreq, drift: drift, beat: beat, idx: idx, oct: oct };
+        });
+        
+        noteMetrics.forEach(function(m) {
+            var driftClass = Math.abs(m.drift) < 2 ? '' : (m.drift > 0 ? 'drift-pos' : 'drift-neg');
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + formatNote(m.note) + '</td><td>' + m.tetFreq.toFixed(1) + '</td><td>' + m.perfFreq.toFixed(1) + '</td><td>' + m.beat.toFixed(2) + '</td><td class="' + driftClass + '">' + m.drift.toFixed(1) + '¢</td>';
+            tbody.appendChild(tr);
+        });
+        
+        if (analysisSection) analysisSection.style.display = "block";
+        if (vizSection) vizSection.style.display = "block";
+        resizeCanvas();
+        
+        latestMetrics = noteMetrics;
+        renderVisualization(CURRENT_VIZ, noteMetrics);
+    }
+
+    window.playCurrent = function(mode, type) {
+        initAudio();
+        var notes = Array.from(selectedNotes).sort(function(a, b) {
+            return Tonal.Note.midi(a) - Tonal.Note.midi(b);
+        });
+        if (notes.length === 0 || !synth) return;
+        
+        var freqs = notes.map(function(n) {
+            if (type === 'tet') return Tonal.Note.freq(n);
+            var semi = Tonal.Interval.semitones(Tonal.Interval.distance(notes[0], n));
+            var oct = Math.floor(semi / 12);
+            var idx = ((semi % 12) + 12) % 12;
+            var ratio = CURRENT_TUNING.ratios[idx];
+            return Tonal.Note.freq(notes[0]) * (ratio ? ratio.r : 1) * Math.pow(2, oct);
+        });
+        
+        if (mode === 'chord') {
+            synth.triggerAttackRelease(freqs, 0.6);
+        } else {
+            var now = Tone.now();
+            freqs.forEach(function(f, i) {
+                synth.triggerAttackRelease(f, "8n", now + (i * 0.25));
+            });
+        }
+    };
+
+    window.compare = function(mode) {
+        playCurrent(mode, 'tet');
+        var delay = mode === 'chord' ? 800 : (selectedNotes.size * 250) + 300;
+        setTimeout(function() { playCurrent(mode, 'just'); }, delay);
+    };
+
+    window.clearAll = function() {
+        selectedNotes.clear();
+        syncKeyHighlights();
+        analyze();
+    };
+
+    function buildShareUrl(anchor) {
+        var params = new URLSearchParams();
+        if (selectedNotes.size > 0) params.set('notes', Array.from(selectedNotes).join(','));
+        if (CURRENT_VIZ && CURRENT_VIZ !== DEFAULT_VIZ) params.set('viz', CURRENT_VIZ);
+        if (CURRENT_TUNING_KEY && CURRENT_TUNING_KEY !== DEFAULT_TUNING_KEY) params.set('tun', CURRENT_TUNING_KEY);
+        var base = window.location.origin + window.location.pathname;
+        var query = params.toString();
+        var url = query ? (base + '?' + query) : base;
+        if (anchor) url += anchor;
+        return url;
+    }
+
+    function copyShareLink(anchor, statusText) {
+        var url = buildShareUrl(anchor);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url);
+        }
+        var statusEl = document.getElementById('status-msg');
+        if (statusEl) {
+            statusEl.innerText = statusText;
+            setTimeout(function() { statusEl.innerText = "Ready"; }, 2000);
+        }
+        return url;
+    }
+
+    window.generateLink = function() {
+        copyShareLink('', "Link Copied!");
+    };
+
+    window.shareVisualization = function() {
+        copyShareLink('#viz', "Viz Link Copied!");
+    };
+
+    window.toggleSection = toggleSection;
+    window.moveSection = moveSection;
+
+    window.onload = initApp;
+})();
+</script>
+</body>
+</html>

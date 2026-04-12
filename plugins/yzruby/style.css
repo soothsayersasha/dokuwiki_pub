@@ -1,0 +1,82 @@
+.dokuwiki .yzruby {
+    vertical-align: middle;
+    line-height: 1.12;
+    --yzruby-base: 1.48;
+    --yzruby-scale: 1;
+    font-size: calc(var(--yzruby-base) * var(--yzruby-scale) * 1em);
+}
+
+.dokuwiki .yzruby.yiv-font {
+    --yzruby-base: 1.48;
+}
+
+.dokuwiki .yzruby.yiv-bold {
+    --yzruby-base: 1.88;
+}
+
+.dokuwiki .yzruby.yiv-italic {
+    --yzruby-base: 1.72;
+}
+
+.dokuwiki .yzruby-size-tiny {
+    --yzruby-scale: 0.72;
+}
+
+.dokuwiki .yzruby-size-small {
+    --yzruby-scale: 0.86;
+}
+
+.dokuwiki .yzruby-size-normal {
+    --yzruby-scale: 1;
+}
+
+.dokuwiki .yzruby-size-big {
+    --yzruby-scale: 1.28;
+}
+
+.dokuwiki .yzruby-size-huge {
+    --yzruby-scale: 1.58;
+}
+
+.dokuwiki .yzruby-ann rb.yiv-font,
+.dokuwiki .yzruby-ann rb.yiv-bold,
+.dokuwiki .yzruby-ann rb.yiv-italic,
+.dokuwiki table.yzautoruby .yiv-font,
+.dokuwiki table.yzautoruby .yiv-bold,
+.dokuwiki table.yzautoruby .yiv-italic {
+    font-size: 1.1em;
+    line-height: 1.05;
+}
+
+.dokuwiki ruby.yzruby-ann rt {
+    font-size: 0.58em;
+    color: #9aa0b0;
+    letter-spacing: 0.01em;
+}
+
+.dokuwiki table.yzautoruby {
+    border-collapse: collapse;
+    width: auto;
+    margin: 1em auto;
+}
+
+.dokuwiki table.yzautoruby th,
+.dokuwiki table.yzautoruby td {
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    padding: 0.45em 0.7em;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.dokuwiki table.yzautoruby td.yzautoruby-base {
+    white-space: nowrap;
+}
+
+.dokuwiki table.yzautoruby td.yzautoruby-reading,
+.dokuwiki table.yzautoruby td.yzautoruby-meaning {
+    font-size: 0.95em;
+}
+
+.dokuwiki table.yzautoruby ruby {
+    white-space: nowrap;
+}

@@ -1,0 +1,92 @@
+====== Karan-Yiil: 850nm Reflected IR Surveyer ======
+
+The **Karan-Yiil** is a dedicated near-infrared (NIR) observation unit, "removing" the limitations of human vision to see in total darkness.
+
+When paired with the [[project:nighthawk|NightHawk]] (IR Flashlight), the Karan-Yiil can see through certain plastics, peer deep into foliage, and turn the pitch-black night into a high-contrast midday scene. Think of this as premium nightvision on the budget.
+
+{{ :project:rpi-hq-module.png?400 |}}
+
+<html>
+<center>
+    <p>In the Yivalese conlang, 
+        <a href="https://atigerseye.com/den/yivalkes/?keyword=karan" target="_blank">Karan</a> 
+        means "Raven" and 
+        <a href="https://atigerseye.com/den/yivalkes/?keyword=yiil" target="_blank">Yiil</a> 
+        means "Gaze" or "Sight."
+    </p>
+    <p>Together, this unit provides the "Raven's Sight"–piercing shadows of the infrared realm.</p>
+</center>
+</html>
+
+===== IR-Sensitive Camera Modules =====
+
+Standard cameras block infrared light to mimic human vision. For this project, you must use a **NoIR** (No Infrared) sensor. These sensors are wide-open to the 850nm-940nm spectrum, allowing your flashlight to act like a massive invisible floodlight.
+
+^ Camera Type ^ Sensor ^ Best Use Case ^ Est. Price (CAD) ^
+| **Arducam OV5647** | Omnivision | Budget builds; very common/replaceable. | ~$15 |
+| **Sony NightShot** | Various CCD | Vintage camcorders; best for "zoom" spotting. //(No DIY required)//| ~$30 |
+| **RPi Module 3 NoIR**| Sony IMX708 | High-res handhelds with **Autofocus**. //(Recommended DIY Choice)//| ~$35 |
+| **ELP USB Module** | Sony IMX323 | Plug-and-play for Android/Laptop use. | ~$45 |
+| **RPi HQ Camera** | Sony IMX477 | **Full Spectrum.** 12MP large sensor. Removable IR glass, C/CS mount lenses.| ~$70 |
+
+===== The Camera Surgery: Freeing the Sensor =====
+
+Depending on your choice above, the "surgery" varies:
+  * **RPi HQ Camera:** Requires removing the internal IR-cut filter (the two-screw method).
+  * **NoIR Modules:** No surgery required! These are sold "pre-blinded" to visible-only light.
+  * :!: **Note:** For the clearest IR images, you may want to add an **IR-Pass filter** (850nm) to block visible light, ensuring the camera *only* sees the infrared "ghost" world.
+
+===== The Shiny Bits (BOM - IR Edition) =====
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Sensor** | Variable | (See Table Above) | $15 – $70 | The "Eye" of the Raven. |
+| **The Stealth-Pass**| 850nm IR Filter | IR-Pass / Visible-Block Glass | $15 | Optional: Blocks visible light for "Pure IR." |
+| **The Glass** | 25mm C-Mount | Standard Lens | $35 | Only needed for HQ/C-Mount sensors. |
+| **The Brain** | RPi Zero 2 W | Compact Processor | $22 | Small enough for handheld use. |
+| **The Display** | 3.5" DPI LCD | Real-time Viewfinder | $30 | Optional if using phone as viewer. |
+
+**Total Est. Cost per Unit: ~$82 – $172 CAD.** \\ 
+(Low end uses Arducam NoIR; High end uses RPi HQ + Lens.)\\
+(~$52 – $142 if using a Phone as the Viewfinder – No LCD needed.)\\
+(~$30 – $120 if you already have a spare RPi Zero.) \\
+===== The Raven's Field Guide: What to Look For =====
+
+The IR world doesn't just look "green" (like old movies)–it looks like a surreal, snowy wonderland. 
+
+  * **The Wood Effect:** Healthy green leaves reflect IR light so strongly they appear glowing white. Landscapes will look like they are covered in fresh snow.
+  * **The "Clear" Soda Trick:** Point the Karan-Yiil at a bottle of **Coca-Cola**. The liquid will appear almost completely clear, like water, because the dyes don't absorb IR light.
+  * **Synthetic Fabrics:** Many "black" polyester or nylon clothes will appear bright white or grey. This is because they are dyed to block visible light, but are highly reflective to IR.
+  * **The Veins of the Hand:** Because NIR light (850nm) penetrates slightly into the skin, you can often see the dark "roads" of your veins through the Karan-Yiil.
+
+===== The Map (System Integration) =====
+
+<code>
+[ SYSTEM ARCHITECTURE: THE KARAN-YIIL ]
+
+      [ NIGHTHAWK (IR THROW) ] ----> [ TARGET ] 
+                                     |
+                                     | (Reflected IR Light)
+                                     |
+      [ IR-PASS FILTER ] <-----------/
+            | (850nm+ Only)
+            v
+      [ CAMERA LENS ] 
+            |
+            v
+      [ NO-IR SENSOR ] (Either native NoIR or Modified HQ)
+            |
+            v
+      [ RPi ZERO 2W ] ----> [ WIFI ] ----> [ SMARTPHONE ]
+                           (OR)
+                      ----> [ TFT LCD ]
+</code>
+
+===== Crow's Comments =====
+
+  * **The Spectrum:** This spectrum is considered "Near-IR" (NIR) – conversely, "Far-IR" (FIR) is thermal energy as in a thermal camera or heat radiating off an object.
+  * **Daylight Use:** The [[project:nighthawk|NightHawk]] is primarily for indoor or nocturnal use. During the day, the sun provides high ambient NIR levels, making an external flashlight less a requirement.
+  * **The Stealth Effect:** To the human eye, the **NightHawk** looks like a faint, dim red glow (the "red drop" effect), but on the Karan-Yiil screen, it looks like a high-powered searchlight.
+  * **Focus Shifting:** IR light focuses at a different point than visible light. Many vintage lenses have a small "red dot" or "R" on the focus scale–use that for IR!
+  * **Green vs Grey** - Traditional nightvision systems choose green due to high sensitivity of the eye there - it peaks at ~555nm! On a modern display, this is less necessary.
+
+Caw! Ready to see what the night is hiding?

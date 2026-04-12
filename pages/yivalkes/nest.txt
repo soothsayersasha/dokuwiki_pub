@@ -1,0 +1,113 @@
+======= Yivalkes / Valaksá / Ibbala =======
+
+Yivalkes, as it was known by Tearan on his first of two jumps in time and space, is a port town located on the grounds of our modern day Dubronik on the Adriatic sea in a late bronze age that is undergoing rapid industrial growth, where, three hundred or so years later, it will be known as Valaksá or Ibbala, depending on who you ask.
+
+Studied here is less its topography than its main spoken and written language, Yivalese.
+
+===== Writing system =====
+
+Some things stay constant over the centuries, while some others change. 
+
+^ All ^ Rustic ^ Modern ^
+| [[script|The 8x8 YzWr Syllabary & Biliterals]] | [[font|Pen and Stylus scripts of the Yivalkes]] | [[font:timesnewyivalese|Times New Yivalese Description]] |
+| [[yivalkes:script|De Script shon]] of the syllabary YzWr character set and their multiple use cases. | [[font:builder|Character builder]] | ? |
+===== Glossary =====
+
+  * [[grammar|Grammar]] of Yivalese, or Yivalkerobba.
+  * [[ipa|IPA equivalencies]] to written text, for ease of on-the-spot phonetics.
+  * [[yivalkes:teacher|Teacher Bot]]
+  * [[https://atigerseye.com/den/yivalkes|YivalEZ]] — Online Glossary w/ advanced search capabilities. <sup>[Beta]</sup>
+  * [[https://github.com/B7th/b7th.github.io/blob/master/Vocabulary.ods|Vocabulary.ods - Github]] — Mangotrain's live updated glossary for Yivalese. <html><sup>[Requires <a href=" https://www.libreoffice.org/LibreOffice">LibreOffice</a> for RegEx functionality]</sup></html>
+    * **Record count:** <html><span id="yival-words-count"></span></html> Words
+    * **Last updated:** <html><span id="yival-last-updated"></span></html>
+
+  * [[yivalkes:expressions|Expressions]] — 106 expressions sorted by Use and Mood. <sup>[WIP]</sup>
+  * [[yivalkes:valaksayo|Lobba Valaksayo]]
+
+
+<html>
+<!--  ..... :} ...... -->
+<script>
+(function(){
+  const wordsEl = document.getElementById('yival-words-count');
+  const lastEl  = document.getElementById('yival-last-updated');
+  if (!wordsEl && !lastEl) return;
+
+  const apiUrl = 'https://atigerseye.com/den/yivalkes/api.php?action=update_summary';
+
+  function ordinal(n) {
+    const s = ["th","st","nd","rd"], v = n % 100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+
+  function prettyDate(d) {
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const year = d.getFullYear();
+    const month = months[d.getMonth()];
+    const day = ordinal(d.getDate());
+    const now = new Date();
+    return (year === now.getFullYear()) ? (month + ' ' + day) : (month + ' ' + day + ', ' + year);
+  }
+
+  function relativeTime(d) {
+    const now = new Date();
+    const diffMs = now - d;
+    const sec = Math.floor(diffMs / 1000);
+    const min = Math.floor(sec / 60);
+    const hr  = Math.floor(min / 60);
+    const days = Math.floor(hr / 24);
+    if (days >= 2) return days + ' days ago';
+    if (days === 1) return '1 day ago';
+    if (hr >= 1) return hr + ' hours ago';
+    if (min >= 1) return min + ' minutes ago';
+    return 'just now';
+  }
+
+  function parseDateMaybe(s) {
+    if (!s) return null;
+    let d = new Date(s);
+    if (!isNaN(d.getTime())) return d;
+    d = new Date(s + 'T00:00:00Z');
+    if (!isNaN(d.getTime())) return d;
+    return null;
+  }
+
+  fetch(apiUrl, {cache: 'no-cache'}).then(r => r.json()).then(json => {
+    if (!json || json.status !== 'success') {
+      if (wordsEl) wordsEl.textContent = 'n/a';
+      if (lastEl) lastEl.textContent = 'n/a';
+      return;
+    }
+
+    const wordCount = ('word_count' in json) ? json.word_count : (json.info && json.info.word_count ? json.info.word_count : null);
+    const added = ('added_count' in json) ? json.added_count : (json.info && json.info.added_count ? json.info.added_count : 0);
+    const modified = ('modified_count' in json) ? json.modified_count : (json.info && json.info.modified_count ? json.info.modified_count : 0);
+
+    const rawDate = json.date_for_display || (json.info && (json.info.date_from_github || json.info.date_from_uses)) || json.normalized_date || '';
+    const d = parseDateMaybe(rawDate);
+
+    if (wordsEl) {
+      wordsEl.textContent = (wordCount !== null) ? String(wordCount) : 'n/a';
+    }
+
+    if (lastEl) {
+      if (!d) {
+        lastEl.textContent = rawDate || 'n/a';
+        return;
+      }
+      const rel = relativeTime(d);
+      const pretty = prettyDate(d);
+      const parts = [];
+      if (added && Number(added) > 0) parts.push('+' + Number(added) + ' added.');
+      if (modified && Number(modified) > 0) parts.push(Number(modified) + ' modified');
+      const suffix = parts.length ? ' (' + parts.join(', ') + ')' : '';
+      lastEl.textContent = rel + ', ' + pretty + '.' + (suffix ? ' ' + suffix : '');
+    }
+  }).catch(err => {
+    if (wordsEl) wordsEl.textContent = 'error';
+    if (lastEl) lastEl.textContent = 'error';
+    console.error('Yival stats fetch error:', err);
+  });
+})();
+</script>
+</html>

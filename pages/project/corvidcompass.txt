@@ -1,0 +1,161 @@
+====== The Corvid Compass: A Gaze-Based Sixth Sense ======
+
+This project focuses on a discrete addition to your **glasses** or **hat**, providing a subtle haptic "nudge" toward **Magnetic North** based on where you are gazing.
+
+The "Corvid Compass" is a compact, versatile charm. It can also be tucked **behind the ear**, or even hidden under a **beard**!
+  * Though optimised for **headwear,** it can be clipped to a **jacket cuff** or worn as a **pendent** at the cost of head-tracking, your body instead must face North.
+
+Wherever it sits, it gives you that migratory "sixth sense" birds have.
+
+===== Form Factor & Vertical Profile =====
+
+w/ comparisons to AA/AAA batteries, SD card and 2x dollar coins.
+
+^ Configuration ^ Length ^ Width ^ Height (Thickness) ^ Best For... ^
+| **The In-Line** | 60mm (AA) | 12mm (AA) | **~4mm** (Two loonies) | Flat glasses frames, hat. |
+| **The Sandwich** | 25mm (SD card) | 18mm (AAA) | **~9mm** (AAA) | Tucking behind the ear, on body. |
+
+===== The Shiny Bits (BOM) =====
+
+^ Item ^ Part Number ^ Description ^ Unit Cost (CAD) ^ Note ^
+| **The Brain** | PIC16F18313-I/SN | 8-pin SOIC Microcontroller | $1.36 | Low power, high IQ. |
+| **The Sense** | Adafruit 4413 | LSM303AGR Breakout Board | $18.08 | **Or bare chip: ~$6.50** |
+| **The Muscle** | 2N7002 | N-Channel MOSFET (SOT-23) | $0.52 | To switch the motor. |
+| **The Pulse** | Seeed 316040004 | 10mm Vibration ERM Motor | $1.85 | Tiny haptic feedback. |
+| **The Power** | MPD BK-885 | 12mm Coin Cell Retainer | $0.84 | For a CR1220 battery. |
+
+**Total Est. Cost per Unit: ~$11.07 - $22.98 CAD.**
+
+[[https://www.digikey.ca/short/wr7p9npv|Digikey.ca Shopping Cart]] - [[https://www.digikey.com/short/wr7p9npv|[.com/USD]]]
+
+===== Alternatives =====
+
+Perhaps you desire shiny alternatives, or even better sensors you may reuse:
+
+==== High-Altitude Options (Absolute Orientation) ====
+If you want the chip to do all the heavy math (Tilt-compensation, Calibration) for you:
+  * **The "Auto-Pilot" (BNO055):** ~**$45.00 CAD**. An Intelligent 9-DOF sensor. Outputs a stable "North" vector directly. No complex math required!
+
+==== Scavenger Options (Budget) ====
+If the Adafruit board is out of stock or you wish to save some shiny coins:
+  * **The "Budget Bird" (QMC5883L):** ~**$4.50 CAD**. No accelerometer. Works only if held perfectly level.
+  * **The "Middle Magpie" (Bare LSM303AGR):** ~**$6.50 CAD**. Buy just the chip and solder it to an LGA-12 adapter. Cheaper, but requires a steady talon and a hot air station.
+  * **The "Pro Crow" (Harvested):** **$0.00 CAD**. Harvest a sensor of an old cellphone/electronic containing a compass. Common targets include:
+    * **Bosch BMC150** (LGA-14, found in PS4 DualShock 4)
+    * **MPU-9250** (QFN-24, found in toy drones)
+    * **LSM303DLHC** (LGA-14, found in Samsung S3/S4 or Note 2)
+
+===== The Map (Schematic) =====
+
+This is the logical map of the nest. Keep your connections short to avoid noise.
+
+<code>
+3.0V >---------+------------------+--------------( MOTOR )
+               |                  |                  |
+            [ VIN ]               |             +----------+
+         +-----------+            |             |  DRAIN   |
+         |  LSM303   |            |             +----------+
+         |  SENSOR   |            |             |  2N7002  |
+         +-----------+            +-------------|  GATE    |
+         [SCL]   [SDA]            |             +----------+
+           |       |              |             |  SOURCE  |
+           |       |              |             +----------+
+           |       |       [ VDD / PIN 1 ]           |
+           |       |      +----------------+         |
+           +-------|------| SCL / PIN 6    |         |
+                   +------| SDA / PIN 5    |         |
+                          | PWM / PIN 2    |---------+
+                          +----------------+
+                            [ VSS / PIN 8 ]
+                                  |
+ GND >----------------------------+------------------+
+</code>
+
+===== Bird Logic: The Firmware (C Code) =====
+
+This code reads the compass and decides when to buzz. It includes basic **Tilt Compensation** so looking down doesn't confuse it. **+/-10 deg** is considered North.
+
+<code c>
+#include <xc.h>
+#include <math.h>
+
+// PIC16F18313 Configuration
+#define MOTOR_PIN LATA2   // Pin 2
+#define PWM_PERIOD 0xFF   // Max PWM period
+
+void main(void) {
+    // Setup PWM on RA2 (Pin 2) for motor control
+    TRISA2 = 0;           // Make Pin 2 Output
+    CCP1CON = 0x8F;       // PWM Mode
+    PR2 = PWM_PERIOD;     // Set Frequency
+    T2CON = 0x04;         // Timer2 On
+
+    float heading;
+    int intensity = 0;
+
+    while(1) {
+        // 1. Read I2C Data (LSM303)
+        // [Insert I2C Read Function Here]
+
+        // 2. Calculate Heading (Simplified)
+        // (Full tilt-compensation math omitted for brevity)
+        heading = atan2(my, mx) * (180.0 / M_PI);
+        if (heading < 0) heading += 360;
+
+        // 3. LOGIC: Is it North? (Window: 350 to 10 degrees)
+        if (heading > 350 || heading < 10) {
+            CCPR1L = 255; // Full Power Buzz!
+        } else {
+            CCPR1L = 0;   // Silence
+        }
+    }
+}
+</code>
+
+==== Variant: The "Analog Sense" (Variable Intensity) ====
+
+If you want to feel *how close* you are to North (faint buzz at West/East, strong buzz at North), replace **Step 3** in the code above with this block:
+
+<code c>
+// 3. VARIANT LOGIC: Variable Intensity
+// Calculate error from North (0 degrees)
+float error = heading;
+if (error > 180) error = 360 - error; // Normalize to 0-180 range
+
+// If within +/- 90 degrees of North...
+if (error < 90) {
+    // Map intensity: 0 error = Max Speed, 90 error = Min Speed
+    // This creates a "magnetic pull" feeling
+    intensity = (int)(255 * (1.0 - (error / 90.0)));
+    CCPR1L = intensity; 
+} else {
+    CCPR1L = 0; // Total silence behind you (South)
+}
+</code>
+
+===== KiCad Source =====
+
+[[https://www.kicad.org/|KiCad]] is my choice for Open Source Electronic Design CAD.
+
+Save this text as ''bird_sense.kicad_sch'' to open the schematic in KiCad.
+
+Note: **WIP** draft - non-functional currently.
+<code lisp>
+(kicad_sch (version 20260101) (generator eeschema)
+  (uuid 89db6782-0164-4682-9531-15822f6d81be)
+  (paper "A4")
+  (lib_symbols
+    (symbol "MCU_Microchip_PIC16:PIC16F18313-ISN" (in_bom yes) (on_board yes))
+    (symbol "Sensor_Magnetic:LSM303AGR" (in_bom yes) (on_board yes))
+    (symbol "Transistor_FET:2N7002" (in_bom yes) (on_board yes))
+  )
+  (wire (pts (xy 127.0 101.6) (xy 139.7 101.6)) (uuid w1))
+  (text "Corvid Compass v1.0" (at 150 20) (effects (font (size 1.5 1.5))))
+)
+</code>
+
+===== Closing Thoughts =====
+
+Building your own senses is the ultimate way to explore your territory. Just remember: measure twice, solder once -- and keep your bits shiny with flux!
+
+Caw for now!

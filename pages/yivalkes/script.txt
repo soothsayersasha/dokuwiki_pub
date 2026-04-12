@@ -1,0 +1,252 @@
+===== The 8x8 YzWr Syllabary & Biliterals =====
+----
+<html>
+<div id="yiv-global-wrapper" class="yiv-container">
+<center><b>These 64 core glyphs form the foundation of the writing system. </b><br/><br/>Each character encodes both meaning and sound. <br/><br/>Use the toggles below to adjust the script style and casing.</center>
+
+<div class="yiv-controls-panel">
+  <div class="yiv-control-group">
+    <strong>Font Style:</strong>
+    <label><input type="radio" name="fontStyle" value="regular" checked onclick="updateYivDisplay()"> Modern</label>
+    <label><input type="radio" name="fontStyle" value="italic" onclick="updateYivDisplay()"> Ancient</label>
+    <label><input type="radio" name="fontStyle" value="bold" onclick="updateYivDisplay()"> Future</label>
+  </div>
+  
+  <div class="yiv-control-group">
+    <strong>Casing:</strong>
+    <label><input type="radio" name="textCase" value="default" checked onclick="updateYivDisplay()"> Yz</label>
+    <label><input type="radio" name="textCase" value="upper" onclick="updateYivDisplay()"> YZ</label>
+    <label><input type="radio" name="textCase" value="lower" onclick="updateYivDisplay()"> yz</label>
+  </div>
+</div>
+
+<table class="yiv-table" id="glyphTable">
+  <tr>
+    <th></th><th>b</th><th>d</th><th>g</th><th>l</th><th>w</th><th>y</th><th>x</th><th>n</th>
+  </tr>
+  <tr>
+    <th>B</th>
+    <td><span>Bb</span><em>Bean</em></td>
+    <td><span>Bd</span><em>Foot</em></td>
+    <td><span>Bg</span><em>Staff</em></td>
+    <td><span>Bl</span><em>Leather</em></td>
+    <td><span>Bw</span><em>Dead</em></td>
+    <td><span>By</span><em>Bee</em></td>
+    <td><span>Bx</span><em>Cup</em></td>
+    <td><span>Bn</span><em>Cloth</em></td>
+  </tr>
+  <tr>
+    <th>D</th>
+    <td><span>Db</span><em>Taste</em></td>
+    <td><span>Dd</span><em>Monarch</em></td>
+    <td><span>Dg</span><em>Plead</em></td>
+    <td><span>Dl</span><em>Tell</em></td>
+    <td><span>Dw</span><em>You</em></td>
+    <td><span>Dy</span><em>Breast</em></td>
+    <td><span>Dx</span><em>Tool</em></td>
+    <td><span>Dn</span><em>House</em></td>
+  </tr>
+  <tr>
+    <th>G</th>
+    <td><span>Gb</span><em>Head</em></td>
+    <td><span>Gd</span><em>Friend</em></td>
+    <td><span>Gg</span><em>Hook</em></td>
+    <td><span>Gl</span><em>Gold</em></td>
+    <td><span>Gw</span><em>Lie</em></td>
+    <td><span>Gy</span><em>Horns</em></td>
+    <td><span>Gx</span><em>Desire</em></td>
+    <td><span>Gn</span><em>Dog-likes</em></td>
+  </tr>
+  <tr>
+    <th>L</th>
+    <td><span>Lb</span><em>Lip</em></td>
+    <td><span>Ld</span><em>Wheel</em></td>
+    <td><span>Lg</span><em>Collect</em></td>
+    <td><span>Ll</span><em>Breath</em></td>
+    <td><span>Lw</span><em>Flow</em></td>
+    <td><span>Ly</span><em>Wash</em></td>
+    <td><span>Lx</span><em>Measure</em></td>
+    <td><span>Ln</span><em>Sunrise</em></td>
+  </tr>
+  <tr>
+    <th>W</th>
+    <td><span>Wb</span><em>Cattle</em></td>
+    <td><span>Wd</span><em>Passion</em></td>
+    <td><span>Wg</span><em>Ice</em></td>
+    <td><span>Wl</span><em>Brick</em></td>
+    <td><span>Ww</span><em>Group</em></td>
+    <td><span>Wy</span><em>Lil Bird</em></td>
+    <td><span>Wx</span><em>Little Animal</em></td>
+    <td><span>Wn</span><em>Big bird</em></td>
+  </tr>
+  <tr>
+    <th>Y</th>
+    <td><span>Yb</span><em>Weave</em></td>
+    <td><span>Yd</span><em>Speak</em></td>
+    <td><span>Yg</span><em>Strength</em></td>
+    <td><span>Yl</span><em>Eye</em></td>
+    <td><span>Yw</span><em>Big Animal</em></td>
+    <td><span>Yy</span><em>Manner</em></td>
+    <td><span>Yx</span><em>Centre</em></td>
+    <td><span>Yn</span><em>Fruit</em></td>
+  </tr>
+  <tr>
+    <th>X</th>
+    <td><span>Xb</span><em>At</em></td>
+    <td><span>Xd</span><em>Campfire</em></td>
+    <td><span>Xg</span><em>Horse</em></td>
+    <td><span>Xl</span><em>Balance</em></td>
+    <td><span>Xw</span><em>Mark</em></td>
+    <td><span>Xy</span><em>Far</em></td>
+    <td><span>Xx</span><em>Feather</em></td>
+    <td><span>Xn</span><em>Snake</em></td>
+  </tr>
+  <tr>
+    <th>N</th>
+    <td><span>Nb</span><em>Navel</em></td>
+    <td><span>Nd</span><em>Nose</em></td>
+    <td><span>Ng</span><em>Mix</em></td>
+    <td><span>Nl</span><em>Reptiles</em></td>
+    <td><span>Nw</span><em>Growth</em></td>
+    <td><span>Ny</span><em>Plant</em></td>
+    <td><span>Nx</span><em>Rope</em></td>
+    <td><span>Nn</span><em>Star/Fish</em></td>
+  </tr>
+</table>
+
+<br/>
+
+</html>
+===== Notes & Context =====
+Each character contains a fair few bits of information, both in meaning and in pronunciation, with a lot of options to go for both.
+
+==== Learning the Tongue from Yivalkes ====
+For neighbouring towns, we see vowels shift about, followed by changes in voicing and stop vs fricative state, until further around the Ikshan, Great Lake, some words become unrecognizable in spoken form but relatively understandable in what is, at the time of this study (in the eleventh and twelfth year of the era, **Arami**) share a common phono-logographic biliteral writing system with root words that dialects and even unrelated languages approach with varying strategies for most of the **NivLis**, lands around the Great Lake. 
+
+Practices do shift between generations however, and with the amazing work of the keepers of the **Fambesar**, lived tales, one is able to notice trends even as simple as the difference between the stables of the elder, **Danekhis**, and that of the current generation, **Mageba**.
+
+Yivalkes’ tongue has 3 numbers-agency-conflation, 4 cases along with a radical stem, a hard to separate use of verb, noun, and adjective, and a lot of leeway in interpretation that can be clarified with the use of a plethora of postpositions.
+  * It usually follows a **S.(C.)O.V.** order. 
+  * **V.(C.)O.** is used when the subject is pronominally included in the verb.
+  * **S.(C.)V.O.** denotes an indefinite object.
+  * **S.(C.)O.** is the most common form when dealing with phrases for which the verb is unnecessary and understood. Verbs are few and far between. The C, if present, is the causer that makes the subject do their thing, if there is any.
+
+===== Digraphs, Biliterals, or just "Characters" =====
+Biliterals are remnants of old symbols that were slotted and parsed into a 8 by 8 set of sounds that sort of mirror each other in a 4 by 4 manner.
+
+The biliteral guides the phoneme for sure, but learning the actual way to pronounce novel or obscure words means there is a need for phonetic markers from time to time, especially at school. In most cases, they would otherwise be omitted. The problem is those phonetic marker also tend to be ambivalent, especially in regional uses of the character set, and over a few generations.
+
+===== Phonotactics – Many glyphs, Many much more sounds =====
+The eight root sounds are always in pair for a total of 64 biliterals. B, D, G, L, W, Y, X, N. While those sound pairs are considered as consonants only, the W, Y, and X (glottal stop really) can and will definitely often be their equivalent u, i and a.
+
+  * **B** can be pronounced p, or v, f, or ph. Same goes for **D** (t, th, s, z), **G** (K, ɣ, zh, sh), **L** (ɾ, ɻ), **N** (m, ŋ). 
+  * **X** can be pronounced h, a, a, e, ɛ, e.
+  * **Y** can be pronounced as ɨ or ʉ or ɪ or i.
+  * **W** can be pronounced as u, ɔ, o, a, œ... It's pretty context dependent. 8 canonical sounds, and about... 32 actual sounds? 
+
+==== Phonotactic Rules ====
+  * Reduplicated biliterals tend to have the onset as voiceless and ending as voiced with both usually being fricative, like Shazha, or Paba, or Kelger.
+  * The second written sound in a pair is usually voiced fricative and the first one voiceless stopped like <span class="yiv-font">Bd</span> / Bd would give Pez.
+  * N gets thrown around and modified to match with its surroundings.
+  * Intermediary vowels tend to have a timbre with the most open syllable being the second on three- and two- syllable words.
+  * L sounds like L at the beginning of words, before a hard consonant, flapped r between vowels, and retroflex r at the end unless after a flapped r where it is L again.
+  * Words ending in <span class="yiv-font">X</span> / X usually get an e when it's at the THERE case.
+
+===== Logograms: Making it mean something, or sound like something else? =====
+Biliterals are essentially a historical rebus that is still somewhat relevant for many of the root words, but some words are just alien to the language, are homophones, or simply shorthanded. In simple, the same 64 roots can be used to indicate meaning detached from pronunciation rather than pronunciation alone, and the opposite is just as true.
+
+  * When standing alone or at the beginning of a word, the principle shared as a shorthand of the more commonly spoken form. e.g. <span class="yiv-font">Yd</span> / Yd, the biliteral for Speak, stands in for the more common word Lasbar, which could be written with <span class="yiv-font">LdBl</span> / LdBl.
+  * Within a word or at its end, rarely is pronounced but provides meaning to what came first, especially when facing obscure words or common near homophone. It is often omitted when the meaning is clear, or when phonetic markers are in use.
+  * A reduplicated logogram (two dots at the bottom, or three dots on top) is both meant and pronounced once.
+
+<html>
+<style>
+/* 1. Font Definitions */
+@font-face {
+    font-family: "YzWr-Italic";
+    src: url("https://atigerseye.com/den/yivalkes/YzWr-Italic.woff2");
+}
+
+/* 2. Container & Controls */
+.yiv-container { width: 100%; margin: 0 auto; color: inherit; }
+.yiv-controls-panel { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+.yiv-control-group { display: flex; gap: 10px; align-items: center; font-family: sans-serif; font-size: 14px; }
+.yiv-control-group label { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+
+/* 3. Table Core Styles */
+.yiv-table { border-collapse: collapse; margin: 0 auto; background: transparent; }
+.yiv-table td, .yiv-table th { 
+    border: 1px solid #555; 
+    padding: 4px 8px;
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+/* 4. Glyph Styling (Default) */
+.yiv-table span {
+    font-family: "YzWrFont", "yiv-font", sans-serif;
+    font-size: 55px;
+    line-height: 0.6;
+    display: block;
+    margin: 0 auto;
+    color: #4a9eff;
+    padding: 0;
+}
+
+/* 5. Font Modes - Global Support */
+.italic-mode .yiv-table span, 
+.italic-mode .yiv-font {
+    font-family: "YzWr-Italic", sans-serif !important;
+}
+
+/* User Fix: Prevent Ancient glyphs from intersecting top of cell */
+.italic-mode .yiv-table span {
+    margin-top: 15px;
+}
+
+.bold-mode .yiv-table span, 
+.bold-mode .yiv-font {
+    font-family: "YzWrBoldFont", sans-serif !important;
+}
+
+/* 6. Case Modes - Global Support */
+.upper-mode .yiv-table span,
+.upper-mode .yiv-font {
+    text-transform: uppercase;
+}
+
+.lower-mode .yiv-table span,
+.lower-mode .yiv-font {
+    text-transform: lowercase;
+}
+
+/* 7. English Labels - User Fix: margin-top increased to 15px */
+.yiv-table em { font-size: 11px; font-style: normal; font-weight: normal; opacity: 0.7; display: block; margin-top: 15px; }
+</style>
+
+<script>
+function updateYivDisplay() {
+  var wrapper = document.getElementById("yiv-global-wrapper");
+  var fontStyle = document.querySelector('input[name="fontStyle"]:checked').value;
+  var textCase = document.querySelector('input[name="textCase"]:checked').value;
+
+  // Reset classes to base
+  wrapper.className = "yiv-container";
+
+  // Apply font modes
+  if (fontStyle === "italic") {
+      wrapper.classList.add("italic-mode");
+  } else if (fontStyle === "bold") {
+      wrapper.classList.add("bold-mode");
+  }
+
+  // Apply casing modes
+  if (textCase === "upper") {
+      wrapper.classList.add("upper-mode");
+  } else if (textCase === "lower") {
+      wrapper.classList.add("lower-mode");
+  }
+}
+</script>
+</div>
+</html>

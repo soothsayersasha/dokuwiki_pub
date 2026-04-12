@@ -1,0 +1,63 @@
+====== Runaikål Project Documentation ======
+
+:!: This page is a draft for the main project page :!:
+
+This project covers the development of [[https://github.com/B7th|MangoTrain's]] **Runaikål**, a 12-tone circular instrument utilising electronic synthesis and physical resonance to achieve a Shepard tone effect.
+
+An interactive demo can be found here: [ [[https://b7th.github.io/runaikal/index.html|Demo]] | [[https://github.com/B7th/b7th.github.io/tree/master/runaikal|Source Code]] ]
+
+[[https://b7th.github.io/runaikal/index.html|{{ :project:runaikal:runaikal-web-tran.png?400 |}}]]
+
+===== Hardware Specifications =====
+==== Core Components ====
+^ Component ^ Specification ^
+| **Microcontroller** | ATMega328 (chosen over ATTiny45 for scaling and pin count) |
+| **Power** | 2x AA Rechargeable batteries |
+| **Output** | 4x Piezo buzzers (2 per chip) |
+| **Amplification** | TL072 Op-amp with RC circuit and relay |
+| **Input** | Contact button located in the "Gem" |
+
+==== Circuitry & Power Management ====
+  * **Signal Path:** PWM Output -> RC Circuit/TL072 (Sine conversion) -> Piezo Buzzers.
+  * **Energy Saving:** * The chip enters **Sleep Mode** immediately after all note tails have faded.
+    * **Relay Switch:** A dedicated "waker" pin triggers a relay to connect the battery to the op-amp only when the chip is active.
+  * **Current Issues:** * Volume is insufficient on AA battery power.
+    * Potential need for **capacitor boosting** to increase rounding and volume.
+
+===== Software & Sound Logic =====
+
+==== Synthesis Principle ====
+  * **Shepard Tone:** The chip produces three simultaneous sinusoidal frequencies.
+    * Higher harmonics decrease in amplitude as the scale ascends.
+    * Lower harmonics increase in amplitude as the scale ascends.
+    * Result: A "circular" or "donut-like" soundscape.
+  * **Dynamics:** * **Variable Decay:** Sound fades based on contact duration. 
+    * **Muting Simulation:** Longer contact increases decay speed to simulate a percussive "mute."
+  * **Processing:** PWM values are processed off-cycle upon a flag to ensure timing delivery is prioritized.
+
+==== Tuning Compromise ====
+  * **Perfect 5ths:** 6 of the 12 tones are shifted just enough to allow half of the notes to be in perfect 5ths with the other half.
+  * **Timbre:** Current sound is described as "Grüüüüm." Needs further "softening" to move away from a harsh electronic tone toward a more organic "cave" sound.
+
+===== Physical Design & Manufacturing =====
+
+==== Case & Aesthetics ====
+  * **Geometry:** The design is based on a **truncated dodecagon**. 
+  * **The Gems:** 12 symmetrical designs that provide the necessary working surface for play.
+  * **Resonance:** Flat surfaces are designed for speakers/piezos to vibrate against to increase volume.
+  * **Portability:** The current case design is foldable.
+
+Placeholder for <3D render of the truncated dodecagon case>
+
+==== The Physical Shepard Tone Conundrum ====
+An alternative "acoustic-first" approach was considered but deemed extremely difficult:
+  * Requires modifying the strength of specific partials/overtones physically without changing the whole timbre.
+  * Velocity must be perfectly controlled across three separate tones to maintain the circular illusion.
+  * Standard "tongues" (like a tongue drum) do not allow for the necessary overtone division.
+
+Placeholder for <Floral/Spiral tiered design iterations>
+
+===== Current Project Concerns =====
+  * **Volume:** Solving the "louder for those in the back" requirement.
+  * **Waterproofing:** Balancing cheap battery access vs. a sealed/wireless unit.
+  * **Manufacturing:** Goal is to refine the design for a limited production run of ~100 units.

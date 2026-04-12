@@ -1,0 +1,59 @@
+====== Lavender ======
+<html>
+<div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: wrap; text-align: center; margin: 20px 0;">
+  
+  <div style="width: 300px;">
+    <a href="https://commons.wikimedia.org/wiki/File:Single_lavender_flower02.jpg" target="_blank">
+      <div style="width: 300px; height: 300px; overflow: hidden; border-radius: 4px; border: 1px solid #ddd;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Single_lavender_flower02.jpg/960px-Single_lavender_flower02.jpg" 
+             style="width: 100%; height: 100%; object-fit: cover;" alt="Lavender Flower">
+      </div>
+    </a>
+    <p style="font-size: 0.85em; line-height: 1.2; margin-top: 8px;">English Lavender<br><i>(Photo: Offnfopt, Public Domain)</i></p>
+  </div>
+
+</div>
+</html>
+\\
+----
+
+^ English ^ French ^ Latin ^ Greek ^ Japanese ^ Chinese ^ Yivalese<sup>(conlang)</sup> ^
+| Lavender | Lavande | Lavandula | Λεβάντα (Levánta) | **薫衣草**\\ (kunnigusa) | **薰衣草**\\ (xūnyīcǎo) | [[https://atigerseye.com/den/yivalkes/?keyword=Delnarai|Delnarai]] (<html><span class="yiv-font">NNnxwy</span></html>) |
+| //From Latin "lavare" (to wash), referencing its historical use in Roman baths and laundry.// |||| //"Scenting Clothes Grass"// || //Moon (<html><span class="yiv-font">Dlnx</span></html>) + Crow (<html><span class="yiv-font">WYwx</span></html>)// |
+| <html><nobr><b>Lav-</b> (Wash)</nobr> + <nobr><b>-ender</b> (Nominal) / <b>-ula</b> (Diminutive) / <b>-ta</b> (Hellenized)</nobr></html> |||| **薫**: 艹 (Grass) + 重/熏 (To smoke/perfume) \\ **衣**: Cloth/Garment \\ **草**: Grass/Herb || **Star** (<html><span class="yiv-font">Nn</span></html>) + **Rope** (<html><span class="yiv-font">Nx</span></html>) + **Bird** (<html><span class="yiv-font">Wy</span></html>) |
+----
+
+=== Short Description ===
+Lavender is a genus of 47 known species of flowering plants in the mint family, **Lamiaceae**. It is a perennial shrub known for its spikes of aromatic flowers and silvery-green foliage. Historically prized for its essential oils and culinary uses.
+
+  * :!: **Note:** While safe for humans in culinary doses, concentrated lavender oil can be toxic to cats and dogs if ingested or applied to skin.
+
+=== Range and Hardiness ===
+  * **Native Range:** The Mediterranean, Middle East, and India.
+  * **Growth:** Low-growing mounded shrub; usually 0.5 to 1 meter in height.
+  * **Hardiness:** Generally hardy in USDA zones 5 - 9. (English Lavender is the hardiest; French and Spanish varieties prefer zones 7 - 9).
+
+^ Zone ^ West Coast Example ^ Climate Note ^
+| Zone 5 | <html><nobr>Eastern WA / Inland BC</nobr></html> | Cold Limit - Requires "English" varieties; needs snow cover or mulch to protect roots from deep freezes. |
+| Zone 7 | <html><nobr>Seattle / Victoria</nobr></html> | Ideal Summer - Enjoys dry summers, but must be planted in gravelly soil to avoid root rot during rainy winters. |
+| Zone 9 | <html><nobr>Central & South CA</nobr></html> | Warm Limit - High humidity can be a struggle; requires high airflow and sandier soil to prevent fungal growth. |
+
+=== Species Classification ===
+
+^ Image ^ Species ^ Common Name ^ Description ^ Native Region ^
+| {{ https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Lavandula_angustifolia_002.JPG/500px-Lavandula_angustifolia_002.JPG?200 }} | //L. angustifolia// | English Lavender | The "true" lavender. Shortest spikes, sweetest scent, and most cold-hardy. Used for top-tier oils. | Mediterranean |
+| {{ https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Lavandula_latifolia_DehesaBoyalPuertollano.jpg/1280px-Lavandula_latifolia_DehesaBoyalPuertollano.jpg?200 }} | //L. latifolia// | French / Spike Lavender | Wider leaves and higher camphor content. Scent is more "medicinal" and pungent than English types. | Western Mediterranean |
+| {{ https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Topped_lavendar_flowerhead.jpg/960px-Topped_lavendar_flowerhead.jpg?200 }} | //L. stoechas// | Italian / Spanish Lavender | Distinctive "rabbit ear" bracts on top of the flower. Very heat tolerant but less cold-hardy. | Spain / Italy / N. Africa |
+| {{ https://upload.wikimedia.org/wikipedia/commons/a/a0/Lavandula_dentata_1.JPG?200 }} | //L. dentata// | French / Toothed Lavender | Named for its serrated (toothed) leaf edges. Woody shrub with a mild, lavender-rosemary scent. | Spain / North Africa |
+
+=== Magical Qualities ===
+
+**Historical & Shamanistic Lore**
+  * **Spiritual Purification:** The name derives from the Latin //lavare// (to wash). While Romans used it for physical bathing, Shamanistic traditions evolved this into "soul washing"—using the smoke of dried lavender to scrub the aura of heavy emotional attachments.
+  * **The Scented Shield:** In Japanese folklore (where it is known as //Kunnigusa//), aromatic herbs were tucked into the sleeves of kimonos. It was believed that a person surrounded by a cloud of scent was invisible to "low-level" hungry ghosts, who are attracted to the smell of decay rather than blossoms.
+  * **Mercury's Herb:** In Western alchemy, it is ruled by Mercury. It is used to "quicken" the mind and facilitate communication between the physical and spiritual realms.
+
+**Metaphysical & Ritual Use**
+  * **The Third Eye:** Associated with the **Ajna (Third Eye) Chakra**. It is used in meditation to enhance psychic sight and "cool" an overactive mind, allowing for clearer intuition and premonitions.
+  * **Tempering the Spirit:** Used in rituals involving the "sweetening" of a person's temperament. It is believed to bridge the gap between anger and understanding, facilitating peaceful resolutions in hostile environments.
+  * **The Dream Bridge (Grief & Peace):** Lavender is used for honoring memory, specifically focusing on the **peace of the rest** without the weight of earthly anxieties.

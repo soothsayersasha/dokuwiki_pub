@@ -1,0 +1,132 @@
+===== Mnemonics =====
+
+^ Glyph ^ Latin ^ Name       ^ Mnemonic Meaning                     ^ Mnemonic sound ^
+| Bb    | Bb    | Bean       | Bean in a pod (looks like B)         | __F__a__v__a Bean |
+| Bd    | Bd    | Foot       | Legs and big foot                    | __B__oo__t__ |
+| Bg    | Bg    | Staff      | Shepherd's staff                     | __B__a__g__uette |
+| Bl    | Bl    | Hide       | Leather hanging to dry               | __Fl__ag |
+| Bw    | Bw    | Dead       | Grave marker / Cross                 | __Boo!__ a ghost! |
+| By    | By    | Bee        | Bee w/ stinger                       | __Bee__ |
+| Bx    | Bx    | Cup        | Cup (shape of U)                     | __Pa__ss more water |
+| Bn    | Bn    | Cloth      | Cloth rolled up                      | __F__u__n__ny taco |
+| Db    | Db    | Taste      | Droplet on tongue                    | __S__oa__p__ |
+| Dd    | Dd    | Sit        | Sat in a dining chair                | __S__i__t__ |
+| Dg    | Dg    | Plead      | Bowed to the left pleading           | __D__o__g__ wants a treat |
+| Dl    | Dl    | Tell       | Lips telling                         | __T__a__l__e |
+| Dw    | Dw    | You        | You better listen (Ear)              | __T__ho__u__ |
+| Dy    | Dy    | Breast     | Breast / small letter 'b'            | __Sea__ (in french mer and mère are pronounced the same, dunno lol) |
+| Dx    | Dx    | Sow        | A seed sown underground              | __Ta__ckle work |
+| Dn    | Dn    | House      | Doorway / House frame                | __D__e__n__ |
+| Gb    | Gb    | Head       | Profile of a head                    | __C__a__p__ital |
+| Gd    | Gd    | Hand       | Hand grabbing                        | __G__e__t__ me this |
+| Gg    | Gg    | Hook       | Fishing hook                         | __C__a__c__a |
+| Gl    | Gl    | Gold       | Coin slot / letter g for gold        | __G__o__l__d |
+| Gw    | Gw    | Lie        | Lie on a pillow                      | __Co__me hither |
+| Gy    | Gy    | Horns      | Bull horns                           | Shimmery |
+| Gx    | Gx    | Desire     | Cross my heart and hope              | __Ga__h! my heart |
+| Gn    | Gn    | Tooth      | Sharp fang                           | __C__a__n__ine |
+| Lb    | Lb    | Lip        | Lips opening to eat                  | __L__i__p__ |
+| Ld    | Ld    | Roll       | Rolled up paper                      | __L__a__t__e i gotta roll |
+| Lg    | Lg    | Collect    | Collected in basket                  | Col__l__e__c__t |
+| Ll    | Ll    | Bridge     | Two paths bridged                    | ? |
+| Lw    | Lw    | Flow       | Water flowing downhill               | L'eau |
+| Ly    | Ly    | Wash       | Water washing over clothes           | __Li__mpid |
+| Lx    | Lx    | Measure    | Ruler marks                          | ? |
+| Ln    | Ln    | Sunrise    | Sun rising over horizon              | ? |
+| Wb    | Wb    | Cattle     | Cow udders                           | ? |
+| Wd    | Wd    | Passion    | Anatomical heart                     | ? |
+| Wg    | Wg    | Ice        | Shimmering ice rink                  | ? |
+| Wl    | Wl    | Brick      | Stacked bricks                       | The city of __Ur__ |
+| Ww    | Ww    | Group      | Bracket / Grouping                   | __oo__oooo so many |
+| Wy    | Wy    | Lil Bird   | Bird foot on ground                  | __Wee__ee a birdie |
+| Wx    | Wx    | Lil Animal | Little monkey hunched over           | A look a __Wa__h |
+| Wn    | Wn    | Big Bird   | Long neck (Ostrich)                  | ? |
+| Yb    | Yb    | Weave      | Thread/Needle crossing               | __IF__ i poke myself with a needle one more time i swear |
+| Yd    | Yd    | Speak      | An ear hearing you speak             | __Y__e__s__? |
+| Yg    | Yg    | Strength   | Flexed muscle                        | The __Y__a__ck__ is massive |
+| Yl    | Yl    | Eye        | Eye shape                            | __Y__ou'__ll__ see! |
+| Yw    | Yw    | Big Animal | Wildcat's tail                       | __YO__ get this away from me |
+| Yy    | Yy    | Manner     | In a straight manner                 | __EEE__k that's coming close to me! |
+| Yx    | Yx    | Centre     | Dot in centre of box                 | __Y__e__a__r |
+| Yn    | Yn    | Fruit      | Fruit up a branch                    | ? |
+| Xb    | Xb    | At         | Pointing up at the sky               | ? |
+| Xd    | Xd    | Campfire   | Crossed logs and smoke               | ? |
+| Xg    | Xg    | Horse      | Horse w/ long neck                   | __Eq__uine |
+| Xl    | Xl    | Balance    | Scale / Balance beam                 | __Al__gebra |
+| Xw    | Xw    | Mark       | X marks the spot                     | __Ou__ch! |
+| Xy    | Xy    | Hollow     | Empty box                            | ? |
+| Xx    | Xx    | Feather    | Quill feather                        | ? |
+| Xn    | Xn    | Snake      | Coiled snake                         | ? |
+| Nb    | Nb    | Navel      | Belly button / navel                 | __N__a__v__el |
+| Nd    | Nd    | Nose       | Pointy nose                          | __N__o__s__e |
+| Ng    | Ng    | Mix        | Stirring spoon in circles (from above)| __M__a__k__e |
+| Nl    | Nl    | Frog       | Frog w/ eyes                         | ? |
+| Nw    | Nw    | Growth     | Sprout growing above ground          | __New__ |
+| Ny    | Ny    | Plant      | Sprout gaining leave                 | ? |
+| Nx    | Nx    | Tie        | Rope knot                            | ? | 
+| Nn    | Nn    | Star       | 5-pointed star                       | ? |
+<html>
+
+<style>
+
+/* Centers table headers */
+
+.dokuwiki table.inline th {
+
+    text-align: center;
+
+    vertical-align: middle;
+
+}
+
+
+
+/* Targets only the 2nd cell (Examples) for the Yivalese font */
+
+.dokuwiki table.inline td:nth-child(1) {
+
+    font-family: "YzWrFont", "yiv-font", sans-serif;
+
+    font-size: 60px;
+
+    line-height: 1.1;
+
+    min-width: 140px;
+
+}
+
+
+
+/* Centers and cleans up the Latin and Description columns */
+
+.dokuwiki table.inline td {
+
+    vertical-align: middle;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    padding: 10px 20px;
+
+}
+
+
+
+/* Fixes the "stretched" look by making width fit the content */
+
+.dokuwiki table.inline {
+
+    border-collapse: collapse;
+
+    width: auto; 
+
+    margin: 20px auto;
+
+    max-width: 1100px;
+
+}
+
+</style>
+
+</html>

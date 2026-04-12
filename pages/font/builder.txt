@@ -1,0 +1,402 @@
+<html>
+<style>
+/* 1. Font Definitions */
+@font-face {
+    font-family: "YzWr-Italic";
+    src: url("https://atigerseye.com/den/yivalkes/YzWr-Italic.woff2");
+}
+
+/* Base UI Container */
+#yiv-builder-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+    font-family: sans-serif;
+}
+
+/* Throbbing Animation for UX Hint */
+@keyframes throb-red {
+    0% { transform: scale(1); border-color: currentColor; box-shadow: none; }
+    50% { transform: scale(1.05); border-color: #ff4a4a; box-shadow: 0 0 15px rgba(255, 74, 74, 0.4); color: #ff4a4a; }
+    100% { transform: scale(1); border-color: currentColor; box-shadow: none; }
+}
+.throb-hint {
+    animation: throb-red 0.4s ease-in-out 2;
+}
+
+/* Toggle Switch Styles */
+.yiv-controls { display: flex; justify-content: center; margin-bottom: 30px; width: 100%; }
+.switch-container { display: flex; align-items: center; cursor: pointer; gap: 10px; }
+.switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+.switch input { display: none; }
+.slider {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(128,128,128,0.4); transition: .3s; border-radius: 20px;
+}
+.slider:before {
+    position: absolute; content: ""; height: 14px; width: 14px;
+    left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;
+}
+input:checked + .slider { background-color: #4a9eff; }
+input:checked + .slider:before { transform: translateX(20px); }
+.label-text { font-family: sans-serif; font-size: 14px; font-weight: bold; opacity: 0.8; }
+
+/* Font Application */
+.yiv-font { font-family: "YzWrFont", sans-serif; }
+.italic-mode .yiv-font { font-family: "YzWr-Italic", sans-serif !important; }
+
+/* Builder Grid Layout */
+.builder-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+}
+.builder-grid {
+    display: grid;
+    grid-template-columns: 160px 70px;
+    grid-template-rows: 70px 160px;
+    gap: 10px;
+}
+.area-top { grid-column: 1; grid-row: 1; display: flex; justify-content: space-between; align-items: flex-end; }
+.area-main { grid-column: 1; grid-row: 2; }
+.area-side { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
+
+/* Slot Styling */
+.glyph-box {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid currentColor; border-radius: 6px;
+    background: rgba(128, 128, 128, 0.05);
+    user-select: none; transition: 0.2s; box-sizing: border-box;
+}
+.glyph-box:hover { background: rgba(128, 128, 128, 0.15); }
+.main-box { width: 160px; height: 160px; font-size: 100px; cursor: pointer; }
+.mod-box { font-size: 28px; cursor: default; }
+
+/* Dynamic Mod Box Sizes */
+.box-70 { width: 70px; height: 70px; }
+.box-75-70 { width: 75px; height: 70px; }
+.box-70-75 { width: 70px; height: 75px; }
+
+/* Add Buttons */
+.add-btn {
+    display: flex; align-items: center; justify-content: center;
+    border: 2px dashed rgba(128, 128, 128, 0.5); border-radius: 4px;
+    background: transparent; color: inherit; font-size: 20px;
+    cursor: pointer; transition: 0.2s; box-sizing: border-box;
+}
+.add-btn:hover { border-style: solid; background: rgba(128, 128, 128, 0.15); }
+
+/* Empty Slots */
+.empty-slot { background: rgba(128, 128, 128, 0.05); border-color: rgba(128, 128, 128, 0.2); color: rgba(128, 128, 128, 0.4); }
+.empty-slot:hover { border-color: rgba(128, 128, 128, 0.5); color: inherit; }
+.btn-top-full { width: 160px; height: 70px; }
+.btn-side-full { width: 70px; height: 160px; }
+.btn-40-70 { width: 40px; height: 70px; }
+.btn-70-40 { width: 70px; height: 40px; }
+
+/* Individual Box Controls */
+.ctrl-btn {
+    position: absolute; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(128, 128, 128, 0.2); border-radius: 50%;
+    font-size: 11px; cursor: pointer; font-family: sans-serif;
+    line-height: 1; z-index: 10;
+}
+.ctrl-btn:hover { background: rgba(128, 128, 128, 0.6); }
+.ctrl-x { top: 4px; right: 4px; }
+.ctrl-flip-bot { bottom: 4px; right: 4px; }
+.ctrl-flip-top { top: 4px; left: 4px; }
+
+/* Output Area */
+.builder-output {
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 220px; padding: 25px; border-radius: 8px;
+    border: 1px solid rgba(128, 128, 128, 0.2); background: rgba(128,128,128,0.02);
+}
+.output-string { font-family: monospace; font-size: 24px; margin-bottom: 15px; opacity: 0.8; }
+.output-logogram { font-size: 100px; line-height: 1; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+
+/* Global Controls */
+.builder-controls { display: flex; gap: 10px; margin-top: 20px; }
+button.yiv-btn {
+    padding: 8px 16px; border: 1px solid currentColor;
+    background: transparent; color: inherit;
+    cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 14px;
+}
+button.yiv-btn:hover { background: rgba(128, 128, 128, 0.1); }
+
+/* Modal Picker */
+#glyph-picker-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; }
+.modal-content {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #fff; color: #333;
+    padding: 20px; border-radius: 8px; max-height: 85vh; overflow-y: auto;
+    border: 1px solid rgba(128, 128, 128, 0.3); max-width: 95%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+@media (prefers-color-scheme: dark) { .modal-content { background: #1a1a1a; color: #eee; } }
+.modal-close { float: right; cursor: pointer; font-size: 28px; font-weight: bold; opacity: 0.7; }
+.modal-close:hover { opacity: 1; }
+
+#glyphTable { border-collapse: collapse; width: auto; margin: 10px auto; }
+#glyphTable th { text-align: center; vertical-align: middle; padding: 10px; opacity: 0.7; }
+#glyphTable td { 
+    vertical-align: middle; text-align: center; padding: 8px 15px; 
+    border: 1px solid rgba(128, 128, 128, 0.2); cursor: pointer; transition: 0.1s;
+}
+#glyphTable td:hover { background: rgba(128, 128, 128, 0.15); }
+#glyphTable td span.yiv-font { font-size: 45px; display: block; line-height: 1; margin-bottom: 4px; color: inherit; }
+#glyphTable td em { font-size: 14px; opacity: 0.8; font-style: normal; }
+</style>
+
+<div id="yiv-builder-wrapper">
+    <div class="yiv-controls">
+        <label class="switch-container">
+            <div class="switch">
+                <input type="checkbox" id="fontToggle" onclick="toggleYivBuilderFont()">
+                <span class="slider"></span>
+            </div>
+            <span class="label-text">Switch to ancient font</span>
+        </label>
+    </div>
+
+    <div class="builder-content">
+        <div class="builder-grid">
+            <div class="area-top" id="area-top"></div>
+            <div class="area-main" id="area-main"></div>
+            <div class="area-side" id="area-side"></div>
+        </div>
+
+        <div class="builder-output">
+            <div class="output-string" id="out-string">...</div>
+            <div class="output-logogram yiv-font" id="out-logogram"></div>
+            <div class="builder-controls">
+                <button class="yiv-btn" id="btn-copy">Copy</button>
+                <button class="yiv-btn" id="btn-clear">Clear All</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="glyph-picker-modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closePicker()">&times;</span>
+        <h3 style="margin-top: 0; opacity: 0.8;">Select a Glyph</h3>
+        <table id="glyphTable">
+            <tr><th></th><th>b</th><th>d</th><th>g</th><th>l</th><th>w</th><th>y</th><th>x</th><th>n</th></tr>
+            <tr><th>B</th><td><span class="yiv-font">Bb</span><br><em>Bean</em></td><td><span class="yiv-font">Bd</span><br><em>Foot</em></td><td><span class="yiv-font">Bg</span><br><em>Staff</em></td><td><span class="yiv-font">Bl</span><br><em>Leather</em></td><td><span class="yiv-font">Bw</span><br><em>Dead</em></td><td><span class="yiv-font">By</span><br><em>Bee</em></td><td><span class="yiv-font">Bx</span><br><em>Cup</em></td><td><span class="yiv-font">Bn</span><br><em>Cloth</em></td></tr>
+            <tr><th>D</th><td><span class="yiv-font">Db</span><br><em>Taste</em></td><td><span class="yiv-font">Dd</span><br><em>Monarch</em></td><td><span class="yiv-font">Dg</span><br><em>Plead</em></td><td><span class="yiv-font">Dl</span><br><em>Tell</em></td><td><span class="yiv-font">Dw</span><br><em>You</em></td><td><span class="yiv-font">Dy</span><br><em>Breast</em></td><td><span class="yiv-font">Dx</span><br><em>Tool</em></td><td><span class="yiv-font">Dn</span><br><em>House</em></td></tr>
+            <tr><th>G</th><td><span class="yiv-font">Gb</span><br><em>Head</em></td><td><span class="yiv-font">Gd</span><br><em>Friend</em></td><td><span class="yiv-font">Gg</span><br><em>Hook</em></td><td><span class="yiv-font">Gl</span><br><em>Gold</em></td><td><span class="yiv-font">Gw</span><br><em>Lie</em></td><td><span class="yiv-font">Gy</span><br><em>Horns</em></td><td><span class="yiv-font">Gx</span><br><em>Desire</em></td><td><span class="yiv-font">Gn</span><br><em>Dog-likes</em></td></tr>
+            <tr><th>L</th><td><span class="yiv-font">Lb</span><br><em>Lip</em></td><td><span class="yiv-font">Ld</span><br><em>Wheel</em></td><td><span class="yiv-font">Lg</span><br><em>Collect</em></td><td><span class="yiv-font">Ll</span><br><em>Breath</em></td><td><span class="yiv-font">Lw</span><br><em>Flow</em></td><td><span class="yiv-font">Ly</span><br><em>Wash</em></td><td><span class="yiv-font">Lx</span><br><em>Measure</em></td><td><span class="yiv-font">Ln</span><br><em>Sunrise</em></td></tr>
+            <tr><th>W</th><td><span class="yiv-font">Wb</span><br><em>Cattle</em></td><td><span class="yiv-font">Wd</span><br><em>Passion</em></td><td><span class="yiv-font">Wg</span><br><em>Ice</em></td><td><span class="yiv-font">Wl</span><br><em>Brick</em></td><td><span class="yiv-font">Ww</span><br><em>Group</em></td><td><span class="yiv-font">Wy</span><br><em>Lil Bird</em></td><td><span class="yiv-font">Wx</span><br><em>Little Animal</em></td><td><span class="yiv-font">Wn</span><br><em>Big bird</em></td></tr>
+            <tr><th>Y</th><td><span class="yiv-font">Yb</span><br><em>Weave</em></td><td><span class="yiv-font">Yd</span><br><em>Speak</em></td><td><span class="yiv-font">Yg</span><br><em>Strength</em></td><td><span class="yiv-font">Yl</span><br><em>Eye</em></td><td><span class="yiv-font">Yw</span><br><em>Big Animal</em></td><td><span class="yiv-font">Yy</span><br><em>Manner</em></td><td><span class="yiv-font">Yx</span><br><em>Centre</em></td><td><span class="yiv-font">Yn</span><br><em>Fruit</em></td></tr>
+            <tr><th>X</th><td><span class="yiv-font">Xb</span><br><em>At</em></td><td><span class="yiv-font">Xd</span><br><em>Campfire</em></td><td><span class="yiv-font">Xg</span><br><em>Horse</em></td><td><span class="yiv-font">Xl</span><br><em>Balance</em></td><td><span class="yiv-font">Xw</span><br><em>Mark</em></td><td><span class="yiv-font">Xy</span><br><em>Far</em></td><td><span class="yiv-font">Xx</span><br><em>Feather</em></td><td><span class="yiv-font">Xn</span><br><em>Snake</em></td></tr>
+            <tr><th>N</th><td><span class="yiv-font">Nb</span><br><em>Navel</em></td><td><span class="yiv-font">Nd</span><br><em>Nose</em></td><td><span class="yiv-font">Ng</span><br><em>Mix</em></td><td><span class="yiv-font">Nl</span><br><em>Reptiles</em></td><td><span class="yiv-font">Nw</span><br><em>Growth</em></td><td><span class="yiv-font">Ny</span><br><em>Plant</em></td><td><span class="yiv-font">Nx</span><br><em>Rope</em></td><td><span class="yiv-font">Nn</span><br><em>Star/Fish</em></td></tr>
+        </table>
+    </div>
+</div>
+
+<script>
+let state = { main: null, top: [], side: [] };
+let activeTarget = null; 
+
+function toggleYivBuilderFont() {
+    let wrapper = document.getElementById("yiv-builder-wrapper");
+    let modal = document.getElementById("glyph-picker-modal");
+    wrapper.classList.toggle("italic-mode");
+    modal.classList.toggle("italic-mode");
+}
+
+function triggerMainHint() {
+    let mainBtn = document.getElementById('main-drop-zone');
+    if (mainBtn) {
+        mainBtn.classList.remove('throb-hint');
+        void mainBtn.offsetWidth; // Trigger reflow
+        mainBtn.classList.add('throb-hint');
+    }
+}
+
+renderUI();
+
+function renderUI() {
+    renderMain();
+    renderTop();
+    renderSide();
+    updateOutput();
+}
+
+function createBox(glyphObj, area, index, sizeClass, isMain = false) {
+    let charDisplay = glyphObj.char + (glyphObj.reversed ? '!' : '');
+    let box = document.createElement('div');
+    box.className = `glyph-box yiv-font ${sizeClass}`;
+    if (isMain) box.id = 'main-drop-zone';
+    box.innerText = charDisplay;
+    if (isMain) box.onclick = (e) => { if(e.target === box) openPicker('main', 'set'); };
+
+    let btnX = document.createElement('div');
+    btnX.className = 'ctrl-btn ctrl-x';
+    btnX.innerHTML = '✕';
+    btnX.onclick = (e) => { e.stopPropagation(); removeGlyph(area, index); };
+    box.appendChild(btnX);
+
+    let btnFlip = document.createElement('div');
+    btnFlip.className = `ctrl-btn ${area === 'top' ? 'ctrl-flip-top' : 'ctrl-flip-bot'}`;
+    btnFlip.innerHTML = '⟳';
+    btnFlip.onclick = (e) => { e.stopPropagation(); flipGlyph(area, index); };
+    box.appendChild(btnFlip);
+
+    return box;
+}
+
+function renderMain() {
+    const container = document.getElementById('area-main');
+    container.innerHTML = '';
+    if (!state.main) {
+        let btn = document.createElement('div');
+        btn.id = 'main-drop-zone';
+        btn.className = 'glyph-box main-box';
+        btn.style.borderStyle = 'dashed';
+        btn.style.fontFamily = 'sans-serif';
+        btn.style.fontSize = '24px';
+        btn.innerText = 'Base';
+        btn.onclick = () => openPicker('main', 'set');
+        container.appendChild(btn);
+    } else {
+        container.appendChild(createBox(state.main, 'main', 0, 'main-box', true));
+    }
+}
+
+function renderTop() {
+    const container = document.getElementById('area-top');
+    container.innerHTML = '';
+    if (!state.main) {
+        container.innerHTML = `<button class="add-btn btn-top-full empty-slot" onclick="triggerMainHint()">+</button>`;
+        return; 
+    }
+    if (state.top.length === 0) {
+        container.innerHTML = `<button class="add-btn btn-top-full empty-slot" onclick="openPicker('top', 'push')">+</button>`;
+    } else if (state.top.length === 1) {
+        let bl = document.createElement('button'); bl.className = 'add-btn btn-40-70'; bl.innerText = '+';
+        bl.onclick = () => openPicker('top', 'pushLeft');
+        let br = document.createElement('button'); br.className = 'add-btn btn-40-70'; br.innerText = '+';
+        br.onclick = () => openPicker('top', 'pushRight');
+        container.appendChild(bl);
+        container.appendChild(createBox(state.top[0], 'top', 0, 'mod-box box-70'));
+        container.appendChild(br);
+    } else {
+        container.appendChild(createBox(state.top[0], 'top', 0, 'mod-box box-75-70'));
+        container.appendChild(createBox(state.top[1], 'top', 1, 'mod-box box-75-70'));
+    }
+}
+
+function renderSide() {
+    const container = document.getElementById('area-side');
+    container.innerHTML = '';
+    if (!state.main) {
+        container.innerHTML = `<button class="add-btn btn-side-full empty-slot" onclick="triggerMainHint()">+</button>`;
+        return; 
+    }
+    if (state.side.length === 0) {
+        container.innerHTML = `<button class="add-btn btn-side-full empty-slot" onclick="openPicker('side', 'push')">+</button>`;
+    } else if (state.side.length === 1) {
+        let bt = document.createElement('button'); bt.className = 'add-btn btn-70-40'; bt.innerText = '+';
+        bt.onclick = () => openPicker('side', 'pushTop');
+        let bb = document.createElement('button'); bb.className = 'add-btn btn-70-40'; bb.innerText = '+';
+        bb.onclick = () => openPicker('side', 'pushBot');
+        container.appendChild(bt);
+        container.appendChild(createBox(state.side[0], 'side', 0, 'mod-box box-70'));
+        container.appendChild(bb);
+    } else {
+        container.appendChild(createBox(state.side[0], 'side', 0, 'mod-box box-70-75'));
+        container.appendChild(createBox(state.side[1], 'side', 1, 'mod-box box-70-75'));
+    }
+}
+
+function removeGlyph(area, index) {
+    if (area === 'main') state = { main: null, top: [], side: [] };
+    else state[area].splice(index, 1);
+    renderUI();
+}
+
+function flipGlyph(area, index) {
+    if (area === 'main') state.main.reversed = !state.main.reversed;
+    else state[area][index].reversed = !state[area][index].reversed;
+    renderUI();
+}
+
+function updateOutput() {
+    if (!state.main) {
+        document.getElementById('out-string').innerText = "...";
+        document.getElementById('out-logogram').innerText = "";
+        return;
+    }
+    let m = state.main.char;
+    m = (state.top.length > 0) ? m.toUpperCase() : m.charAt(0).toUpperCase() + m.charAt(1).toLowerCase();
+    if (state.main.reversed) m += "!";
+    let t = "";
+    if (state.top.length === 1) t += state.top[0].char + (state.top[0].reversed ? "!" : "");
+    else if (state.top.length === 2) {
+        t += state.top[1].char + (state.top[1].reversed ? "!" : ""); 
+        t += state.top[0].char + (state.top[0].reversed ? "!" : ""); 
+    }
+    let s = "";
+    if (state.side.length === 1) s += state.side[0].char + (state.side[0].reversed ? "!" : "");
+    else if (state.side.length === 2) {
+        s += state.side[0].char + (state.side[0].reversed ? "!" : ""); 
+        s += state.side[1].char + (state.side[1].reversed ? "!" : ""); 
+    }
+    let finalStr = m + t + s;
+    document.getElementById('out-string').innerText = finalStr;
+    document.getElementById('out-logogram').innerText = finalStr;
+}
+
+function openPicker(area, action) {
+    activeTarget = { area, action };
+    document.getElementById('glyph-picker-modal').style.display = 'block';
+}
+
+function closePicker() {
+    document.getElementById('glyph-picker-modal').style.display = 'none';
+    activeTarget = null;
+}
+
+document.querySelectorAll('#glyphTable td').forEach(td => {
+    td.addEventListener('click', () => {
+        let span = td.querySelector('span.yiv-font');
+        if (span && activeTarget) {
+            let val = span.innerText;
+            if (activeTarget.area !== 'main') val = val.toLowerCase();
+            let obj = { char: val, reversed: false };
+            if (activeTarget.area === 'main') state.main = obj;
+            else if (activeTarget.action === 'push') state[activeTarget.area].push(obj);
+            else if (activeTarget.action === 'pushLeft' || activeTarget.action === 'pushTop') state[activeTarget.area].unshift(obj);
+            else if (activeTarget.action === 'pushRight' || activeTarget.action === 'pushBot') state[activeTarget.area].push(obj);
+            closePicker();
+            renderUI();
+        }
+    });
+});
+
+window.onclick = (e) => { if (e.target == document.getElementById('glyph-picker-modal')) closePicker(); }
+
+document.getElementById('btn-clear').addEventListener('click', () => {
+    state = { main: null, top: [], side: [] };
+    renderUI();
+});
+
+document.getElementById('btn-copy').addEventListener('click', (e) => {
+    let text = document.getElementById('out-string').innerText;
+    if (text !== "...") {
+        navigator.clipboard.writeText(text);
+        e.target.innerText = "Copied!";
+        setTimeout(() => e.target.innerText = "Copy", 2000);
+    }
+});
+</script>
+</html>

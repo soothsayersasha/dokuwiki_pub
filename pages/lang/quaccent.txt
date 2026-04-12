@@ -1,0 +1,84 @@
+======= The Quaccent System =======
+
+**Quaccent** (//Quack// + //Accent//) is a dual-mode communication system. It combines tonal avian vocalisations with the **Reed-Script**, a geometric stick-based script.
+
+====== 1. Vocalisation: Tonal Quaccent ======
+
+The spoken component relies on the relationship between the short **Quack** and the long **Quaar**. 
+
+===== 1.1 The Syntax of the Bill =====
+  * **The Quaar-Primary (Command):** If a phrase begins with a long //Quāar//, it is an active directive, a question, or a requirement for the listener to act.
+  * **The Quack-Primary (Statement):** If a phrase begins with a short //Quack//, it is a description of a state of being or an observation.
+
+===== 1.2 Tonal Lexicon =====
+
+^ Concept ^ Sound Pattern ^ Inflection/Tone ^
+| Yes | Quäck-Quäck | High, sharp (Staccato) |
+| No | <html>Qu<u>a</u>ck-Qu<u>a</u>ck</html> | Low, flat/gravelly (Low-bar) |
+| Walk | Quāck-Quāar | Mid-tone, steady (Level) |
+| Swim | Quáck-Quáar | Rising "gurgle" (Ascending) |
+| Bike Ride | Quäck-Caw-Caw | Rhythmic staccato clicks |
+| Car Ride | <html>Qu<u>a</u>ck-Qu<u>a</u>ck-C<u>a</u>w</html> | Low vibration |
+| Come Here! | Quāar-Quàck! | Mid start to sharp falling drop |
+| Where? | Quáar-Quáar? | Rising pitch (Ascending) |
+| Danger! | Quáär-CÄW! | Explosive and harsh |
+| Love | Quāck-Trrr-lōō | Melodic warble |
+| Duck (Noun) | Quāck-Quāck-Hāh | Natural rhythmic quack |
+| Rat (Noun) | Quäck-Squaw | High, pinched staccato |
+| Seagull (Noun) | Quāck-Kree-Yáh | Piercing, sliding upward |
+| Crow (Noun) | <html>Qu<u>a</u>ck-C<u>a</u>w-C<u>a</u>w</html> | Deep, throat-heavy rasp |
+
+====== 2. The Reed-Script (Sticks) ======
+
+The Reed-Script is a physical script. All messages are oriented by the **North Stick** (the longest branch), which serves as the "anchor" for reading directions.
+
+===== 2.1 Avian Beak Motifs =====
+Living creatures are identified by their "Beak" markers (using ^, v, <, > shapes).
+
+<code>
+   |^|          \^/          \v/          /^\
+  (Crow)      (Seagull)     (Duck)       (Rat)
+</code>
+
+===== 2.2 Conceptual Glyphs =====
+Simple geometric arrangements for actions and objects.
+
+^ Concept ^ ASCII Glyph ^ Visual Logic ^
+| Love | X | Two paths intersecting |
+| Treasure | [X] | Value protected in a box |
+| Protection | /_\ | A sturdy peaked nest |
+| Wait/Stop | — | A horizontal barrier |
+| Left | / | Leaning toward the North Stick |
+| Right | \ | Leaning away from the North Stick |
+| Walk | vv | Two feet, bipedal |
+| Swim | /\/ | Water surface ripples |
+| Bike | [vv] | Two feet push down |
+| Car | [==] | Tires, aerial view of car|
+
+====== 3. Phrase Construction ======
+
+To build a sentence, place the **North Stick** at the top. Arrange the Subject below it, followed by the Action or Direction.
+
+**Example: "Seagull, Go Left" (Command)**
+//Vocalisation: Quāar-Kree-Yáh (Rising end)//
+<code>
+      |       (North Stick)
+     \^/      (Seagull)
+      \       (Direction: Left)
+</code>
+
+**Example: "Protection for the Rat" (Observation)**
+//Vocalisation: Quāck-Squäw-Kaww//
+<code>
+      |       (North Stick)
+     /^\      (Rat)
+     /_\      (Under Protection)
+</code>
+
+**Example: "Duck Swim Right" (Statement)**
+//Vocalisation: Quāck-Quāck-Hāh-/\///
+<code>
+      |       (North Stick)
+     \v/      (Duck)
+      /      (Direction: Right)
+</code>

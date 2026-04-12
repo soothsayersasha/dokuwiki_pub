@@ -1,0 +1,125 @@
+====== Qardence: A Game of Harmonic Construction ======
+
+Welcome to **Qardence**, a system using [[https://github.com/B7th|MangoTrain]]'s //Quards// for translating visual geometry into sonic identity. These tiles can be printed on premium **qardstock**, ensuring that your compositions have both physical and musical weight. 
+
+{{ :music:quards-messy-table.png?400 |}}
+
+By arranging these hexagonal units, you aren't just playing a game; you are practicing **Qardination** – the art of mapping "hexture" and flow through symbolic alignment.
+
+===== The Qardstock Anatomy =====
+
+Before you begin your first "Compositional Cast," familiarise yourself with the structural "hexture" of your deck:
+
+  * **The Ornate (Flow-Glyphs):** These represent **Legato** movements. Their curvy nature suggests a "winding" melody.
+  * **The Geometric (Point-Glyphs):** These represent **Staccato** movements. Sharp lines and dots suggest rhythmic "stabs."
+  * **The Void (Low-Density):** Qards with 1 glyph or 0 (joker) represent **Roots** or **Rests**.
+
+==== Degree & Quality Logic ====
+The number of glyphs on a qard determines its **Scale Degree**, while the colour temperature determines the **Chord Quality**:
+
+^ Glyph Count ^ Scale Degree ^ Description ^
+| 1 | Tonic (I) | The Root / Starting Point |
+| 2 | Supertonic (ii) | The "Passing" tone |
+| 3 | Mediant (iii) | The "Character" (determines Major/Minor) |
+| 4 | Subdominant (IV) | The Bridge |
+| 5+ | Dominant (V) | The Tension |
+
+^ Colour Temp ^ Quality ^ Result ^
+| **Warm** (Red/Orange/Yellow) | Major | Happy / Bright / Dominant |
+| **Cool** (Blue/Green/Purple) | Minor | Sad / Dark / Melancholy |
+| **Neutral** (White/Tan/Grey) | Power/Sus | Open / Ambiguous / Drone |
+
+----
+
+===== Method 1: The Hexture Map (Structured) =====
+
+==== 1. The Tonic Root ====
+Place a single **1-Glyph Qard** (I) in the centre to set your key. Cool for Minor, Warm for Major.
+
+==== 2. Edge-Matching Resonance ====
+  * **Flat-to-Flat:** A flush connection indicates a **Consonant** interval (a 3rd or a 5th.)
+  * **Point-to-Point:** Touching only at the vertex indicates a **Dissonant** interval (a 2nd or 7th.)
+
+<code>
+   Flat-to-Flat (Consonant)       Point-to-Point (Dissonant)
+        ___   ___   ___                ___
+       / I \ /iii\ / V \              / ii\
+       \___/ \___/ \___/              \___/
+                                           \
+                                            \___   ___
+                                            / I \ /vii\
+                                            \___/ \___/
+</code>
+
+
+**Consonant Path (Flat-to-Flat):** {{ :music:qard-con.mp3 |}} 
+**Dissonant Path (Point-to-Point):** {{ :music:qard-diss-edit.mp3 |}}
+
+==== 3. Colour Theory Chordal Shift ====
+  * **Monochromatic Layers:** Stacking same-coloured qards creates an inversion or harmonic depth within the same chord.
+  * **Chromatic Clashes:** Placing opposing colours (e.g., Red vs. Blue) signals a modulation.
+
+<code>
+Monochromatic (Layered)           Chromatic Clash (Modulation)
+          ___                               ___         ___
+         /iii\                             / I \  >>   / I \
+         \___/                             \___/       \___/
+           |                               (Blu)       (Red)
+          ___                             Eb-Minor    C-Major
+         / I \                           (1st Root)  (2nd Root)
+         \___/
+</code>
+**Monochromatic Layering:** {{ :music:qard-mon.mp3 |}}
+**Chromatic Clash (Modulation):** {{ :music:qard-cla.mp3 |}}
+
+==== Example Constraints (Gamified Qardination) ====
+
+  * **The Hive Mind:** Build a progression where every qard touches at least three others. This forces a "Choral" sound.
+<code>
+         ___
+     ___/ Q \___
+    / Q \___/ Q \
+    \___/ Q \___/
+    / Q \___/ Q \
+    \___/ Q \___/
+        \___/
+</code>
+
+  * **The Spectrum Run:** Start with the darkest qard and end with the lightest. Bridge the tonal gap using only 5 qards.
+<code>
+  [Black] -- [Deep Blue] -- [Grey] -- [Tan] -- [White]
+</code>
+
+  * **The Magic Mirror:** Build a visually symmetric pattern. For an example, play the left wing, the head (I), hit the body (rest), then the right wing (reverse.)
+<code>
+      (LEFT WING)     (HEAD)     (RIGHT WING)
+       ___   ___        ___        ___   ___
+      / V \ /iii\      / I \      /iii\ / V \
+      \___/ \___/      \___/      \___/ \___/
+          \ /            |            \ /
+         ( ii)         (VOID)        ( ii)
+          / \            |            / \
+    Legato Flight      Chord      Staccato Flutter
+</code>
+
+**Symmetrical Butterfly:**
+{{ :music:qard-sym.mp3 |}}
+
+{{ :music:quard-butterfly.jpg?400 |}}
+
+----
+
+===== Method 2: Aleatoric Qardination (The Random Cast) =====
+
+==== 1. The Gravity Drop ====
+Hold a handful of qards 12 inches above the table and release. The resulting "hexture" on the table is your musical score.
+
+==== 2. Reading the Spatial Score ====
+  * **The Pile-Up:** Overlapping qards are played as a **Cluster Chord**.
+  * **The Loners:** A qard that flew far away is a **Solo Outlier** (play at a high or low octave.)
+  * **The Orientation:** Upside-down cards become jokers (roots.)
+
+==== 3. Bridging the Gaps ====
+Look at the empty spaces between the qardstock. These are your **Rests**.
+
+It is important to leave these rules up to your imagination – place special care in to the meaning of these through your personal intention of the piece.

@@ -1,0 +1,830 @@
+====== Yivalese Word Construction ======
+
+<html>
+<style>
+    /* Dark Theme Optimized Styling */
+    .yiv-container {
+        color: inherit;
+        padding: 10px;
+        font-family: sans-serif;
+    }
+
+    /* Matrix grid hidden - using link-list only */
+    .matrix-grid {
+        display: none;
+    }
+
+    .initial-cell {
+        display: none;
+    }
+
+    .pair-btn {
+        display: none;
+    }
+
+    .output-section {
+        margin-top: 40px;
+        padding: 20px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.2);
+        border-radius: 8px;
+    }
+    #latin-output {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 12px;
+        font-size: 1.3em;
+        margin-bottom: 15px;
+        border-radius: 4px;
+    }
+    .preview-label {
+        font-size: 0.75em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: rgba(255,255,255,0.5);
+        margin-bottom: 8px;
+    }
+    #glyph-preview {
+        font-size: 6em;
+        line-height: 30px;
+        margin-bottom: 10px;
+        min-height: 0.7em;
+    }
+    #meaning-preview {
+        font-size: 1.2em;
+        color: #9cdcfe;
+        font-style: italic;
+        min-height: 1.2em;
+    }
+
+    .yiv-font { font-family: "YzWrFont", "yiv-font", sans-serif; }
+
+    .reading-list {
+        min-height: 2.8em;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 1.1em;
+        line-height: 1.5;
+        color: #fff;
+        margin-bottom: 6px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .reading-items {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    /* show appended readings on the same line */
+    .reading-chunk { display: inline; }
+
+    .pair-description {
+        font-size: 0.95em;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    /* workflow visuals */
+    .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    .workflow-card {
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        padding: 12px;
+        background: rgba(255,255,255,0.03);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .workflow-card.center {
+        background: rgba(156, 220, 254, 0.08);
+        border-color: rgba(156, 220, 254, 0.6);
+    }
+    .workflow-label {
+        font-size: 0.8em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #9cdcfe;
+    }
+    .workflow-example {
+        font-size: 1em;
+        font-weight: 600;
+    }
+
+    /* Responsive tweak: on small screens make workflow cards narrower and scrollable */
+    @media (max-width: 600px) {
+        .workflow-grid {
+            /* keep grid layout but tighten minimum widths so cards always fit */
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 6px;
+            padding-bottom: 6px;
+        }
+        .workflow-card {
+            min-width: 0; /* allow flexible shrinking */
+            padding: 6px;
+            font-size: 0.95em;
+        }
+        .workflow-label {
+            font-size: 0.72em;
+        }
+        .workflow-example {
+            font-size: 0.88em;
+        }
+    }
+
+    /* Link list always visible */
+    .mobile-menu {
+        margin-bottom: 20px;
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .mobile-category {
+        margin: 0;
+    }
+    .mobile-category h4 {
+        margin: 0 0 6px 0;
+        font-size: 0.95em;
+        color: #9cdcfe;
+    }
+    .mobile-link {
+        margin-right: 8px;
+        color: #9cdcfe;
+        text-decoration: underline;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    /* Logogram preview */
+    .logogram-preview {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 6px;
+        background: rgba(0,0,0,0.28);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "YzWrFont", "yiv-font", sans-serif;
+        margin-bottom: 8px;
+        padding: 2px;
+    }
+    .logogram-main {
+        font-size: 8.5em;
+        line-height: 1;
+        display:block;
+        text-align:center;
+        transform: translateY(-8%);
+    }
+    .logogram-truncate-note {
+        font-size: 0.85em;
+        color: rgba(255,255,255,0.6);
+        margin-top: 6px;
+    }
+
+    .reading-hint {
+        color: rgba(255,255,255,0.6);
+        font-size: 0.85em;
+        letter-spacing: 0.25px;
+    }
+
+    .more-link {
+        display: none;
+        margin-top: 6px;
+        align-self: flex-end;
+        color: #9cdcfe;
+        font-size: 0.85em;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .more-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="yiv-container">
+    <div id="workflow-grid" class="workflow-grid">
+        <div class="workflow-card">
+            <div class="workflow-label">Choose intended meaning</div>
+            <div class="workflow-example">Desire + Tell = Song</div>
+        </div>
+        <div class="workflow-card center">
+            <div class="workflow-label">Observe logogram</div>
+            <div class="workflow-example">See how GxDl appears</div>
+        </div>
+        <div class="workflow-card">
+            <div class="workflow-label">Choose inspired readings</div>
+            <div class="workflow-example">Gedh, Kedal, Gebda,...</div>
+        </div>
+    </div>
+    <div class="preview-label">Glyph Pairs</div>
+    <div class="reading-hint" style="margin-bottom:8px;">Click desired glyphs below to construct word/compound.</div>
+    <div id="mobile-menu" class="mobile-menu"></div>
+    <div id="matrix-root" class="matrix-grid"></div>
+
+    <div class="output-section">
+        <div class="preview-label">Construction</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <input type="text" id="latin-output" placeholder="Click glyphs above..." oninput="sync()" style="flex:1">
+            <button id="clear-inline" title="Clear" style="padding:6px 8px; cursor:pointer; white-space:nowrap; background:transparent; border:1px solid rgba(255,255,255,0.08); border-radius:4px;">Clear</button>
+            <button id="share-btn" style="padding:6px 10px; cursor:pointer; white-space:nowrap;">Share</button>
+        </div>
+        
+        <div style="display:flex; gap:20px;">
+            <div>
+                <div class="preview-label">Separate Glyphs</div>
+                <div id="glyph-preview" class="yiv-font" style="font-size: 6em; margin-bottom: 10px; min-height: 1.2em;"></div>
+            </div>
+            <div>
+                <div class="preview-label">Logogram</div>
+                <div id="logogram-container">
+                        <div class="logogram-preview">
+                            <span class="logogram-main" id="logogram-main"></span>
+                        </div>
+                        <div class="logogram-truncate-note" id="logogram-note" style="display:none;">* Logogram truncates to 3 glyphs</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="preview-label">Compound Meanings</div>
+        <div id="meaning-preview"></div>
+        
+        <div class="preview-label">Example Readings</div>
+        <div id="reading-list" class="reading-list">
+            <div id="reading-items" class="reading-items">
+                <span class="reading-hint">Select glyphs to see example readings.</span>
+            </div>
+            <a href="#" id="reading-more" class="more-link">more...</a>
+        </div>
+        <div class="preview-label">Exists</div>
+        <div id="existing-list" class="reading-list">
+            <div id="existing-items" class="reading-items">
+                <span class="reading-hint">No matches found.</span>
+            </div>
+            <div class="logogram-truncate-note" id="existing-note" style="display:none;">Exists in dictionary, might be homophone.</div>
+        </div>
+        
+        
+    </div>
+</div>
+
+<script>
+    const data = {
+        'B': {'b': 'Bean', 'd': 'Foot', 'g': 'Staff', 'l': 'Hide/Leather', 'w': 'Dead', 'y': 'Bee', 'x': 'Cup', 'n': 'Cloth'},
+        'D': {'b': 'Taste', 'd': 'Sit/Monarch', 'g': 'Plead', 'l': 'Tell', 'w': 'You', 'y': 'Breast', 'x': 'Sow/Tool', 'n': 'House'},
+        'G': {'b': 'Head', 'd': 'Hand/Friend', 'g': 'Hook/Defecation', 'l': 'Gold', 'w': 'Lie', 'y': 'Horns', 'x': 'Desire', 'n': 'Tooth/Dog-likes'},
+        'L': {'b': 'Lip', 'd': 'Roll/Wheel', 'g': 'Collect', 'l': 'Bridge', 'w': 'Flow', 'y': 'Wash', 'x': 'Measure', 'n': 'Sunrise'},
+        'W': {'b': 'Cattle', 'd': 'Passion', 'g': 'Ice', 'l': 'Brick', 'w': 'Group', 'y': 'Lil Bird', 'x': 'Little Animal', 'n': 'Big bird'},
+        'Y': {'b': 'Weave', 'd': 'Speak', 'g': 'Strength', 'l': 'Eye', 'w': 'Big Animal', 'y': 'Manner', 'x': 'Centre', 'n': 'Fruit'},
+        'X': {'b': 'At', 'd': 'Campfire', 'g': 'Horse', 'l': 'Balance', 'w': 'Mark', 'y': 'Hollow/Far', 'x': 'Feather', 'n': 'Snake'},
+        'N': {'b': 'Navel', 'd': 'Nose', 'g': 'Mix', 'l': 'Pumice', 'w': 'Growth', 'y': 'Plant', 'x': 'Tie/Rope', 'n': 'Star/Fish'}
+    };
+
+    const phonoUrl = '/den/testing/phono.json';
+    let phoneticMap = {};
+    let glossSet = null;
+    let glossMap = null;
+    let candidateSets = [];
+    const chunkSize = 20;
+    const maxComboSamples = 500;
+    let shuffledCombos = [];
+    let comboCursor = 0;
+    let totalCombos = 0;
+
+    const root = document.getElementById('matrix-root');
+    const input = document.getElementById('latin-output');
+    const gPreview = document.getElementById('glyph-preview');
+    const mPreview = document.getElementById('meaning-preview');
+    const readingItems = document.getElementById('reading-items');
+    const moreLink = document.getElementById('reading-more');
+    const shareBtn = document.getElementById('share-btn');
+    const clearInline = document.getElementById('clear-inline');
+
+    /* Mobile/menu behavior: render a compact categorized list instead of grid on small screens */
+    function renderMobileMenu() {
+        const menuContainer = document.getElementById('mobile-menu');
+        if (!menuContainer) return;
+        menuContainer.innerHTML = '';
+
+        const menu = document.createElement('div');
+        menu.id = 'mobile-menu-inner';
+        menu.style.display = 'flex';
+        menu.style.flexDirection = 'column';
+        // Build exhaustive categories from `data` using keyword matching
+        function buildCategories() {
+            const keywordMap = [
+                { name: 'Animals', keywords: ['animal','bird','horse','cattle','horn','horns','beast','little animal','big animal','feather','bee','snake'] },
+                { name: 'Body', keywords: ['hand','eye','lip','nose','breast','head','tooth','navel','mouth','hide','leather'] },
+                { name: 'Nature', keywords: ['sun','star','plant','fruit','growth','flow','ice','campfire','pumice','river','moon','fire'] },
+                { name: 'Objects', keywords: ['house','bridge','brick','cup','tool','rope','measure','staff','hook','mark','tie','sow','fence','brick'] },
+                { name: 'Actions', keywords: ['speak','weave','wash','collect','roll','passion','mix','taste','tell','plead','speak','weave','flow','lie','pass','sit'] }
+            ];
+
+            const cats = {};
+            for (const init in data) {
+                const col = data[init];
+                for (const fin in col) {
+                    const meaning = col[fin];
+                    const pair = init + fin;
+                    const m = ('' + meaning).toLowerCase();
+                    let assigned = false;
+                    for (const map of keywordMap) {
+                        for (const kw of map.keywords) {
+                            if (m.includes(kw)) {
+                                cats[map.name] = cats[map.name] || [];
+                                cats[map.name].push({ label: meaning, pair });
+                                assigned = true;
+                                break;
+                            }
+                        }
+                        if (assigned) break;
+                    }
+                    if (!assigned) {
+                        cats['Other'] = cats['Other'] || [];
+                        cats['Other'].push({ label: meaning, pair });
+                    }
+                }
+            }
+            return cats;
+        }
+
+        const categories = buildCategories();
+
+        Object.keys(categories).forEach(cat => {
+            const wrap = document.createElement('div');
+            wrap.className = 'mobile-category';
+            const h = document.createElement('h4');
+            h.textContent = cat;
+            wrap.appendChild(h);
+            categories[cat].forEach(item => {
+                const a = document.createElement('a');
+                a.className = 'mobile-link';
+                a.href = '#';
+                a.textContent = item.label + ' (' + item.pair + ')';
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    input.value += item.pair;
+                    sync();
+                });
+                wrap.appendChild(a);
+            });
+            menu.appendChild(wrap);
+        });
+
+        // insert menu into the container (replace old content)
+        menuContainer.appendChild(menu);
+    }
+
+    window.addEventListener('resize', () => renderMobileMenu());
+    window.addEventListener('load', () => renderMobileMenu());
+
+    // Prefill `latin-output` from ?glyph=... if present (URLSearchParams returns decoded value)
+    function applyQueryPrefill() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const glyph = params.get('glyph');
+            if (glyph) {
+                input.value = glyph;
+            }
+        } catch (e) {
+            // ignore malformed
+        }
+    }
+
+    // Share button: copy a URL with encoded glyph param to clipboard
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const base = window.location.origin + window.location.pathname;
+            const encoded = encodeURIComponent(input.value || '');
+            const url = base + (encoded ? ('?glyph=' + encoded) : '');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    const prev = shareBtn.textContent;
+                    shareBtn.textContent = 'Copied';
+                    setTimeout(() => { shareBtn.textContent = prev; }, 1500);
+                }).catch(() => {
+                    // fallback: prompt
+                    window.prompt('Copy this URL', url);
+                });
+            } else {
+                window.prompt('Copy this URL', url);
+            }
+        });
+    }
+
+    if (clearInline) {
+        clearInline.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearAll();
+        });
+    }
+
+    fetch(phonoUrl)
+        .then(resp => resp.ok ? resp.json() : Promise.reject())
+        .then(json => {
+            phoneticMap = json;
+            updateReadings(input.value);
+        })
+        .catch(() => {
+            readingItems.innerHTML = '<span class="reading-hint">Unable to load readings.</span>';
+            moreLink.style.display = 'none';
+        });
+
+    // Load glossary lookup JSON (dumped from server) for existence checks
+    fetch('/den/testing/gloss_lookup.json')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(list => {
+            try {
+                glossMap = new Map();
+                (list || []).forEach(o => {
+                    if (!o || !o.s) return;
+                    const key = (''+o.s).toLowerCase().trim();
+                    const meaning = (o.m || '').toString().trim();
+                    glossMap.set(key, meaning);
+                });
+                glossSet = new Set(glossMap.keys());
+            } catch (e) {
+                glossSet = null;
+                glossMap = null;
+            }
+            // if phoneticMap already loaded, refresh readings to mark exists
+            updateReadings(input.value);
+        })
+        .catch(() => { glossSet = null; glossMap = null; });
+
+    // `more` link behavior is set when rendering previews below.
+
+    Object.keys(data).forEach(init => {
+        const head = document.createElement('div');
+        head.className = 'initial-cell';
+        head.innerHTML = `
+            <span class="yiv-font" style="font-size:3.2em;">${init}</span>
+            <span style="font-weight:bold;">${init}</span>
+        `;
+        root.appendChild(head);
+
+        const pairs = data[init];
+        Object.keys(pairs).forEach(fin => {
+            const pair = init + fin;
+            const btn = document.createElement('div');
+            btn.className = 'pair-btn';
+            btn.onclick = () => { input.value += pair; sync(); };
+            btn.innerHTML = `
+                <span class="yiv-font" style="font-size:3em;">${pair}</span>
+                <span>${pair}</span>
+                <span class="pair-description">${pairs[fin]}</span>
+            `;
+            root.appendChild(btn);
+        });
+    });
+
+    renderMobileMenu();
+
+    function sync() {
+        const val = input.value;
+        // Single character view: preserve entered case (font handles display)
+        gPreview.innerText = val;
+        
+        let meanings = [];
+        for (let i = 0; i < val.length; i += 2) {
+            const pair = val.substr(i, 2);
+            if (pair.length === 2) {
+                const init = pair[0].toUpperCase();
+                const fin = pair[1].toLowerCase();
+                if (data[init] && data[init][fin]) {
+                    meanings.push(data[init][fin]);
+                } else {
+                    meanings.push("?");
+                }
+            }
+        }
+        mPreview.innerText = meanings.join(' + ');
+        
+        // Generate logogram
+        generateLogogram(val);
+        
+        updateReadings(val);
+    }
+
+    function generateLogogram(val) {
+        const logogramMain = document.getElementById('logogram-main');
+        const logogramNote = document.getElementById('logogram-note');
+
+        if (!val || val.length === 0) {
+            logogramMain.textContent = '';
+            if (logogramNote) logogramNote.style.display = 'none';
+            return;
+        }
+
+        const glyphs = [];
+        for (let i = 0; i < val.length; i += 2) {
+            const pair = val.substr(i, 2);
+            if (pair.length === 2) glyphs.push(pair);
+        }
+
+        if (!glyphs.length) {
+            logogramMain.textContent = '';
+            if (logogramNote) logogramNote.style.display = 'none';
+            return;
+        }
+
+        const truncated = glyphs.length > 3;
+        const used = glyphs.slice(0, 3);
+        const display = used[0].toUpperCase() + used.slice(1).map(p => p.toLowerCase()).join('');
+        logogramMain.textContent = display;
+        if (logogramNote) logogramNote.style.display = truncated ? 'block' : 'none';
+    }
+
+    function applyPhoneticVariants(reading) {
+        const variants = [reading];
+        let modified = reading;
+        
+        // g ↔ k mapping
+        if (modified.includes('g') || modified.includes('G')) {
+            const toggled = modified.replace(/g/g, '§').replace(/G/g, 'Ƶ').replace(/§/g, 'k').replace(/Ƶ/g, 'K');
+            if (toggled !== modified) variants.push(toggled);
+        }
+        
+        // n ↔ m mapping removed: avoid producing m-substituted variants
+        
+        // f ↔ p mapping
+        if (modified.includes('f') || modified.includes('F')) {
+            const toggled = modified.replace(/f/g, '§').replace(/F/g, 'Ƶ').replace(/§/g, 'p').replace(/Ƶ/g, 'P');
+            if (toggled !== modified) variants.push(toggled);
+        }
+        
+        // f ↔ b mapping (alternate)
+        if (modified.includes('f') || modified.includes('F')) {
+            const toggled = modified.replace(/f/g, '§').replace(/F/g, 'Ƶ').replace(/§/g, 'b').replace(/Ƶ/g, 'B');
+            if (toggled !== modified) variants.push(toggled);
+        }
+        
+        return variants;
+    }
+
+    // Generate fuzzy candidate normalizations for lookup checks
+    function generateFuzzyCandidates(word) {
+        if (!word) return [];
+        const w = ('' + word).toLowerCase().trim();
+        const variants = new Set();
+        variants.add(w);
+
+        // collapse doubled letters (pedakk -> pedak)
+        variants.add(w.replace(/([a-z])\1+/g, '$1'));
+
+        // remove all h's (peddakh -> peddak -> peddak -> pedak)
+        variants.add(w.replace(/h/g, ''));
+        variants.add(w.replace(/([a-z])\1+/g, '$1').replace(/h/g, ''));
+
+        // map common aspirated pairs to plain (dh->d, kh->k, ph->p, th->t, gh->g, bh->b)
+        variants.add(w.replace(/dh/g, 'd'));
+        variants.add(w.replace(/kh/g, 'k'));
+        variants.add(w.replace(/ph/g, 'p'));
+        variants.add(w.replace(/th/g, 't'));
+        variants.add(w.replace(/gh/g, 'g'));
+        variants.add(w.replace(/bh/g, 'b'));
+
+        // remove trailing single h
+        variants.add(w.replace(/h$/,''));
+
+        // also consider single <-> double n variants (nn <-> n)
+        variants.add(w.replace(/n/g, 'nn'));
+        variants.add(w.replace(/nn/g, 'n'));
+
+        return Array.from(variants);
+    }
+
+    function updateReadings(value) {
+        candidateSets = [];
+        comboCursor = 0;
+        readingItems.innerHTML = '';
+        const pairs = [];
+
+        for (let i = 0; i < value.length; i += 2) {
+            const group = value.substr(i, 2);
+            if (group.length !== 2) {
+                continue;
+            }
+            pairs.push(group);
+        }
+
+        if (!pairs.length) {
+            readingItems.innerHTML = '<span class="reading-hint">Select glyphs to see example readings.</span>';
+            moreLink.style.display = 'none';
+            return;
+        }
+
+        candidateSets = pairs.map(getCandidates);
+        const rawCombos = buildCombos(candidateSets);
+        const uniqueCombos = Array.from(new Set(rawCombos.map(capitalizeReading))).filter(x => x && !x.includes('x') && !x.includes('X'));
+        
+        // Add phonetic variants
+        let expandedCombos = [];
+        for (const combo of uniqueCombos) {
+            expandedCombos.push(combo);
+            const variants = applyPhoneticVariants(combo);
+            for (const variant of variants) {
+                if (variant !== combo && !expandedCombos.includes(variant)) {
+                    expandedCombos.push(variant);
+                }
+            }
+        }
+        
+        shuffledCombos = shuffleArray(expandedCombos);
+        if (shuffledCombos.length > maxComboSamples) {
+            shuffledCombos = shuffledCombos.slice(0, maxComboSamples);
+        }
+        totalCombos = shuffledCombos.length;
+        if (!totalCombos) {
+            readingItems.innerHTML = '<span class="reading-hint">No readings available.</span>';
+            moreLink.style.display = 'none';
+            return;
+        }
+
+        // Populate "Already Exists" section by fuzzy-checking against glossSet
+        const existingItems = document.getElementById('existing-items');
+        const existingNote = document.getElementById('existing-note');
+        if (existingItems) existingItems.innerHTML = '';
+        // ensure matchedCombos exists even if glossSet is unavailable
+        let matchedCombos = new Set();
+        if (glossSet && existingItems) {
+            // collect the actual DB keys that matched any fuzzy variant
+            const foundDB = new Set();
+            matchedCombos = new Set();
+            for (const combo of shuffledCombos) {
+                const checks = generateFuzzyCandidates(combo);
+                for (const c of checks) {
+                    if (glossSet.has(c)) { foundDB.add(c); matchedCombos.add(combo); break; }
+                }
+            }
+            if (foundDB.size) {
+                // render as a single inline, comma-delimited list with links and meanings
+                existingItems.innerHTML = '';
+                const span = document.createElement('span');
+                span.className = 'reading-chunk';
+                let first = true;
+                Array.from(foundDB).forEach(dbKey => {
+                    if (!first) span.appendChild(document.createTextNode(', '));
+                    first = false;
+                    const a = document.createElement('a');
+                    a.href = '/den/yivalkes/?keyword=' + encodeURIComponent(dbKey);
+                    const meaning = (glossMap && glossMap.get(dbKey)) ? glossMap.get(dbKey) : '';
+                    a.textContent = dbKey.charAt(0).toUpperCase() + dbKey.slice(1) + (meaning ? (' (' + meaning + ')') : '');
+                    a.style.color = '#9cdcfe';
+                    span.appendChild(a);
+                });
+                existingItems.appendChild(span);
+                if (existingNote) existingNote.style.display = 'block';
+            } else {
+                existingItems.innerHTML = '<span class="reading-hint">No matches found.</span>';
+                if (existingNote) existingNote.style.display = 'none';
+            }
+        } else if (existingItems) {
+            existingItems.innerHTML = '<span class="reading-hint">Dictionary lookup unavailable.</span>';
+            if (existingNote) existingNote.style.display = 'none';
+        }
+
+        // Remove any example readings that matched the DB so they don't appear twice
+        if (matchedCombos.size) {
+            shuffledCombos = shuffledCombos.filter(c => !matchedCombos.has(c));
+            totalCombos = shuffledCombos.length;
+            if (!totalCombos) {
+                readingItems.innerHTML = '<span class="reading-hint">No readings available.</span>';
+                moreLink.style.display = 'none';
+                return;
+            }
+        }
+
+        // Render a simple preview: show up to `previewLimit` items, then reveal more on demand.
+        const separator = ', ';
+        const previewLimit = 50;
+
+        let line = readingItems.querySelector('.reading-chunk');
+        if (!line) {
+            line = document.createElement('span');
+            line.className = 'reading-chunk';
+            readingItems.appendChild(line);
+        }
+
+        const previewCount = Math.min(previewLimit, shuffledCombos.length);
+        line.textContent = shuffledCombos.slice(0, previewCount).join(separator);
+
+        if (shuffledCombos.length > previewCount) {
+            moreLink.style.display = 'inline-block';
+            moreLink.textContent = 'more...';
+            moreLink.onclick = (e) => { e.preventDefault(); line.textContent = shuffledCombos.join(separator); moreLink.style.display = 'none'; };
+        } else {
+            moreLink.style.display = 'none';
+        }
+    }
+
+    function getCandidates(pair) {
+        if (!pair) {
+            return [''];
+        }
+        const normalized = pair.toLowerCase();
+        const list = Array.isArray(phoneticMap[normalized]) ? phoneticMap[normalized].slice() : [];
+        const filtered = list.filter(s => typeof s === 'string' && s.length > 1);
+        if (!filtered.length) {
+            return [pair[0].toUpperCase() + pair[1].toLowerCase()];
+        }
+        const baseLetter = pair[0].toUpperCase();
+        const preferred = filtered.filter(s => s[0].toUpperCase() === baseLetter);
+        if (preferred.length) {
+            const others = filtered.filter(s => s[0].toUpperCase() !== baseLetter);
+            return preferred.concat(others);
+        }
+        return filtered;
+    }
+
+    function buildCombos(sets) {
+        if (!sets.length) {
+            return [];
+        }
+        return sets.reduce((acc, set) => {
+            if (!acc.length) {
+                return set.slice();
+            }
+            const next = [];
+            acc.forEach(prefix => {
+                set.forEach(token => {
+                    next.push(prefix + token);
+                });
+            });
+            return next;
+        }, []);
+    }
+
+    function loadNextChunk() {
+        if (!shuffledCombos.length || comboCursor >= totalCombos) {
+            moreLink.style.display = 'none';
+            return;
+        }
+
+        const end = Math.min(comboCursor + chunkSize, totalCombos);
+        const segment = shuffledCombos.slice(comboCursor, end);
+        const text = segment.join(', ');
+        let line = readingItems.querySelector('.reading-chunk');
+        if (!line) {
+            line = document.createElement('span');
+            line.className = 'reading-chunk';
+            line.textContent = text;
+            readingItems.appendChild(line);
+        } else {
+            // append with comma separator (avoid leading comma)
+            if (line.textContent && line.textContent.trim().length) {
+                line.textContent = line.textContent + ', ' + text;
+            } else {
+                line.textContent = text;
+            }
+        }
+
+        comboCursor = end;
+        moreLink.style.display = comboCursor < totalCombos ? 'inline-block' : 'none';
+    }
+
+    function shuffleArray(items) {
+        const array = items.slice();
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function capitalizeReading(text) {
+        if (!text) {
+            return '';
+        }
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
+
+    function clearAll() {
+        input.value = '';
+        sync();
+    }
+
+    // apply any glyph param before first sync
+    applyQueryPrefill();
+    readingItems.innerHTML = '<span class="reading-hint">Select glyphs to see example readings.</span>';
+    sync();
+</script>
+</html>
+
+===== Linguistic Construction: From Glyph to Phonology =====
+
+Writing Yivalese from the spoken form into its written one is an interpretive process. This is due to phonetic and semantic drift from its original source which was fairly consistent, until it wasn't. For example, Niwiden, the word for Nest, has over time been crunched to Nuden, which can be written in a few ways (XWwy (<html><span class="yiv-font">XWwy</span></html>) for its logographic form, NyWyDn (<html><span class="yiv-font">NyWyDn</span></html>) for historic purposes, and NwDn (<html><span class="yiv-font">NwDn</span></html>) for a shorthand version (think through vs thru)).
+
+Once you have selected a compound of glyphs to represent a concept - such as GxDl (<html><span class="yiv-font">GxDl</span></html> desire+tell = song) - you may backform the pronunciation by extracting specific characters from those pairs. It is also fine to mix and match to keep the resulting pronunciation natural, with the guiding principle to use semantically related character wherever possible.

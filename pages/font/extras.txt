@@ -1,0 +1,40 @@
+====== Yivalese Font + Ruby Extras ======
+
+This page demonstrates the ``yzruby`` plugin syntax.
+
+===== Yivalese font wrappers =====
+
+^ Family ^ Main tag ^ Synonyms ^
+| Present / regular | <nowiki>{{yz|text}}</nowiki> | <nowiki>{{yzreg|text}}</nowiki>, <nowiki>{{yzregular|text}}</nowiki>, <nowiki>{{yznormal|text}}</nowiki> |
+| Modern / future | <nowiki>{{yzbold|text}}</nowiki> | <nowiki>{{yzmodern|text}}</nowiki>, <nowiki>{{yzfuture|text}}</nowiki> |
+| Ancient / old | <nowiki>{{yzitalic|text}}</nowiki> | <nowiki>{{yzold|text}}</nowiki>, <nowiki>{{yzancient|text}}</nowiki> |
+
+Optional size is the third argument: ``tiny``, ``small``, ``normal``, ``big``, ``huge``. ``tiny`` is the legacy extra-small size; ``huge`` is the largest.
+
+Examples:
+^ Size ^ Example ^
+| Regular | <nowiki>{{yz|Dywlxn}}</nowiki> -> {{yz|Dywlxn}} |
+| Big | <nowiki>{{yzregular|Dywlxn|big}}</nowiki> -> {{yzregular|Dywlxn|big}} |
+| Modern | <nowiki>{{yzmodern|Dywlxn}}</nowiki> -> {{yzmodern|Dywlxn}} |
+| Huge | <nowiki>{{yzfuture|Dywlxn|huge}}</nowiki> -> {{yzfuture|Dywlxn|huge}} |
+| Ancient / small | <nowiki>{{yzancient|Dywlxn|small}}</nowiki> -> {{yzancient|Dywlxn|small}} |
+
+===== Ruby syntax =====
+
+  * Standard: <nowiki>{{ruby|Suram|Delimit}}</nowiki> -> {{ruby|Suram|Delimit}}
+  * Shorthand: <nowiki>%Suram|Delimit%</nowiki> -> %Suram|Delimit%
+
+===== Auto ruby tables =====
+
+Use <nowiki>{{autoruby}}</nowiki> around a simple pipe table. The first column is the base text, the second column is the 1:1 reading, and the third column can stay as the gloss or meaning.
+
+{{autoruby}}
+^ base ^ reading ^ meaning ^
+| El Mu | Me-here Worm-here | I am a worm |
+| Eli mwi | Me-hither Worm-hither | I want a worm |
+{{/autoruby}}
+
+Notes:
+  * If a row has more base words than readings, the leftovers stay plain.
+  * If a row has a header row with ``^`` cells, it stays a normal header row.
+  * <nowiki>{{autoruby}}</nowiki> keeps the base text in the page's normal font and only inserts ruby readings.

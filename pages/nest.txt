@@ -1,0 +1,170 @@
+====== Welcome! ======
+
+Welcome to Nest — a place for future creative projects, notes, and experiments. This wiki will host project pages, sketches, and links as things evolve.
+
+====== Adventure ======
+  * [[places:sacred|Sacred places around Duncan, BC]]
+    * //A collection of local landmarks and quiet spots in the Cowichan Valley with OpenStreetMap directions.//
+
+====== Music ======
+  * [[music:perfect?notes=C4%2CE4%2CG4%2CB4|Just in Time intonation]] — Piano (Chorded, Altered Tunings)
+    * Plug in your own notes by using the keyboard, chords will be identified and pitch-corrected. (An example is automatically loaded which can be cleared.) <sup>[<color #22b14c>New:</color> Visualisations!]</sup>
+
+  * [[music:qardence|Qardence]] — A system utilising //qards// (hexagonal, colourful cards) in order to construct musical motifs.
+
+====== Projects ======
+
+===== Electronics =====
+
+==== Eyol-Elta Enigma ====
+  * [[project:eyolelta|Eyol-Elta Enigma]]
+    * //A kinetic light sculpture that rationalises the chaotic "Gleam" into fated, spherical patterns.//
+    * Features a 20-node dodecahedron lattice governed by cellular automata logic //à la// [[wp>Conway's Game of Life]]
+
+==== Little Duckling (Boardgame) ====
+  * [[proj:duckling|Duckling]] 
+    * //A boardgame of light inspired by the poem below; exploring themes of guidance and discovery.//
+    * [[proj:duckling:poem|"Un Petit Caneton"]] — Poem by MangoTrain
+
+===== Senses =====
+
+==== Corvid Compass: A Gaze-Based 6th Sense ====
+  * [[project:corvidcompass|Compass]] — LSM303/PIC16-based compass with buzzer — to find **North** like a bird.
+
+==== Karan: IR Realm ====
+**Flood Light**
+  * [[project:nighthawk|NightHawk]]: Sub-$40 3.5W IR flood/spotlight for sub-$40 night vision systems.
+
+**IR Camera**
+  * [[project:karan-yiil|Karan Yiil]]: IR-pass Camera based on the Rasp PI / HQ Camera
+
+==== Fisa: UV Realm ====
+**Flood Light**
+  * [[project:dayhawk|DayHawk]]: ~$40 3.5W UV flood/spotlight
+    * Uses 365nm over the more common 395nm, reveals more.
+    * Wood's glass to eliminate the bothersome 'purple glow'.
+
+**UV Camera**
+  * [[project:fisa-yiil|Fisa Yiil]]: UV-pass Camera based on the Rasp PI / HQ Camera
+
+====== Nature ======
+
+==== Ginkgo ====
+  * [[plants:ginkgo|Ginkgo]]
+    * //An ancient "living fossil" tree with fan-shaped leaves, embodying resilience and the deep memory of the earth.//
+
+==== Lavender ====
+  * [[plants:lavender|Lavender]]
+    * //Fragrant Mediterranean shrubs used for purification, sleep, and the "Scented Shield."//
+
+==== Wisteria ====
+  * [[plants:wisteria|Wisteria]]
+    * //A genus of woody climbing vines known for cascading purple blooms and vigorous growth.//
+
+====== Yivalkes / Valaksá / Ibbala ======
+
+[[yivalkes:nest|Some town on the Adriatic sea.]]
+===== Glossary =====
+  * [[https://atigerseye.com/wiki/yivalkes/teacher|Teacher Bot]]
+  * [[yivalkes:ipa|IPA]] Jason file for phonetics
+  * [[https://atigerseye.com/wiki/yivalkes/script|De Script shon]] of the syllabary YzWr character set and their multiple use cases.
+  * [[https://atigerseye.com/den/yivalkes|YivalEZ]] — Online Glossary w/ advanced search capabilities. <sup>[Beta]</sup>
+  * [[https://github.com/B7th/b7th.github.io/blob/master/Vocabulary.ods|Vocabulary.ods - Github]] — Mangotrain's live updated glossary for Yivalese. <html><sup>[Requires <a href=" https://www.libreoffice.org/LibreOffice">LibreOffice</a> for RegEx functionality]</sup></html>
+    * **Record count:** <html><span id="yival-words-count"></span></html> Words
+    * **Last updated:** <html><span id="yival-last-updated"></span></html>
+
+  * [[yivalkes:expressions|Expressions]] — 106 expressions sorted by Use and Mood. <sup>[WIP]</sup>
+
+===== Journals of Tearan =====
+  * [[https://t.me/Yivalkes|Link to Telegram Channel]]
+    * //Live updates and linguistic evolution as seen through the eyes of Tearan in Yivalkes.//
+      * Major update coming soon!
+
+===== YzWr Font =====
+  * [[font:format|YzWr Font Formatting]] — How the glyphs are composed and stacked.
+
+<html>
+<script>
+(function(){
+  const wordsEl = document.getElementById('yival-words-count');
+  const lastEl  = document.getElementById('yival-last-updated');
+  if (!wordsEl && !lastEl) return;
+
+  const apiUrl = 'https://atigerseye.com/den/yivalkes/api.php?action=update_summary';
+
+  function ordinal(n) {
+    const s = ["th","st","nd","rd"], v = n % 100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+
+  function prettyDate(d) {
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const year = d.getFullYear();
+    const month = months[d.getMonth()];
+    const day = ordinal(d.getDate());
+    const now = new Date();
+    return (year === now.getFullYear()) ? (month + ' ' + day) : (month + ' ' + day + ', ' + year);
+  }
+
+  function relativeTime(d) {
+    const now = new Date();
+    const diffMs = now - d;
+    const sec = Math.floor(diffMs / 1000);
+    const min = Math.floor(sec / 60);
+    const hr  = Math.floor(min / 60);
+    const days = Math.floor(hr / 24);
+    if (days >= 2) return days + ' days ago';
+    if (days === 1) return '1 day ago';
+    if (hr >= 1) return hr + ' hours ago';
+    if (min >= 1) return min + ' minutes ago';
+    return 'just now';
+  }
+
+  function parseDateMaybe(s) {
+    if (!s) return null;
+    let d = new Date(s);
+    if (!isNaN(d.getTime())) return d;
+    d = new Date(s + 'T00:00:00Z');
+    if (!isNaN(d.getTime())) return d;
+    return null;
+  }
+
+  fetch(apiUrl, {cache: 'no-cache'}).then(r => r.json()).then(json => {
+    if (!json || json.status !== 'success') {
+      if (wordsEl) wordsEl.textContent = 'n/a';
+      if (lastEl) lastEl.textContent = 'n/a';
+      return;
+    }
+
+    const wordCount = ('word_count' in json) ? json.word_count : (json.info && json.info.word_count ? json.info.word_count : null);
+    const added = ('added_count' in json) ? json.added_count : (json.info && json.info.added_count ? json.info.added_count : 0);
+    const modified = ('modified_count' in json) ? json.modified_count : (json.info && json.info.modified_count ? json.info.modified_count : 0);
+
+    const rawDate = json.date_for_display || (json.info && (json.info.date_from_github || json.info.date_from_uses)) || json.normalized_date || '';
+    const d = parseDateMaybe(rawDate);
+
+    if (wordsEl) {
+      wordsEl.textContent = (wordCount !== null) ? String(wordCount) : 'n/a';
+    }
+
+    if (lastEl) {
+      if (!d) {
+        lastEl.textContent = rawDate || 'n/a';
+        return;
+      }
+      const rel = relativeTime(d);
+      const pretty = prettyDate(d);
+      const parts = [];
+      if (added && Number(added) > 0) parts.push('+' + Number(added) + ' added.');
+      if (modified && Number(modified) > 0) parts.push(Number(modified) + ' modified');
+      const suffix = parts.length ? ' (' + parts.join(', ') + ')' : '';
+      lastEl.textContent = rel + ', ' + pretty + '.' + (suffix ? ' ' + suffix : '');
+    }
+  }).catch(err => {
+    if (wordsEl) wordsEl.textContent = 'error';
+    if (lastEl) lastEl.textContent = 'error';
+    console.error('Yival stats fetch error:', err);
+  });
+})();
+</script>
+</html>

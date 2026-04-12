@@ -1,0 +1,168 @@
+====== YIVALESE VERB FORMS: THE QUICK GUIDE ======
+
+Everything you need to "decline" a word, no linguistics degree required.
+
+We'll use one word the whole way through:
+
+  SHARU: "miracle"
+  Said simply: Sharu | Working stem: shaaru
+
+In English we'd just say "miracle" every time. In Yivalese the word itself changes depending on who's involved, where they are, and how you're saying it. Let's walk through it.
+
+===== STEP 0: GET THE STEM (takes 5 seconds) =====
+
+Take the "Said (simplified)" spelling, lowercase it. That's your stem.
+
+  Sharu -> shaaru   (the written/dictionary spelling has the double vowel)
+
+  * If the word has hyphens like "Ganda-l": strip from the hyphen -> "ganda"
+  * If it's "Was-sikh-ka": keep prefix+middle, drop the last -> "wassikh"
+  * If it has !, ?, (, ) in it: no forms; it's an exclamation, not a verb.
+
+===== PART 1: THE FORMS YOU'LL ACTUALLY USE =====
+
+==== THE DOER (Actor-Here) ====
+
+Just the stem. "The miracle-doer / the one performing a miracle, right here."
+English parallel: just "miracle" / "the one who miracles"
+
+  shaaru -> the miracle-doer (base)
+
+Add WHO is doing it; stick these endings on:
+
+  * **shaaru + in = shaarwin** -> "the miracle-doer: me" (I)
+  * **shaaru + tse = shaarutse** -> "the miracle-doer: you" (you)
+  * **shaaru + rh = shaarurh** -> "the miracle-doer: them" (they)
+
+English: "I miracle / you miracle / they miracle"
+(Yivalese bakes the subject into the word itself.)
+
+How to pick the ending:
+
+  * Base ends in [w/u] sound? -> **+win** (not +in, the w gets absorbed)
+  * Base ends in ii? -> **+iin**
+  * Base ends in a/o or -aea? -> **+ani / +atse / +arh**
+  * Everything else: -> **+in / +tse / +rh**
+
+==== THE RECEIVER (Passor-Here) ====
+
+"The one the miracle is happening TO." Like "being miracled."
+English parallel: "be given a miracle" / "to receive a miracle"
+
+For shaaru, the receiver form is also:
+  shaaru -> the receiver (same word here!)
+
+With person:
+
+  * **shaaru + in = shaarwin** -> "it's happening to me"
+  * **shaaru + tse = shaarutse** -> "it's happening to you"
+  * **shaaru + rh = shaarurh** -> "it's happening to them"
+
+==== ASKING / TELLING SOMEONE TO DO IT (Imperative) ====
+
+Stick a prefix on the stem. That's it.
+
+  * **ipp + shaaru = ittshaaru** -> gentle: "could you maybe...?"
+  * **epp + shaaru = ettshaaru** -> normal: "please do it"
+  * **app + shaaru = attshaaru** -> strong: "DO IT NOW"
+
+English: "Would you perform a miracle?" / "Perform a miracle." / "MIRACLE. NOW."
+
+(The prefix changes shape slightly based on what sound starts the stem, the full pattern table is in human.md, but ipp/epp/app is the easy approximation.)
+
+===== PART 2: THE SPATIAL FORMS (the cool part) =====
+
+Yivalese tracks WHERE the action is happening relative to the speaker.
+The word itself changes shape to encode direction. No extra prepositions needed.
+
+  * **shaaru** -> the miracle-doer, RIGHT HERE (by the speaker)
+  * **shaarwa** -> the miracle-doer, OVER THERE (across the room)
+  * **shaarwii** -> the miracle-doer, COMING HERE (moving toward speaker)
+  * **shaaruyo** -> the miracle-doer, GOING AWAY (moving away from speaker)
+
+English parallels:
+"a miracle happening here" / "there's a miracle over there" /
+"a miracle coming this way" / "a miracle heading off"
+
+Add person to the "over there" form:
+
+  * **shaarwa + ni = shaarwani** -> "the miracle over there: for/to me"
+  * **shaarwa + tse = shaarwatse** -> "the miracle over there: for/to you"
+  * **shaarwa + rh = shaarwarh** -> "the miracle over there: for/to them"
+
+The receiver "over there" (Passor-There) works the same way:
+
+  * **shaarua** -> "being miracled, over there"
+  * **shaarua + ni = shaaruani** -> "being miracled over there, for me"
+
+===== PART 3: EXTRAS (good to know, less urgent) =====
+
+==== REDUPLICATED: "the intense / vivid / repeated version" ====
+
+Like saying "MIRACLES everywhere" or "she's SUCH a miracle person."
+You build a prefix by echoing the starting sounds of the stem.
+
+The rules by what sound starts the stem:
+
+  * **starts with sh/zh:** sh + vowel + zh + echo -> **shazhaaru** (shaaru)
+  * **starts with s + vowel:** s + vowel + z + echo -> **sizila** (sila)
+  * **starts with n/m/l + vowel:** repeat 1st syllable -> **lalami** (lami), **nanayil** (nayil)
+  * **starts with k/g + vowel:** k + vowel + g + echo -> **kaganda** (ganda)
+  * **starts with p/b + vowel:** p + vowel + b + echo -> **pabashkhaw** (bashkhaw)
+  * **starts with vowel or h:** prepend iya -> **iyalunel** (alunel)
+  * **starts with anything else:** prepend ea -> **eawassikh** (wassikh)
+  * **absolute fallback:** prepend hee -> **heewhatever**
+
+For shaaru: "sh" onset -> sha + zh + a + aru = shazhaaru
+
+English feel: "She is SUCH a miracle." / "Miracles miracles everywhere!"
+
+==== MAKING SOMEONE DO IT (Causative) ====
+
+"Making/causing" someone to perform the miracle.
+English: "I made it happen" / "She made you do it"
+
+  * **shaaru + niya = shaaruniya** -> "causing ME to miracle"
+  * **shaaru + taya = shaarutaya** -> "causing YOU to miracle"
+  * **shaaru + rheya = shaarurheya** -> "causing THEM to miracle"
+
+Quick rule: almost always +niya / +taya / +rheya tacked on the stem.
+
+==== RIGHT NOW (Present Active) ====
+
+"Currently doing it, actively, in progress."
+English: "is performing a miracle / actively miracling"
+
+  shaaru + yaam = shaaruyaam -> "actively performing a miracle right now"
+
+Rule: if stem ends in a vowel, add yaam; if it ends in oo, swap to waam; if it ends in a consonant, just add aam.
+
+==== CHEERS! (exclamation / toast) ====
+
+Raise a glass, celebrate, exclaim. Used in toasts and songs.
+
+  shaaroyets! -> "Here's to miracles! / For miracles!"
+
+Rule: end of stem gets replaced/augmented with -eyets! or -oyets!
+(exact ending depends on stem's final sound; generally just say -eyets!)
+
+===== CHEAT SHEET: SHARU / shaaru at a glance =====
+
+^ FORM ^ YIVALESE ^ ENGLISH FEEL ^
+| base (doer) | shaaru | "the miracle / the miracle-doer" |
+| me | shaarwin | "I'm the miracle-doer" |
+| you | shaarutse | "you're the miracle-doer" |
+| them | shaarurh | "they're the miracle-doer" |
+| gentle ask | ittshaaru | "could you maybe perform one?" |
+| normal ask | ettshaaru | "please, perform a miracle" |
+| strong ask | attshaaru | "PERFORM A MIRACLE NOW" |
+| over there | shaarwa | "miracle-doer, over there" |
+| coming here | shaarwii | "miracle-doer, coming this way" |
+| going away | shaaruyo | "miracle-doer, heading off" |
+| receiver | shaaru | "the one being miracled" |
+| vivid/intense | shazhaaru | "SUCH a miracle / miracles!" |
+| I caused it | shaaruniya | "causing me to miracle" |
+| you caused it | shaarutaya | "causing you to miracle" |
+| they caused it | shaarurheya | "causing them to miracle" |
+| right now | shaaruyaam | "actively performing a miracle" |
+| cheers! | shaaroyets! | "here's to miracles!" |

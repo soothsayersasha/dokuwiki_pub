@@ -1,0 +1,278 @@
+====== Collection of Crow-Caw-phony and Chords ======
+
+This is a digital nest for the creation of every shiny melodic fragment, harmonic experiment, and rhythmic trinket I find. Each section represents a challenge to capture a specific mood through a specific musical constraint.
+
+
+<code>
+              ░░                                                        
+      ░░░░░░░░░░░░░░  ░░▒▒░░░░▒▒▒▒  ░░░░░░░░░░░░░░  ░░░░                
+         CROW    ░░    CAW    ░░      PHONY                                  
+    ░░░░░░░░      ░░  ░░░░  ░░░░░░  ░░░░  ░░░░░░░░                      
+              ░░      ░░      ░░              ░░                        
+    ░░░░                ▒▒▒▒░░                                          
+    ░░  ░░          ▒▒▓▓██▓▓▓▓▓▓▓▓░░                                    
+  ░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓██████████▓▓▓▓▒▒                                  
+        ▓▓██▓▓▓▓████████▓▒▒▓██████████░░                                
+          ▓▓▓▓▓▓▓▓▓▓██████████████████▓▓                                
+            ░░▓▓████▓▓██████▓▓██▓▓▓▓████▓▓                              
+              ░░▓▓▓▓▓▓██▓▓▓▓████████▓▓▓▓▓▓▒▒                            
+      ░░▓▓▓▓▓▓▓▓▓▓████████▓▓██▓▓▒▒▓▓▓▓▓▓██▓▓▓▓                          
+    ░░░░▒▒▒▒▓▓████████████▓▓██████████████▓▓▓▓▒▒▒▒▒▒▓▓▓▓                
+                ████████████████████▓▓██████░░▒▒▒▒▒▒▒▒▓▓▓▓▒▒            
+                ▒▒██▓▓████▓▓████▒▒██████▓▓▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓████░░        
+                ▓▓██████▒▒██████▓▓▓▓██▓▓▓▓██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████        
+              ░░▒▒▓▓▓▓██▓▓▒▒██▓▓████▓▓▓▓▓▓██▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓████      
+              ░░░░▓▓▓▓▓▓▓▓▓▓████████▓▓████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓▓░░  
+              ░░  ▒▒▒▒▓▓████████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  
+                ░░░░▒▒██████████████████████████▓▓▓▓▓▓▓▓▓▓████▓▓▓▓▓▓▓▓▓▓
+                    ░░▓▓████████████████████████▓▓██▓▓▓▓██▓▓████▓▓▓▓▓▓▓▓
+                    ░░▒▒██████████████████████████████▓▓▓▓████▓▓██▓▓▓▓▓▓
+                        ▓▓██████████████████████████████████████▓▓██████
+</code>
+<html><center></html>
+:!: **WIP** :!:
+<html></center></html>
+
+===== 01. The Seven Diatonic Modes =====
+//Qard height represents a lower or higher energy state//
+==== Ionian (The Major Scale) ====
+<code>
+Scale: W - W - H - W - W - W - H / 1 - 2 - 3 - 4 - 5 - 6 - 7
+
+ [ Bright & Stable ]
+   _____         _____         _____
+  /  I  \       / IV  \       /  V  \
+ (   C   )-----(   F   )-----(   G   )
+  \_____/       \_____/       \_____/
+</code>
+
+==== Dorian ====
+<code>
+Scale: W - H - W - W - W - H - W / 1 - 2 - b3 - 4 - 5 - 6 - b7
+
+ [ Sophisticated & Jazzy ]
+                 _____
+                / IV  \
+   _____       (   F   )       _____
+  /  i  \       \_____/       /  i  \
+ (  Cm   )-------------------(  Cm   )
+  \_____/                     \_____/
+</code>
+
+==== Phrygian ====
+<code>
+Scale: H - W - W - W - H - W - W / 1 - b2 - b3 - 4 - 5 - b6 - b7
+
+ [ Dark & Tension-Heavy ]
+   _____        _____
+  /  i  \      / bII \
+ (  Cm   )----(  Db   )   _____
+  /_____/      \_____/   /  i  \
+                        (  Cm   )
+                         \_____/
+</code>
+
+==== Lydian ====
+<code>
+Scale: W - W - W - H - W - W - H / 1 - 2 - 3 - #4 - 5 - 6 - 7
+
+ [ Ethereal & Uplifting ]
+                _____
+               / II  \
+   _____      (   D   )     _____
+  /  I  \      \_____/     /  I  \
+ (   C   )----------------(   C   )
+  \_____/                  \_____/
+</code>
+
+==== Mixolydian ====
+<code>
+Scale: W - W - H - W - W - H - W / 1 - 2 - 3 - 4 - 5 - 6 - b7
+
+ [ Bluesy & Gritty ]
+   _____                     _____
+  /  I  \       _____       /  I  \
+ (   C   )-----/ bVII\-----(   C   )
+  \_____/     (  Bb   )     \_____/
+               \_____/
+</code>
+
+==== Aeolian (Natural Minor) ====
+<code>
+Scale: W - H - W - W - H - W - W / 1 - 2 - b3 - 4 - 5 - b6 - b7
+
+ [ Somber & Classic ]
+   _____         _____
+  /  i  \       / bVI \
+ (  Cm   )-----(  Ab   )     _____
+  \_____/       \_____/     / bVII\
+                           (  Bb   )
+                            \_____/
+</code>
+
+==== Locrian ====
+<code>
+Scale: H - W - W - H - W - W - W / 1 - b2 - b3 - 4 - b5 - b6 - b7
+
+ [ Dissonant & Unstable ]
+   _____
+  / bII \       ____
+ (  Db   )-----/  i°\
+  \_____/     ( Cdim )
+               \____/
+</code>
+
+<html><center></html>
+:!: TO BE COMPLETED. **WIP**. :!:
+<html></center></html>
+
+===== 02. The Standard Keys (Major & Minor) =====
+
+
+//Note: Sections to be filled with individual key-based compositions.//
+
+==== Major Scales ====
+=== C Major ===
+=== G Major (F♯) ===
+=== D Major (F♯, C♯) ===
+=== A Major (F♯, C♯, G♯) ===
+=== E Major (F♯, C♯, G♯, D♯) ===
+=== B Major (F♯, C♯, G♯, D♯, A♯) ===
+=== F♯ Major (F♯, C♯, G♯, D♯, A♯, E♯) ===
+=== C♯ Major (F♯, C♯, G♯, D♯, A♯, E♯, B♯) ===
+=== F Major (B♭) ===
+=== B♭ Major (B♭, E♭) ===
+=== E♭ Major (B♭, E♭, A♭) ===
+=== A♭ Major (B♭, E♭, A♭, D♭) ===
+=== D♭ Major (B♭, E♭, A♭, D♭, G♭) ===
+=== G♭ Major (B♭, E♭, A♭, D♭, G♭, C♭) ===
+=== C♭ Major (B♭, E♭, A♭, D♭, G♭, C♭, F♭) ===
+
+==== Minor Scales (Harmonic/Melodic) ====
+=== A Minor ===
+=== E Minor ===
+=== B Minor ===
+=== F♯ Minor ===
+=== G♯ Minor ===
+=== D♯ Minor ===
+=== B♭ Minor ===
+=== F Minor ===
+=== C Minor ===
+=== G Minor ===
+=== D Minor ===
+
+===== 03. Microtonal & Xenharmonic Sets =====
+
+==== 19-EDO ====
+<code>Division: 19 equal steps per octave.
+Characteristic: Greatly improved "pure" minor thirds and major sixths compared to 12-tet.</code>
+
+==== 22-EDO ====
+<code>Division: 22 equal steps per octave.
+Characteristic: Excellent "super-major" and "sub-minor" intervals; very distinct "alien" feel.</code>
+
+==== 31-EDO (Huygens-Fokker) ====
+<code>Division: 31 equal steps per octave.
+Characteristic: Very close to 1/4 comma meantone; allows for "septimal" (harmonic 7th) intervals.</code>
+
+==== Bohlen-Pierce Scale ====
+<code>Division: Based on the "tritave" (ratio of 3:1) divided into 13 steps.
+Characteristic: No octaves! A truly experimental landscape.</code>
+
+===== 04. World & Cultural Scales =====
+
+==== Arabic Maqamat (Microtonal - Quarter-tones) ====
+=== Maqam Rast ===
+<code>Notes: C - D - E𝄳 - F - G - A - B𝄳 - C
+(𝄳 = half-flat / quarter-tone)</code>
+=== Maqam Hijaz ===
+<code>Notes: C - D♭ - E - F - G - A♭ - B♭ - C
+(Characterised by the augmented second between D♭ and E)</code>
+
+==== Indian Raag ====
+=== Raag Bhairav ===
+<code>Notes: C - D♭ - E - F - G - A♭ - B - C
+(Morning Raag; solemn and prayerful)</code>
+=== Raag Yaman ===
+<code>Notes: C - D - E - F♯ - G - A - B - C
+(Evening Raag; uses the Lydian #4)</code>
+
+==== Ethiopian Kiñit ====
+=== Tizita (Major) ===
+<code>Notes: C - D - E - G - A - C
+(Pentatonic; nostalgic and sentimental)</code>
+=== Ambassel ===
+<code>Notes: C - D♭ - F - G - A♭ - C
+(Used for historical narratives and legends)</code>
+
+==== East Asian & Japanese ====
+=== Hirajoshi ===
+<code>Notes: C - D - E♭ - G - A♭ - C
+(Dark, folk-oriented Japanese scale)</code>
+=== In-Sen ===
+<code>Notes: C - D♭ - F - G - B♭ - C
+(The traditional "koto" scale)</code>
+
+==== Balkan & Eastern European ====
+=== Double Harmonic Major (Byzantine) ===
+<code>Notes: C - D♭ - E - F - G - A♭ - B - C
+Intervals: 1-♭2-3-4-5-♭6-7</code>
+=== Hungarian Gypsy Minor ===
+<code>Notes: C - D - E♭ - F♯ - G - A♭ - B - C
+Intervals: 1-2-♭3-♯4-5-♭6-7</code>
+
+===== 05. Named Chord Progressions =====
+
+=== Pastoral (The "Meadow" Sound) - Caw! ===
+<code>Progression: I - IV - iv - I
+Example (C): C - F - Fm - C</code>
+
+=== The Royal Road (J-Pop/Anime standard) ===
+<code>Progression: IV - V - iii - vi
+Example (C): F - G - Em - Am</code>
+
+=== The Andalusian Cadence (Flamenco feel) ===
+<code>Progression: i - VII - VI - V
+Example (Am): Am - G - F - E</code>
+
+=== The Mario Cadence (Heroic Departure) ===
+<code>Progression: ♭VI - ♭VII - I
+Example (C): A♭ - B♭ - C</code>
+
+===== 06. Esoteric & Experimental =====
+
+=== Prometheus Scale (The Mystic Scale, seen in Indian pop) ===
+<code>Notes: C - D - E - F♯ - A - B♭
+Source: Alexander Scriabin. Hexatonic (6-note) scale.</code>
+
+=== Messiaen Mode 2 (Octatonic / Whole-Half) ===
+<code>Notes: C - C♯ - D♯ - E - F♯ - G - A - B♭ - C
+Characteristic: Alternating half and whole steps. Symmetry.</code>
+
+=== The Enigmatic Scale ===
+<code>Notes: C - D♭ - E - F♯ - G♯ - A♯ - B - C
+Source: Giuseppe Verdi.</code>
+
+=== Negative Harmony Mirror ===
+<code>Concept: Mirroring C Major around the C/G axis.
+Result: G Phrygian (G - A♭ - B♭ - C - D - E♭ - F - G).</code>
+
+===== 07. Compositional Challenges =====
+
+==== The Tritone Scavenge ====
+<code>Constraint: Every melodic interval must be an augmented 4th (tritone). Chords must contain at least one tritone.</code>
+
+==== The Hollow Bone (Monophony) ====
+<code>Constraint: A single melodic line only. No harmony, no chords, no double-tracking. Focus on rhythm and phrasing.</code>
+
+==== The Murder's Flight (Polyrhythm) ====
+<code>Constraint: Use 3 against 4 or 5 against 7 patterns throughout the piece to mimic chaotic bird flight.</code>
+
+==== Corvid Vocalisation (Mimicry) ====
+<code>Constraint: Use portamento (slides) and microtonal bends to mimic the "caw" and "click" sounds of a crow.</code>
+
+==== The Shiny Object (Ostileto) ====
+<code>Constraint: One short, high-pitched melodic phrase must repeat (loop) through the entire song regardless of key changes.</code>
+
+==== Twelve-Tone Row (Serialism) ====
+<code>Constraint: Use all 12 notes of the chromatic scale in a specific order. No note can repeat until all 12 are played.</code>

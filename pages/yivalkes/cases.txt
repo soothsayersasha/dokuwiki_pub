@@ -1,0 +1,79 @@
+====== Jason file ======
+
+<code>
+{
+"bareRoot":["",""],
+"fullRoot":["",""],
+"soundClass":["","","",""],
+
+"usingFullRoot":[
+  "cheers2nd",
+  "actorThere","actorThere1st","actorThere2nd","actorThere3rd",
+  "actorHither","actorHither1st","actorHither2nd","actorHither3rd",
+  "actorHence","actorHence1st","actorHence2nd","actorHence3rd",
+  "passorThere","passorThere1st","passorThere2nd","passorThere3rd",
+  "passorHence","passorHence1st","passorHence2nd","passorHence3rd",
+],
+
+"causer1st":[
+  ["([mn]*|ng)$","([aeiouwy])$","$"],
+  ["niya","\1niya","iniya"]
+],
+"causer2nd":[
+  ["(m+|ng)$","([dt])+$","([aeiourlhzsyw])$","([pbkg])$","$"],
+  ["ntaya","ttsaya","\1taya","\1saya","etaya"]
+],
+"causer3rd":[
+  ["([aeiouwyrh])r?$","$"],
+  ["\1rheya","erheya"]
+],
+
+"present":[
+  ["oo$","[eoa]+$","([iu])$","$"],
+  ["waam","aam","\1yaam","aam"]
+],
+"cheers":[
+  ["([aeou])[iy]$","([^aeiou])$","[ou]+$","[aei]*$","$"],
+  ["\1iyets!","$1eyets!","oyets!","eyets!","eyets!"]
+],
+
+"cheersAlt":[
+  ["([aeou])[iy]$","([^aeiou])$","[ou]+$","[aei]*$","$"],
+  ["\1iyets!","$1eyets!","oyets!","eyets!","eyets!"]
+],
+
+"reduplicated":[
+  ["^[td]h?([sz]h?)([aeiouy]*)([aeiou])","^([bdgptkszfv])(h?)([lrsfzv])","^([sz])(h?)([pbkgtd])",
+   "^[fv]([pbkgtd])","^[sz]([aeiou]*)([aeiou])","^[fv]([aeiou]*)([aeiou])","^[sz]h([aeiou]*)([aeiou])",
+   "^(h?)([uwo]*)([ou])","^(h?)([iy]*)([aeoiu])", "^[pb]h?([aeiou]*)([aeiou])","^([nml])([aeiou]*)([aeiou])",
+   "^[kg]h?([aeiou]*)([aeiou])","^[fv]([nml])","^[sz]([nml])","^(h?)([ea]*)","^"],
+  ["t\3d\1\2\3","\1e\1\2\3","s\2ez\3","fev\1","s\2z\1\2",
+   "f\2v\1\2","sh\2zh\1\2","\1owo","\1iya", "p\2b\1\2","\1\3\1\2\3",
+   "k\2g\1\2","fav\1","saz\1","\1ea","hee"]
+],
+
+"imperatives":[
+  "^(h?([aeiouyw])|[pbvf][pb]?h?)", "^[sz](h?)([aeiou])", "^h?[aeiou]?(([sz])|[dt][td]?)h?", 
+  "^h?[aeiou]?([gk][gk]?h?|[sz]h)", "^h?[aeiou]?(([sz])|[dt][td]?)h?", "^[m]([aeiou])", "^h?"
+],
+"mildImperative":["ipp\2", "itts\1\2", "itt\2", "ikk", "itt\2", "ibb\1", "ippe"],
+"regularImperative":["epp\2", "etts\1\2", "ett\2", "ekk", "ett\2", "ebb\1", "eppe"],
+"strongImperative":["app\2", "atts\1\2", "att\2", "akk", "att\2", "abb\1", "appe"],
+"sillyImperative":["opp\2", "otts\1\2", "ott\2", "okk", "ott\2", "obb\1", "oppe"],
+"dismissiveImperative":["mb\2", "ndz\1\2", "nd\2", "ng", "nd\2", "mb\1", "mbe"],
+"mildIntenserative":["iyepp\2", "iyetts\1\2", "iyyett\2", "iyyekk", "iyyett\2", "iyyebb\1", "iyyeppe"],
+"regularIntenserative":["eyapp\2", "eyatts\1\2", "eyyatt\2", "eyyakk", "eyyatt\2", "eyyabb\1", "eyyappe"],
+"strongIntenserative":["ayapp\2", "ayatts\1\2", "ayyatt\2", "ayyakk", "ayyatt\2", "ayyabb\1", "ayyappe"],
+"sillyIntenserative":["ayopp\2", "ayotts\1\2", "ayott\2", "ayokk", "ayott\2", "ayobb\1", "ayoppe"],
+"dismissiveIntenserative":["eumb\2", "eundz\1\2", "eund\2", "eung", "eund\2", "eumb\1", "eumbe"]
+
+}
+</code>
+
+====== Explanation ======
+
+Each word is different from their onset to their coda and that brings them different "classes". Some words have silent letter at more bare cases.
+
+The idea being is a while loop is made until something matches, and the key of that match is the same key for the resulting changes.
+
+It is also important to know which word use the full root as opposed to the bare one, here described with "usingFullRoot"
